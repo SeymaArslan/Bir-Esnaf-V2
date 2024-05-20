@@ -9,21 +9,89 @@
 /* Begin PBXBuildFile section */
 		1F4A11832BFA3249004025AB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4A11822BFA3249004025AB /* AppDelegate.swift */; };
 		1F4A11852BFA3249004025AB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4A11842BFA3249004025AB /* SceneDelegate.swift */; };
-		1F4A11872BFA3249004025AB /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4A11862BFA3249004025AB /* ViewController.swift */; };
-		1F4A118A2BFA3249004025AB /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 1F4A11892BFA3249004025AB /* Base */; };
 		1F4A118C2BFA324A004025AB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1F4A118B2BFA324A004025AB /* Assets.xcassets */; };
 		1F4A118F2BFA324A004025AB /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 1F4A118E2BFA324A004025AB /* Base */; };
+		1F91403A2BFBCD5B001E25BE /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9140392BFBCD5B001E25BE /* LoginViewController.swift */; };
+		1F91403C2BFBD10B001E25BE /* HomeTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F91403B2BFBD10B001E25BE /* HomeTabBarController.swift */; };
+		1F9140442BFBD224001E25BE /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9140432BFBD224001E25BE /* Constants.swift */; };
+		1F9140462BFBD260001E25BE /* Product.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9140452BFBD260001E25BE /* Product.swift */; };
+		1F9140482BFBD269001E25BE /* Company.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9140472BFBD269001E25BE /* Company.swift */; };
+		1F91404A2BFBD272001E25BE /* Puchase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9140492BFBD272001E25BE /* Puchase.swift */; };
+		1F91404C2BFBD278001E25BE /* Sale.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F91404B2BFBD278001E25BE /* Sale.swift */; };
+		1F91404E2BFBD27D001E25BE /* Shop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F91404D2BFBD27D001E25BE /* Shop.swift */; };
+		1F9140502BFBD286001E25BE /* Province.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F91404F2BFBD286001E25BE /* Province.swift */; };
+		1F9140522BFBD28C001E25BE /* District.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9140512BFBD28C001E25BE /* District.swift */; };
+		1F9140542BFBD393001E25BE /* ProductViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9140532BFBD393001E25BE /* ProductViewController.swift */; };
+		1F9140562BFBD3B3001E25BE /* AddProductViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9140552BFBD3B3001E25BE /* AddProductViewController.swift */; };
+		1F9140582BFBD3BD001E25BE /* UpdateProductViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9140572BFBD3BD001E25BE /* UpdateProductViewController.swift */; };
+		1F91405B2BFBD3F5001E25BE /* CompanyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F91405A2BFBD3F5001E25BE /* CompanyViewController.swift */; };
+		1F91405D2BFBD3FD001E25BE /* CompanyDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F91405C2BFBD3FD001E25BE /* CompanyDetailViewController.swift */; };
+		1F9140602BFBD43E001E25BE /* AddCompanyInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F91405F2BFBD43E001E25BE /* AddCompanyInfoViewController.swift */; };
+		1F9140622BFBD44C001E25BE /* AddCompanyAddressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9140612BFBD44C001E25BE /* AddCompanyAddressViewController.swift */; };
+		1F9140642BFBD45D001E25BE /* AddCompanyBankInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9140632BFBD45D001E25BE /* AddCompanyBankInfoViewController.swift */; };
+		1F9140672BFBD48B001E25BE /* UpdateCompanyInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9140662BFBD48B001E25BE /* UpdateCompanyInfoViewController.swift */; };
+		1F9140692BFBD49E001E25BE /* UpdateCompanyAddressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9140682BFBD49E001E25BE /* UpdateCompanyAddressViewController.swift */; };
+		1F91406B2BFBD4A7001E25BE /* UpdateCompanyBankInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F91406A2BFBD4A7001E25BE /* UpdateCompanyBankInfoViewController.swift */; };
+		1F91406E2BFBD4CE001E25BE /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F91406D2BFBD4CE001E25BE /* SettingsViewController.swift */; };
+		1F9140702BFBD4D9001E25BE /* ShopViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F91406F2BFBD4D9001E25BE /* ShopViewController.swift */; };
+		1F9140722BFBD502001E25BE /* PurchaseTransactionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9140712BFBD502001E25BE /* PurchaseTransactionsViewController.swift */; };
+		1F9140742BFBD51E001E25BE /* AddPurchaseTransactionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9140732BFBD51E001E25BE /* AddPurchaseTransactionsViewController.swift */; };
+		1F9140762BFBD529001E25BE /* UpdatePurchaseTransactionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9140752BFBD529001E25BE /* UpdatePurchaseTransactionsViewController.swift */; };
+		1F9140792BFBD550001E25BE /* SalesTransactionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9140782BFBD550001E25BE /* SalesTransactionsViewController.swift */; };
+		1F91407B2BFBD557001E25BE /* AddSalesTransactionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F91407A2BFBD557001E25BE /* AddSalesTransactionsViewController.swift */; };
+		1F91407D2BFBD56E001E25BE /* UpdateSalesTransactionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F91407C2BFBD56E001E25BE /* UpdateSalesTransactionsViewController.swift */; };
+		1F9140802BFBD58B001E25BE /* SalesResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F91407F2BFBD58B001E25BE /* SalesResultsViewController.swift */; };
+		1F9140822BFBD5C7001E25BE /* ProductTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9140812BFBD5C7001E25BE /* ProductTableViewCell.swift */; };
+		1F9140842BFBD5DB001E25BE /* CompanyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9140832BFBD5DB001E25BE /* CompanyTableViewCell.swift */; };
+		1F9140872BFBD61D001E25BE /* PurchaseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9140862BFBD61D001E25BE /* PurchaseTableViewCell.swift */; };
+		1F9140892BFBD627001E25BE /* SalesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9140882BFBD627001E25BE /* SalesTableViewCell.swift */; };
+		C0B680EFFC452AC5075C6FF8 /* Pods_Bir_Esnaf_V2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C59BE7789685AD5C19E3265 /* Pods_Bir_Esnaf_V2.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		1F4A117F2BFA3249004025AB /* Bir Esnaf V2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Bir Esnaf V2.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1F4A11822BFA3249004025AB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1F4A11842BFA3249004025AB /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		1F4A11862BFA3249004025AB /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		1F4A11892BFA3249004025AB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		1F4A118B2BFA324A004025AB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1F4A118E2BFA324A004025AB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1F4A11902BFA324A004025AB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1F9140392BFBCD5B001E25BE /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		1F91403B2BFBD10B001E25BE /* HomeTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTabBarController.swift; sourceTree = "<group>"; };
+		1F9140432BFBD224001E25BE /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		1F9140452BFBD260001E25BE /* Product.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Product.swift; sourceTree = "<group>"; };
+		1F9140472BFBD269001E25BE /* Company.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Company.swift; sourceTree = "<group>"; };
+		1F9140492BFBD272001E25BE /* Puchase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Puchase.swift; sourceTree = "<group>"; };
+		1F91404B2BFBD278001E25BE /* Sale.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sale.swift; sourceTree = "<group>"; };
+		1F91404D2BFBD27D001E25BE /* Shop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shop.swift; sourceTree = "<group>"; };
+		1F91404F2BFBD286001E25BE /* Province.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Province.swift; sourceTree = "<group>"; };
+		1F9140512BFBD28C001E25BE /* District.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = District.swift; sourceTree = "<group>"; };
+		1F9140532BFBD393001E25BE /* ProductViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductViewController.swift; sourceTree = "<group>"; };
+		1F9140552BFBD3B3001E25BE /* AddProductViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProductViewController.swift; sourceTree = "<group>"; };
+		1F9140572BFBD3BD001E25BE /* UpdateProductViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateProductViewController.swift; sourceTree = "<group>"; };
+		1F91405A2BFBD3F5001E25BE /* CompanyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyViewController.swift; sourceTree = "<group>"; };
+		1F91405C2BFBD3FD001E25BE /* CompanyDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyDetailViewController.swift; sourceTree = "<group>"; };
+		1F91405F2BFBD43E001E25BE /* AddCompanyInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCompanyInfoViewController.swift; sourceTree = "<group>"; };
+		1F9140612BFBD44C001E25BE /* AddCompanyAddressViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCompanyAddressViewController.swift; sourceTree = "<group>"; };
+		1F9140632BFBD45D001E25BE /* AddCompanyBankInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCompanyBankInfoViewController.swift; sourceTree = "<group>"; };
+		1F9140662BFBD48B001E25BE /* UpdateCompanyInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateCompanyInfoViewController.swift; sourceTree = "<group>"; };
+		1F9140682BFBD49E001E25BE /* UpdateCompanyAddressViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateCompanyAddressViewController.swift; sourceTree = "<group>"; };
+		1F91406A2BFBD4A7001E25BE /* UpdateCompanyBankInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateCompanyBankInfoViewController.swift; sourceTree = "<group>"; };
+		1F91406D2BFBD4CE001E25BE /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		1F91406F2BFBD4D9001E25BE /* ShopViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopViewController.swift; sourceTree = "<group>"; };
+		1F9140712BFBD502001E25BE /* PurchaseTransactionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseTransactionsViewController.swift; sourceTree = "<group>"; };
+		1F9140732BFBD51E001E25BE /* AddPurchaseTransactionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPurchaseTransactionsViewController.swift; sourceTree = "<group>"; };
+		1F9140752BFBD529001E25BE /* UpdatePurchaseTransactionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatePurchaseTransactionsViewController.swift; sourceTree = "<group>"; };
+		1F9140782BFBD550001E25BE /* SalesTransactionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SalesTransactionsViewController.swift; sourceTree = "<group>"; };
+		1F91407A2BFBD557001E25BE /* AddSalesTransactionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSalesTransactionsViewController.swift; sourceTree = "<group>"; };
+		1F91407C2BFBD56E001E25BE /* UpdateSalesTransactionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateSalesTransactionsViewController.swift; sourceTree = "<group>"; };
+		1F91407F2BFBD58B001E25BE /* SalesResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SalesResultsViewController.swift; sourceTree = "<group>"; };
+		1F9140812BFBD5C7001E25BE /* ProductTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductTableViewCell.swift; sourceTree = "<group>"; };
+		1F9140832BFBD5DB001E25BE /* CompanyTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyTableViewCell.swift; sourceTree = "<group>"; };
+		1F9140862BFBD61D001E25BE /* PurchaseTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseTableViewCell.swift; sourceTree = "<group>"; };
+		1F9140882BFBD627001E25BE /* SalesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SalesTableViewCell.swift; sourceTree = "<group>"; };
+		54CED3810CF9F7434442ED16 /* Pods-Bir Esnaf V2.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bir Esnaf V2.release.xcconfig"; path = "Target Support Files/Pods-Bir Esnaf V2/Pods-Bir Esnaf V2.release.xcconfig"; sourceTree = "<group>"; };
+		6C59BE7789685AD5C19E3265 /* Pods_Bir_Esnaf_V2.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Bir_Esnaf_V2.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		727E0CDDFDC288C03231D69C /* Pods-Bir Esnaf V2.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bir Esnaf V2.debug.xcconfig"; path = "Target Support Files/Pods-Bir Esnaf V2/Pods-Bir Esnaf V2.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,17 +99,28 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C0B680EFFC452AC5075C6FF8 /* Pods_Bir_Esnaf_V2.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		06BEE62EAE2C255954A88EDB /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				6C59BE7789685AD5C19E3265 /* Pods_Bir_Esnaf_V2.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		1F4A11762BFA3249004025AB = {
 			isa = PBXGroup;
 			children = (
 				1F4A11812BFA3249004025AB /* Bir Esnaf V2 */,
 				1F4A11802BFA3249004025AB /* Products */,
+				78048BF098FBD1BAAC51A60A /* Pods */,
+				06BEE62EAE2C255954A88EDB /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -56,15 +135,168 @@
 		1F4A11812BFA3249004025AB /* Bir Esnaf V2 */ = {
 			isa = PBXGroup;
 			children = (
-				1F4A11822BFA3249004025AB /* AppDelegate.swift */,
-				1F4A11842BFA3249004025AB /* SceneDelegate.swift */,
-				1F4A11862BFA3249004025AB /* ViewController.swift */,
-				1F4A11882BFA3249004025AB /* Main.storyboard */,
-				1F4A118B2BFA324A004025AB /* Assets.xcassets */,
+				1F91403E2BFBD1A9001E25BE /* Features */,
+				1F91403D2BFBD176001E25BE /* Core */,
 				1F4A118D2BFA324A004025AB /* LaunchScreen.storyboard */,
-				1F4A11902BFA324A004025AB /* Info.plist */,
+				1F4A118B2BFA324A004025AB /* Assets.xcassets */,
 			);
 			path = "Bir Esnaf V2";
+			sourceTree = "<group>";
+		};
+		1F91403D2BFBD176001E25BE /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				1F4A11822BFA3249004025AB /* AppDelegate.swift */,
+				1F4A11842BFA3249004025AB /* SceneDelegate.swift */,
+				1F4A11902BFA324A004025AB /* Info.plist */,
+				1F9140432BFBD224001E25BE /* Constants.swift */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		1F91403E2BFBD1A9001E25BE /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				1F9140422BFBD1EF001E25BE /* View */,
+				1F9140412BFBD1E3001E25BE /* ViewModel */,
+				1F9140402BFBD1D9001E25BE /* Model */,
+				1F91403F2BFBD1CE001E25BE /* Service */,
+			);
+			path = Features;
+			sourceTree = "<group>";
+		};
+		1F91403F2BFBD1CE001E25BE /* Service */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
+		1F9140402BFBD1D9001E25BE /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				1F9140452BFBD260001E25BE /* Product.swift */,
+				1F9140472BFBD269001E25BE /* Company.swift */,
+				1F9140492BFBD272001E25BE /* Puchase.swift */,
+				1F91404B2BFBD278001E25BE /* Sale.swift */,
+				1F91404D2BFBD27D001E25BE /* Shop.swift */,
+				1F91404F2BFBD286001E25BE /* Province.swift */,
+				1F9140512BFBD28C001E25BE /* District.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		1F9140412BFBD1E3001E25BE /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		1F9140422BFBD1EF001E25BE /* View */ = {
+			isa = PBXGroup;
+			children = (
+				1F9140392BFBCD5B001E25BE /* LoginViewController.swift */,
+				1F91403B2BFBD10B001E25BE /* HomeTabBarController.swift */,
+				1F91408A2BFBD645001E25BE /* TabBarItem */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		1F9140592BFBD3C9001E25BE /* Product */ = {
+			isa = PBXGroup;
+			children = (
+				1F9140532BFBD393001E25BE /* ProductViewController.swift */,
+				1F9140552BFBD3B3001E25BE /* AddProductViewController.swift */,
+				1F9140572BFBD3BD001E25BE /* UpdateProductViewController.swift */,
+				1F9140812BFBD5C7001E25BE /* ProductTableViewCell.swift */,
+			);
+			path = Product;
+			sourceTree = "<group>";
+		};
+		1F91405E2BFBD415001E25BE /* Company */ = {
+			isa = PBXGroup;
+			children = (
+				1F91405A2BFBD3F5001E25BE /* CompanyViewController.swift */,
+				1F91405C2BFBD3FD001E25BE /* CompanyDetailViewController.swift */,
+				1F9140832BFBD5DB001E25BE /* CompanyTableViewCell.swift */,
+				1F91406C2BFBD4AF001E25BE /* UpdateCompany */,
+				1F9140652BFBD464001E25BE /* AddCompany */,
+			);
+			path = Company;
+			sourceTree = "<group>";
+		};
+		1F9140652BFBD464001E25BE /* AddCompany */ = {
+			isa = PBXGroup;
+			children = (
+				1F91405F2BFBD43E001E25BE /* AddCompanyInfoViewController.swift */,
+				1F9140612BFBD44C001E25BE /* AddCompanyAddressViewController.swift */,
+				1F9140632BFBD45D001E25BE /* AddCompanyBankInfoViewController.swift */,
+			);
+			path = AddCompany;
+			sourceTree = "<group>";
+		};
+		1F91406C2BFBD4AF001E25BE /* UpdateCompany */ = {
+			isa = PBXGroup;
+			children = (
+				1F9140662BFBD48B001E25BE /* UpdateCompanyInfoViewController.swift */,
+				1F9140682BFBD49E001E25BE /* UpdateCompanyAddressViewController.swift */,
+				1F91406A2BFBD4A7001E25BE /* UpdateCompanyBankInfoViewController.swift */,
+			);
+			path = UpdateCompany;
+			sourceTree = "<group>";
+		};
+		1F9140772BFBD531001E25BE /* Purchase */ = {
+			isa = PBXGroup;
+			children = (
+				1F9140712BFBD502001E25BE /* PurchaseTransactionsViewController.swift */,
+				1F9140732BFBD51E001E25BE /* AddPurchaseTransactionsViewController.swift */,
+				1F9140752BFBD529001E25BE /* UpdatePurchaseTransactionsViewController.swift */,
+				1F9140862BFBD61D001E25BE /* PurchaseTableViewCell.swift */,
+			);
+			path = Purchase;
+			sourceTree = "<group>";
+		};
+		1F91407E2BFBD575001E25BE /* Sales */ = {
+			isa = PBXGroup;
+			children = (
+				1F9140782BFBD550001E25BE /* SalesTransactionsViewController.swift */,
+				1F91407A2BFBD557001E25BE /* AddSalesTransactionsViewController.swift */,
+				1F91407C2BFBD56E001E25BE /* UpdateSalesTransactionsViewController.swift */,
+				1F9140882BFBD627001E25BE /* SalesTableViewCell.swift */,
+			);
+			path = Sales;
+			sourceTree = "<group>";
+		};
+		1F9140852BFBD600001E25BE /* Shop */ = {
+			isa = PBXGroup;
+			children = (
+				1F91407F2BFBD58B001E25BE /* SalesResultsViewController.swift */,
+				1F91406F2BFBD4D9001E25BE /* ShopViewController.swift */,
+				1F91407E2BFBD575001E25BE /* Sales */,
+				1F9140772BFBD531001E25BE /* Purchase */,
+			);
+			path = Shop;
+			sourceTree = "<group>";
+		};
+		1F91408A2BFBD645001E25BE /* TabBarItem */ = {
+			isa = PBXGroup;
+			children = (
+				1F91406D2BFBD4CE001E25BE /* SettingsViewController.swift */,
+				1F91405E2BFBD415001E25BE /* Company */,
+				1F9140592BFBD3C9001E25BE /* Product */,
+				1F9140852BFBD600001E25BE /* Shop */,
+			);
+			path = TabBarItem;
+			sourceTree = "<group>";
+		};
+		78048BF098FBD1BAAC51A60A /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				727E0CDDFDC288C03231D69C /* Pods-Bir Esnaf V2.debug.xcconfig */,
+				54CED3810CF9F7434442ED16 /* Pods-Bir Esnaf V2.release.xcconfig */,
+			);
+			path = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -74,9 +306,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1F4A11932BFA324A004025AB /* Build configuration list for PBXNativeTarget "Bir Esnaf V2" */;
 			buildPhases = (
+				16CBD593DBC5FE89B41DC299 /* [CP] Check Pods Manifest.lock */,
 				1F4A117B2BFA3249004025AB /* Sources */,
 				1F4A117C2BFA3249004025AB /* Frameworks */,
 				1F4A117D2BFA3249004025AB /* Resources */,
+				1BEE41BED0AF455DCC9CF3E5 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -127,34 +361,100 @@
 			files = (
 				1F4A118C2BFA324A004025AB /* Assets.xcassets in Resources */,
 				1F4A118F2BFA324A004025AB /* Base in Resources */,
-				1F4A118A2BFA3249004025AB /* Base in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		16CBD593DBC5FE89B41DC299 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Bir Esnaf V2-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		1BEE41BED0AF455DCC9CF3E5 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Bir Esnaf V2/Pods-Bir Esnaf V2-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Bir Esnaf V2/Pods-Bir Esnaf V2-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Bir Esnaf V2/Pods-Bir Esnaf V2-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		1F4A117B2BFA3249004025AB /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1F4A11872BFA3249004025AB /* ViewController.swift in Sources */,
+				1F9140722BFBD502001E25BE /* PurchaseTransactionsViewController.swift in Sources */,
+				1F9140692BFBD49E001E25BE /* UpdateCompanyAddressViewController.swift in Sources */,
+				1F91405D2BFBD3FD001E25BE /* CompanyDetailViewController.swift in Sources */,
+				1F9140622BFBD44C001E25BE /* AddCompanyAddressViewController.swift in Sources */,
+				1F9140542BFBD393001E25BE /* ProductViewController.swift in Sources */,
+				1F9140442BFBD224001E25BE /* Constants.swift in Sources */,
+				1F91406B2BFBD4A7001E25BE /* UpdateCompanyBankInfoViewController.swift in Sources */,
+				1F91404C2BFBD278001E25BE /* Sale.swift in Sources */,
+				1F9140802BFBD58B001E25BE /* SalesResultsViewController.swift in Sources */,
+				1F91407B2BFBD557001E25BE /* AddSalesTransactionsViewController.swift in Sources */,
+				1F9140892BFBD627001E25BE /* SalesTableViewCell.swift in Sources */,
+				1F9140702BFBD4D9001E25BE /* ShopViewController.swift in Sources */,
+				1F9140672BFBD48B001E25BE /* UpdateCompanyInfoViewController.swift in Sources */,
+				1F91404A2BFBD272001E25BE /* Puchase.swift in Sources */,
+				1F9140842BFBD5DB001E25BE /* CompanyTableViewCell.swift in Sources */,
+				1F91404E2BFBD27D001E25BE /* Shop.swift in Sources */,
+				1F9140602BFBD43E001E25BE /* AddCompanyInfoViewController.swift in Sources */,
+				1F9140502BFBD286001E25BE /* Province.swift in Sources */,
+				1F9140582BFBD3BD001E25BE /* UpdateProductViewController.swift in Sources */,
+				1F9140762BFBD529001E25BE /* UpdatePurchaseTransactionsViewController.swift in Sources */,
+				1F9140872BFBD61D001E25BE /* PurchaseTableViewCell.swift in Sources */,
+				1F91403C2BFBD10B001E25BE /* HomeTabBarController.swift in Sources */,
 				1F4A11832BFA3249004025AB /* AppDelegate.swift in Sources */,
+				1F9140642BFBD45D001E25BE /* AddCompanyBankInfoViewController.swift in Sources */,
+				1F9140562BFBD3B3001E25BE /* AddProductViewController.swift in Sources */,
+				1F91407D2BFBD56E001E25BE /* UpdateSalesTransactionsViewController.swift in Sources */,
+				1F9140522BFBD28C001E25BE /* District.swift in Sources */,
+				1F91403A2BFBCD5B001E25BE /* LoginViewController.swift in Sources */,
+				1F91405B2BFBD3F5001E25BE /* CompanyViewController.swift in Sources */,
+				1F9140792BFBD550001E25BE /* SalesTransactionsViewController.swift in Sources */,
+				1F9140742BFBD51E001E25BE /* AddPurchaseTransactionsViewController.swift in Sources */,
+				1F9140482BFBD269001E25BE /* Company.swift in Sources */,
+				1F9140822BFBD5C7001E25BE /* ProductTableViewCell.swift in Sources */,
 				1F4A11852BFA3249004025AB /* SceneDelegate.swift in Sources */,
+				1F9140462BFBD260001E25BE /* Product.swift in Sources */,
+				1F91406E2BFBD4CE001E25BE /* SettingsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		1F4A11882BFA3249004025AB /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				1F4A11892BFA3249004025AB /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		1F4A118D2BFA324A004025AB /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -287,6 +587,7 @@
 		};
 		1F4A11942BFA324A004025AB /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 727E0CDDFDC288C03231D69C /* Pods-Bir Esnaf V2.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -315,6 +616,7 @@
 		};
 		1F4A11952BFA324A004025AB /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 54CED3810CF9F7434442ED16 /* Pods-Bir Esnaf V2.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;

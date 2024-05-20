@@ -6,17 +6,21 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
+    var authListener: AuthStateDidChangeListenerHandle?
 
-
+    
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
-        // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
-        // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
-        guard let _ = (scene as? UIWindowScene) else { return }
+
+        guard let windowScene = (scene as? UIWindowScene) else { return }
+        let window = UIWindow(windowScene: windowScene)
+        self.window = window
+
+        autoLogin()
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
@@ -48,5 +52,35 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 
 
+    func autoLogin() {
+            authListener = Auth.auth().addStateDidChangeListener({ [weak self] auth, user in
+                guard let self = self else { return }
+                // Öncelikle listener'ı kaldırmak istiyoruz çünkü değişiklikleri tekrar dinlemeye gerek yok
+                Auth.auth().removeStateDidChangeListener(self.authListener!)
+
+                if user != nil && UserDefaults.standard.object(forKey: "kcurrentUser") != nil {
+                    DispatchQueue.main.async {
+                        self.goToApp()
+                    }
+                } else {
+                    DispatchQueue.main.async {
+                        self.goToLogin()
+                    }
+                }
+            })
+        }
+
+        private func goToApp() {
+            let homeVC = HomeTabBarController()
+            self.window?.rootViewController = homeVC
+            self.window?.makeKeyAndVisible()
+        }
+
+        private func goToLogin() {
+            let loginVC = LoginViewController()
+            self.window?.rootViewController = loginVC
+            self.window?.makeKeyAndVisible()
+        }
+    
 }
 
