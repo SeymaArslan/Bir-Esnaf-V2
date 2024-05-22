@@ -11,6 +11,7 @@
 		1F4A11852BFA3249004025AB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4A11842BFA3249004025AB /* SceneDelegate.swift */; };
 		1F4A118C2BFA324A004025AB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1F4A118B2BFA324A004025AB /* Assets.xcassets */; };
 		1F4A118F2BFA324A004025AB /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 1F4A118E2BFA324A004025AB /* Base */; };
+		1F6DD35D2BFE2BDB00677D04 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1F6DD35C2BFE2BDB00677D04 /* GoogleService-Info.plist */; };
 		1F91403A2BFBCD5B001E25BE /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9140392BFBCD5B001E25BE /* LoginViewController.swift */; };
 		1F91403C2BFBD10B001E25BE /* HomeTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F91403B2BFBD10B001E25BE /* HomeTabBarController.swift */; };
 		1F9140442BFBD224001E25BE /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9140432BFBD224001E25BE /* Constants.swift */; };
@@ -45,7 +46,7 @@
 		1F9140842BFBD5DB001E25BE /* CompanyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9140832BFBD5DB001E25BE /* CompanyTableViewCell.swift */; };
 		1F9140872BFBD61D001E25BE /* PurchaseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9140862BFBD61D001E25BE /* PurchaseTableViewCell.swift */; };
 		1F9140892BFBD627001E25BE /* SalesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9140882BFBD627001E25BE /* SalesTableViewCell.swift */; };
-		C0B680EFFC452AC5075C6FF8 /* Pods_Bir_Esnaf_V2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C59BE7789685AD5C19E3265 /* Pods_Bir_Esnaf_V2.framework */; };
+		29B4F03F8827A2885F45BA57 /* Pods_Bir_Esnaf_V2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55E30EC6204C3D063B664950 /* Pods_Bir_Esnaf_V2.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -55,6 +56,7 @@
 		1F4A118B2BFA324A004025AB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1F4A118E2BFA324A004025AB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1F4A11902BFA324A004025AB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1F6DD35C2BFE2BDB00677D04 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		1F9140392BFBCD5B001E25BE /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		1F91403B2BFBD10B001E25BE /* HomeTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTabBarController.swift; sourceTree = "<group>"; };
 		1F9140432BFBD224001E25BE /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -89,9 +91,9 @@
 		1F9140832BFBD5DB001E25BE /* CompanyTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyTableViewCell.swift; sourceTree = "<group>"; };
 		1F9140862BFBD61D001E25BE /* PurchaseTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseTableViewCell.swift; sourceTree = "<group>"; };
 		1F9140882BFBD627001E25BE /* SalesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SalesTableViewCell.swift; sourceTree = "<group>"; };
-		54CED3810CF9F7434442ED16 /* Pods-Bir Esnaf V2.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bir Esnaf V2.release.xcconfig"; path = "Target Support Files/Pods-Bir Esnaf V2/Pods-Bir Esnaf V2.release.xcconfig"; sourceTree = "<group>"; };
-		6C59BE7789685AD5C19E3265 /* Pods_Bir_Esnaf_V2.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Bir_Esnaf_V2.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		727E0CDDFDC288C03231D69C /* Pods-Bir Esnaf V2.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bir Esnaf V2.debug.xcconfig"; path = "Target Support Files/Pods-Bir Esnaf V2/Pods-Bir Esnaf V2.debug.xcconfig"; sourceTree = "<group>"; };
+		55E30EC6204C3D063B664950 /* Pods_Bir_Esnaf_V2.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Bir_Esnaf_V2.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8ABD50003077D3525D790C63 /* Pods-Bir Esnaf V2.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bir Esnaf V2.release.xcconfig"; path = "Target Support Files/Pods-Bir Esnaf V2/Pods-Bir Esnaf V2.release.xcconfig"; sourceTree = "<group>"; };
+		C5955BEC1910F62DD5A9AF2A /* Pods-Bir Esnaf V2.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bir Esnaf V2.debug.xcconfig"; path = "Target Support Files/Pods-Bir Esnaf V2/Pods-Bir Esnaf V2.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,28 +101,20 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C0B680EFFC452AC5075C6FF8 /* Pods_Bir_Esnaf_V2.framework in Frameworks */,
+				29B4F03F8827A2885F45BA57 /* Pods_Bir_Esnaf_V2.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		06BEE62EAE2C255954A88EDB /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				6C59BE7789685AD5C19E3265 /* Pods_Bir_Esnaf_V2.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 		1F4A11762BFA3249004025AB = {
 			isa = PBXGroup;
 			children = (
 				1F4A11812BFA3249004025AB /* Bir Esnaf V2 */,
 				1F4A11802BFA3249004025AB /* Products */,
 				78048BF098FBD1BAAC51A60A /* Pods */,
-				06BEE62EAE2C255954A88EDB /* Frameworks */,
+				7E8CAFB1353C568FB6184B35 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -138,6 +132,8 @@
 				1F91403E2BFBD1A9001E25BE /* Features */,
 				1F91403D2BFBD176001E25BE /* Core */,
 				1F4A118D2BFA324A004025AB /* LaunchScreen.storyboard */,
+				1F6DD35C2BFE2BDB00677D04 /* GoogleService-Info.plist */,
+				1F4A11902BFA324A004025AB /* Info.plist */,
 				1F4A118B2BFA324A004025AB /* Assets.xcassets */,
 			);
 			path = "Bir Esnaf V2";
@@ -148,7 +144,6 @@
 			children = (
 				1F4A11822BFA3249004025AB /* AppDelegate.swift */,
 				1F4A11842BFA3249004025AB /* SceneDelegate.swift */,
-				1F4A11902BFA324A004025AB /* Info.plist */,
 				1F9140432BFBD224001E25BE /* Constants.swift */,
 			);
 			path = Core;
@@ -293,10 +288,18 @@
 		78048BF098FBD1BAAC51A60A /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				727E0CDDFDC288C03231D69C /* Pods-Bir Esnaf V2.debug.xcconfig */,
-				54CED3810CF9F7434442ED16 /* Pods-Bir Esnaf V2.release.xcconfig */,
+				C5955BEC1910F62DD5A9AF2A /* Pods-Bir Esnaf V2.debug.xcconfig */,
+				8ABD50003077D3525D790C63 /* Pods-Bir Esnaf V2.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		7E8CAFB1353C568FB6184B35 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				55E30EC6204C3D063B664950 /* Pods_Bir_Esnaf_V2.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -306,11 +309,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1F4A11932BFA324A004025AB /* Build configuration list for PBXNativeTarget "Bir Esnaf V2" */;
 			buildPhases = (
-				16CBD593DBC5FE89B41DC299 /* [CP] Check Pods Manifest.lock */,
+				490ACE9ECF5FB35EC0583BE2 /* [CP] Check Pods Manifest.lock */,
 				1F4A117B2BFA3249004025AB /* Sources */,
 				1F4A117C2BFA3249004025AB /* Frameworks */,
 				1F4A117D2BFA3249004025AB /* Resources */,
-				1BEE41BED0AF455DCC9CF3E5 /* [CP] Embed Pods Frameworks */,
+				30133E3EAE28072BD48C89BE /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -361,13 +364,31 @@
 			files = (
 				1F4A118C2BFA324A004025AB /* Assets.xcassets in Resources */,
 				1F4A118F2BFA324A004025AB /* Base in Resources */,
+				1F6DD35D2BFE2BDB00677D04 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		16CBD593DBC5FE89B41DC299 /* [CP] Check Pods Manifest.lock */ = {
+		30133E3EAE28072BD48C89BE /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Bir Esnaf V2/Pods-Bir Esnaf V2-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Bir Esnaf V2/Pods-Bir Esnaf V2-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Bir Esnaf V2/Pods-Bir Esnaf V2-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		490ACE9ECF5FB35EC0583BE2 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -387,23 +408,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		1BEE41BED0AF455DCC9CF3E5 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Bir Esnaf V2/Pods-Bir Esnaf V2-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Bir Esnaf V2/Pods-Bir Esnaf V2-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Bir Esnaf V2/Pods-Bir Esnaf V2-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -503,7 +507,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -566,7 +570,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -587,7 +591,7 @@
 		};
 		1F4A11942BFA324A004025AB /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 727E0CDDFDC288C03231D69C /* Pods-Bir Esnaf V2.debug.xcconfig */;
+			baseConfigurationReference = C5955BEC1910F62DD5A9AF2A /* Pods-Bir Esnaf V2.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -598,7 +602,6 @@
 				INFOPLIST_FILE = "Bir Esnaf V2/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -608,15 +611,19 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "seymaArslan.Bir-Esnaf-V2";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
 		1F4A11952BFA324A004025AB /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 54CED3810CF9F7434442ED16 /* Pods-Bir Esnaf V2.release.xcconfig */;
+			baseConfigurationReference = 8ABD50003077D3525D790C63 /* Pods-Bir Esnaf V2.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -627,7 +634,6 @@
 				INFOPLIST_FILE = "Bir Esnaf V2/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -637,9 +643,13 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "seymaArslan.Bir-Esnaf-V2";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

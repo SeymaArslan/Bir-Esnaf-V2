@@ -7,6 +7,8 @@
 
 import UIKit
 import FirebaseAuth
+import Firebase
+import IQKeyboardManagerSwift
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -15,11 +17,18 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-
         guard let windowScene = (scene as? UIWindowScene) else { return }
-        let window = UIWindow(windowScene: windowScene)
-        self.window = window
-
+        
+        // Pencereyi oluşturun
+        window = UIWindow(windowScene: windowScene)
+        
+        // Firebase yapılandırması
+//        FirebaseApp.configure()
+        
+        // IQKeyboardManager yapılandırması
+        IQKeyboardManager.shared.enable = true
+        
+        // Kullanıcı oturum durumunu kontrol edin ve doğru root view controller'ı ayarlayın
         autoLogin()
     }
 
@@ -51,7 +60,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // to restore the scene back to its current state.
     }
 
-
+/*
     func autoLogin() {
             authListener = Auth.auth().addStateDidChangeListener({ [weak self] auth, user in
                 guard let self = self else { return }
@@ -80,7 +89,36 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             let loginVC = LoginViewController()
             self.window?.rootViewController = loginVC
             self.window?.makeKeyAndVisible()
-        }
+        }*/
+    func autoLogin() {
+        authListener = Auth.auth().addStateDidChangeListener({ [weak self] auth, user in
+            guard let self = self else { return }
+            // Öncelikle listener'ı kaldırmak istiyoruz çünkü değişiklikleri tekrar dinlemeye gerek yok
+            Auth.auth().removeStateDidChangeListener(self.authListener!)
+
+            if user != nil && UserDefaults.standard.object(forKey: "kcurrentUser") != nil {
+                DispatchQueue.main.async {
+                    self.goToApp()
+                }
+            } else {
+                DispatchQueue.main.async {
+                    self.goToLogin()
+                }
+            }
+        })
+    }
+
+    private func goToApp() {
+        let homeVC = HomeTabBarController() // Ana sayfanızın view controller'ı
+        window?.rootViewController = homeVC
+        window?.makeKeyAndVisible()
+    }
+
+    private func goToLogin() {
+        let loginVC = LoginViewController() // Giriş sayfanızın view controller'ı
+        window?.rootViewController = loginVC
+        window?.makeKeyAndVisible()
+    }
     
 }
 
