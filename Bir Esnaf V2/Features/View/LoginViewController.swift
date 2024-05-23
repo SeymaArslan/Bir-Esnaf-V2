@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import ProgressHUD
 
 class LoginViewController: UIViewController {
     
@@ -34,6 +35,7 @@ class LoginViewController: UIViewController {
     private let mailLabel: UILabel = {
         let label = UILabel()
         label.text = "Email"
+        label.isHidden = true
         label.font = UIFont.systemFont(ofSize: 20, weight: .light)
         label.textColor = UIColor(named: Colors.labelColourful)
         return label
@@ -55,6 +57,7 @@ class LoginViewController: UIViewController {
     private let passLabel: UILabel = {
         let label = UILabel()
         label.text = "Password"
+        label.isHidden = true
         label.font = UIFont.systemFont(ofSize: 20, weight: .light)
         label.textColor = UIColor(named: Colors.labelColourful)
         return label
@@ -76,6 +79,7 @@ class LoginViewController: UIViewController {
     private let passReplyLabel: UILabel = {
         let label = UILabel()
         label.text = "Repeat Password"
+        label.isHidden = true
         label.font = UIFont.systemFont(ofSize: 20, weight: .light)
         label.textColor = UIColor(named: Colors.labelColourful)
         return label
@@ -83,12 +87,15 @@ class LoginViewController: UIViewController {
     
     private let passReplyTextField: UITextField = {
         let textField = UITextField()
+        textField.isHidden = true
         textField.placeholder = "Repeat Password"
+        textField.font = UIFont.systemFont(ofSize: 14)
         return textField
     }()
     
     private let passReplyView: UIView = {
         let view = UIView()
+        view.isHidden = true
         view.backgroundColor = .systemGray
         return view
     }()
@@ -114,6 +121,7 @@ class LoginViewController: UIViewController {
         let button = UIButton()
         button.setTitle("Resend Email", for: .normal)
         button.setTitleColor(UIColor(named: Colors.blue), for: .normal)
+        button.isHidden = true
         button.addTarget(self, action: #selector(resendEmailButtonPressed), for: .touchUpInside)
         return button
     }()
@@ -159,29 +167,50 @@ class LoginViewController: UIViewController {
         return stackView
     }()
     
+    
+    //MARK: - Vars
+    var isLogin = true
+    
+    
+    //MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
         configure()
-        
+        updateUIFor(login: true)
+        setupTextFieldDelegates()
+        setupBackgroundTap()
     }
     
     
     //MARK: - Button Actions
     @objc func loginButtonPressed() {
-        
+        if isDataInputedFor(type: isLogin ? "login" : "register") {
+            // login or register
+        } else {
+            ProgressHUD.showError("All Fields are required")
+        }
     }
     
-    @objc func signUpButtonPressed() {
-        
+    @objc func signUpButtonPressed(_ sender: UIButton) {
+        updateUIFor(login: sender.titleLabel?.text == "Login")
+        isLogin.toggle()
     }
     
     @objc func resendEmailButtonPressed() {
-        
+        if isDataInputedFor(type: "password") {
+
+        } else {
+            ProgressHUD.showError("Email is required.")
+        }
     }
     
     @objc func forgotPasswordButtonPressed() {
-        
+        if isDataInputedFor(type: "password") {
+
+        } else {
+            ProgressHUD.showError("Email is required.")
+        }
     }
     
     
@@ -284,11 +313,11 @@ class LoginViewController: UIViewController {
         }
         
         infoSignUpLabel.snp.makeConstraints { make in
-            make.leading.equalTo(70)
+            make.leading.equalTo(65)
         }
         
         signUpButton.snp.makeConstraints { make in
-            make.leading.equalTo(infoSignUpLabel.snp.trailing).inset(80)
+            make.leading.equalTo(infoSignUpLabel.snp.trailing).inset(65)
         }
         
     }
@@ -313,26 +342,84 @@ class LoginViewController: UIViewController {
         view.addSubview(signUpStackView)
         signUpStackView.addArrangedSubview(infoSignUpLabel)
         signUpStackView.addArrangedSubview(signUpButton)
-//        view.addSubview(infoSignUpLabel)
-//        view.addSubview(signUpButton)
     }
     
     func textFieldConfig(make: ConstraintMaker) {
-        make.leading.equalTo(0)
-        make.trailing.equalTo(0)
+        make.leading.equalTo(1)
+        make.trailing.equalTo(1)
         make.width.equalTo(361)
     }
     
     func labelConfig(make: ConstraintMaker) {
-        make.leading.equalTo(0)
-        make.trailing.equalTo(0)
+        make.leading.equalTo(1)
+        make.trailing.equalTo(1)
         make.width.equalTo(361)
+        make.height.equalTo(24)
     }
     
     func viewConfig(make: ConstraintMaker) {
-        make.leading.equalTo(0)
-        make.trailing.equalTo(0)
+        make.leading.equalTo(1)
+        make.trailing.equalTo(1)
         make.height.equalTo(2)
         make.width.equalTo(355)
     }
+    
+    
+    //MARK: - Setup
+    @objc func backgroundTap() {
+        view.endEditing(false)
+    }
+    
+    private func setupBackgroundTap() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(backgroundTap))
+        view.addGestureRecognizer(tapGesture)
+    }
+    
+    @objc func textFieldDidChange(_ textField: UITextField) {
+        updatePlaceholderLabels(textField: textField)
+    }
+    
+    private func setupTextFieldDelegates() {
+        mailTextField.addTarget(self, action: #selector(textFieldDidChange(_ :)), for: .editingChanged)
+        passwordTextField.addTarget(self, action: #selector(textFieldDidChange(_ :)), for: .editingChanged)
+        passReplyTextField.addTarget(self, action: #selector(textFieldDidChange(_ :)), for: .editingChanged)
+        
+    }
+    
+    //MARK: - Animations
+    private func updateUIFor(login: Bool) {
+        loginButton.setTitle(login ? "LOGIN" : "REGISTER", for: .normal)
+        signUpButton.setTitle(login ? "SignUp" : "Login", for: .normal)
+        infoSignUpLabel.text = login ? "Don't have an account?" : "Have an account?"
+        
+        UIView.animate(withDuration: 0.5) {
+            self.passReplyTextField.isHidden = login
+            self.passReplyView.isHidden = login
+        }
+    }
+    
+    private func updatePlaceholderLabels(textField: UITextField) {
+        switch textField {
+        case mailTextField:
+            mailLabel.isHidden = !textField.hasText
+        case passwordTextField:
+            passLabel.isHidden = !textField.hasText
+        default:
+            passReplyLabel.isHidden = !textField.hasText
+        }
+    }
+    
+    
+    //MARK: - Helpers
+    private func isDataInputedFor(type: String) -> Bool {
+        switch type {
+        case "login":
+            return mailTextField.text != "" && passwordTextField.text != ""
+        case "registration":
+            return mailTextField.text != "" && passwordTextField.text != "" && passReplyTextField.text != ""
+        default:
+            return mailTextField.text != ""
+        }
+    }
+    
 }
