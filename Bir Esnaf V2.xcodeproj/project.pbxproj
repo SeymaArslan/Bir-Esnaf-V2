@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1F03D2832C0068D3001C1732 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F03D2822C0068D3001C1732 /* User.swift */; };
+		1F03D2852C007539001C1732 /* FCollectionReference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F03D2842C007539001C1732 /* FCollectionReference.swift */; };
+		1F03D2872C0075E6001C1732 /* FirebaseUserListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F03D2862C0075E6001C1732 /* FirebaseUserListener.swift */; };
 		1F4A11832BFA3249004025AB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4A11822BFA3249004025AB /* AppDelegate.swift */; };
 		1F4A11852BFA3249004025AB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4A11842BFA3249004025AB /* SceneDelegate.swift */; };
 		1F4A118C2BFA324A004025AB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1F4A118B2BFA324A004025AB /* Assets.xcassets */; };
@@ -50,6 +53,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1F03D2822C0068D3001C1732 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		1F03D2842C007539001C1732 /* FCollectionReference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FCollectionReference.swift; sourceTree = "<group>"; };
+		1F03D2862C0075E6001C1732 /* FirebaseUserListener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseUserListener.swift; sourceTree = "<group>"; };
 		1F4A117F2BFA3249004025AB /* Bir Esnaf V2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Bir Esnaf V2.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1F4A11822BFA3249004025AB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1F4A11842BFA3249004025AB /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -108,6 +114,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1F03D2882C00760A001C1732 /* FirebaseHelpers */ = {
+			isa = PBXGroup;
+			children = (
+				1F03D2842C007539001C1732 /* FCollectionReference.swift */,
+				1F03D2862C0075E6001C1732 /* FirebaseUserListener.swift */,
+			);
+			path = FirebaseHelpers;
+			sourceTree = "<group>";
+		};
 		1F4A11762BFA3249004025AB = {
 			isa = PBXGroup;
 			children = (
@@ -131,6 +146,7 @@
 			children = (
 				1F91403E2BFBD1A9001E25BE /* Features */,
 				1F91403D2BFBD176001E25BE /* Core */,
+				1F91403F2BFBD1CE001E25BE /* Service */,
 				1F4A118D2BFA324A004025AB /* LaunchScreen.storyboard */,
 				1F6DD35C2BFE2BDB00677D04 /* GoogleService-Info.plist */,
 				1F4A11902BFA324A004025AB /* Info.plist */,
@@ -155,7 +171,6 @@
 				1F9140422BFBD1EF001E25BE /* View */,
 				1F9140412BFBD1E3001E25BE /* ViewModel */,
 				1F9140402BFBD1D9001E25BE /* Model */,
-				1F91403F2BFBD1CE001E25BE /* Service */,
 			);
 			path = Features;
 			sourceTree = "<group>";
@@ -163,6 +178,7 @@
 		1F91403F2BFBD1CE001E25BE /* Service */ = {
 			isa = PBXGroup;
 			children = (
+				1F03D2882C00760A001C1732 /* FirebaseHelpers */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -177,6 +193,7 @@
 				1F91404D2BFBD27D001E25BE /* Shop.swift */,
 				1F91404F2BFBD286001E25BE /* Province.swift */,
 				1F9140512BFBD28C001E25BE /* District.swift */,
+				1F03D2822C0068D3001C1732 /* User.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -429,6 +446,7 @@
 				1F91407B2BFBD557001E25BE /* AddSalesTransactionsViewController.swift in Sources */,
 				1F9140892BFBD627001E25BE /* SalesTableViewCell.swift in Sources */,
 				1F9140702BFBD4D9001E25BE /* ShopViewController.swift in Sources */,
+				1F03D2872C0075E6001C1732 /* FirebaseUserListener.swift in Sources */,
 				1F9140672BFBD48B001E25BE /* UpdateCompanyInfoViewController.swift in Sources */,
 				1F91404A2BFBD272001E25BE /* Puchase.swift in Sources */,
 				1F9140842BFBD5DB001E25BE /* CompanyTableViewCell.swift in Sources */,
@@ -440,6 +458,7 @@
 				1F9140872BFBD61D001E25BE /* PurchaseTableViewCell.swift in Sources */,
 				1F91403C2BFBD10B001E25BE /* HomeTabBarController.swift in Sources */,
 				1F4A11832BFA3249004025AB /* AppDelegate.swift in Sources */,
+				1F03D2832C0068D3001C1732 /* User.swift in Sources */,
 				1F9140642BFBD45D001E25BE /* AddCompanyBankInfoViewController.swift in Sources */,
 				1F9140562BFBD3B3001E25BE /* AddProductViewController.swift in Sources */,
 				1F91407D2BFBD56E001E25BE /* UpdateSalesTransactionsViewController.swift in Sources */,
@@ -450,6 +469,7 @@
 				1F9140742BFBD51E001E25BE /* AddPurchaseTransactionsViewController.swift in Sources */,
 				1F9140482BFBD269001E25BE /* Company.swift in Sources */,
 				1F9140822BFBD5C7001E25BE /* ProductTableViewCell.swift in Sources */,
+				1F03D2852C007539001C1732 /* FCollectionReference.swift in Sources */,
 				1F4A11852BFA3249004025AB /* SceneDelegate.swift in Sources */,
 				1F9140462BFBD260001E25BE /* Product.swift in Sources */,
 				1F91406E2BFBD4CE001E25BE /* SettingsViewController.swift in Sources */,
