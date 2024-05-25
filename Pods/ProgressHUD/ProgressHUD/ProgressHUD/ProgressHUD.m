@@ -193,7 +193,7 @@
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	if (spinner == nil)
 	{
-		UIActivityIndicatorViewStyle style = UIActivityIndicatorViewStyleWhiteLarge;
+        UIActivityIndicatorViewStyle style = UIActivityIndicatorViewStyleLarge;
 		if (@available(iOS 13, *)) { style = UIActivityIndicatorViewStyleLarge; }
 		spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:style];
 		spinner.color = colorSpinner;

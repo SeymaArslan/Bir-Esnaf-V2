@@ -7,7 +7,6 @@
 
 import UIKit
 import SnapKit
-import ProgressHUD
 
 class LoginViewController: UIViewController {
     
@@ -66,6 +65,7 @@ class LoginViewController: UIViewController {
     private let passwordTextField: UITextField = {
         let textField = UITextField()
         textField.placeholder = "Password"
+        textField.isSecureTextEntry = true
         textField.font = UIFont.systemFont(ofSize: 14)
         return textField
     }()
@@ -89,6 +89,7 @@ class LoginViewController: UIViewController {
         let textField = UITextField()
         textField.isHidden = true
         textField.placeholder = "Repeat Password"
+        textField.isSecureTextEntry = true
         textField.font = UIFont.systemFont(ofSize: 14)
         return textField
     }()
@@ -185,10 +186,11 @@ class LoginViewController: UIViewController {
     
     //MARK: - Button Actions
     @objc func loginButtonPressed() {
+        print("bastım")
         if isDataInputedFor(type: isLogin ? "login" : "register") {
-            // login or register
+            isLogin ? loginUser() : registerUser()
         } else {
-            ProgressHUD.showError("All Fields are required")
+            //ProgressHUD.showError("All Fields are required")
         }
     }
     
@@ -201,7 +203,7 @@ class LoginViewController: UIViewController {
         if isDataInputedFor(type: "password") {
 
         } else {
-            ProgressHUD.showError("Email is required.")
+          //  ProgressHUD.showError("Email is required.")
         }
     }
     
@@ -209,7 +211,7 @@ class LoginViewController: UIViewController {
         if isDataInputedFor(type: "password") {
 
         } else {
-            ProgressHUD.showError("Email is required.")
+           // ProgressHUD.showError("Email is required.")
         }
     }
     
@@ -395,6 +397,7 @@ class LoginViewController: UIViewController {
         UIView.animate(withDuration: 0.5) {
             self.passReplyTextField.isHidden = login
             self.passReplyView.isHidden = login
+//            self.passReplyLabel.isHidden = login
         }
     }
     
@@ -411,15 +414,55 @@ class LoginViewController: UIViewController {
     
     
     //MARK: - Helpers
+    private func loginUser() {
+        
+    }
+    
+    private func registerUser() {
+        if passwordTextField.text! == passReplyTextField.text! {
+            FirebaseUserListener.shared.registerUserWith(email: mailTextField.text!, password: passwordTextField.text!) { error in
+                DispatchQueue.main.async {
+                    if error == nil {
+                        self.showSuccess(message: "Verification email sent.")
+                        self.resendEmailButton.isHidden = false
+                    } else {
+                        self.showError(message: error!.localizedDescription)
+                    }
+                }
+            }
+        } else {
+            DispatchQueue.main.async {
+                self.showError(message: "The Passwords don't match")
+            }
+            print("Passwords do not match: \(passwordTextField.text!) != \(passReplyTextField.text!)")
+        }
+    }
+    
+    
     private func isDataInputedFor(type: String) -> Bool {
         switch type {
         case "login":
             return mailTextField.text != "" && passwordTextField.text != ""
-        case "registration":
+        case "register":
             return mailTextField.text != "" && passwordTextField.text != "" && passReplyTextField.text != ""
         default:
             return mailTextField.text != ""
         }
     }
     
+    
+    private func showError(message: String) {
+        let alertController = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+        alertController.addAction(okAction)
+        self.present(alertController, animated: true)
+    }
+    
+    private func showSuccess(message: String) {
+        let alertController = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+        alertController.addAction(okAction)
+        self.present(alertController, animated: true)
+    }
+
 }

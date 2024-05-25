@@ -30,3 +30,4 @@ post_install do |installer|
           end
    end
 end
+/Users/seymaarslan/Desktop/swift/Bir-Esnaf-V2/Podfile
