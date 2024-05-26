@@ -15,8 +15,6 @@ pod 'Firebase/Storage'
 pod 'Firebase/Analytics'
 pod 'FirebaseFirestoreSwift'
 
-pod 'ProgressHUD'
-
 pod 'IQKeyboardManagerSwift'
 
 end
@@ -30,4 +28,3 @@ post_install do |installer|
           end
    end
 end
-/Users/seymaarslan/Desktop/swift/Bir-Esnaf-V2/Podfile

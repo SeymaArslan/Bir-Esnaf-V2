@@ -190,7 +190,7 @@ class LoginViewController: UIViewController {
         if isDataInputedFor(type: isLogin ? "login" : "register") {
             isLogin ? loginUser() : registerUser()
         } else {
-            //ProgressHUD.showError("All Fields are required")
+            showError(message: "All Fields are required")
         }
     }
     
@@ -201,17 +201,17 @@ class LoginViewController: UIViewController {
     
     @objc func resendEmailButtonPressed() {
         if isDataInputedFor(type: "password") {
-
+            resendVerificationEmail()
         } else {
-          //  ProgressHUD.showError("Email is required.")
+            showError(message: "Email is required.")
         }
     }
     
     @objc func forgotPasswordButtonPressed() {
         if isDataInputedFor(type: "password") {
-
+            resetPassword()
         } else {
-           // ProgressHUD.showError("Email is required.")
+            showError(message: "Email is required.")
         }
     }
     
@@ -415,7 +415,18 @@ class LoginViewController: UIViewController {
     
     //MARK: - Helpers
     private func loginUser() {
-        
+        FirebaseUserListener.shared.loginUserWithEmail(email: mailTextField.text!, password: passwordTextField.text!) { error, isEmailVerified in
+            if error == nil {
+                if isEmailVerified {
+                    self.goToApp()
+                } else {
+                    self.showError(message: "Please verify email.")
+                    self.resendEmailButton.isHidden = false
+                }
+            } else {
+                self.showError(message: error!.localizedDescription)
+            }
+        }
     }
     
     private func registerUser() {
@@ -435,6 +446,27 @@ class LoginViewController: UIViewController {
                 self.showError(message: "The Passwords don't match")
             }
             print("Passwords do not match: \(passwordTextField.text!) != \(passReplyTextField.text!)")
+        }
+    }
+    
+    private func resetPassword() {
+        FirebaseUserListener.shared.resetPasswordFor(email: mailTextField.text!) { error in
+            if error == nil {
+                self.showSuccess(message: "Reset link send to email.")
+            } else {
+                self.showError(message: error!.localizedDescription)
+            }
+        }
+    }
+    
+    
+    private func resendVerificationEmail() {
+        FirebaseUserListener.shared.resendVerificationEmail(email: mailTextField.text!) { error in
+            if error == nil {
+                self.showSuccess(message: "New verification email sent.")
+            } else {
+                self.showSuccess(message: error!.localizedDescription)
+            }
         }
     }
     
@@ -465,4 +497,12 @@ class LoginViewController: UIViewController {
         self.present(alertController, animated: true)
     }
 
+    
+    //MARK: - Navigation
+    private func goToApp() {
+        let homeVC = HomeTabBarController()
+        homeVC.modalPresentationStyle = .fullScreen
+        self.present(homeVC, animated: true, completion: nil)
+    }
+    
 }

@@ -1040,7 +1040,6 @@ PODS:
     - nanopb/encode (= 2.30910.0)
   - nanopb/decode (2.30910.0)
   - nanopb/encode (2.30910.0)
-  - ProgressHUD (2.70)
   - PromisesObjC (2.4.0)
   - RecaptchaInterop (100.0.0)
   - SnapKit (5.7.1)
@@ -1053,7 +1052,6 @@ DEPENDENCIES:
   - Firebase/Storage
   - FirebaseFirestoreSwift
   - IQKeyboardManagerSwift
-  - ProgressHUD
   - SnapKit
 
 SPEC REPOS:
@@ -1082,7 +1080,6 @@ SPEC REPOS:
     - IQKeyboardManagerSwift
     - leveldb-library
     - nanopb
-    - ProgressHUD
     - PromisesObjC
     - RecaptchaInterop
     - SnapKit
@@ -1112,11 +1109,10 @@ SPEC CHECKSUMS:
   IQKeyboardManagerSwift: d338c11a896e9f29603443700c4567e32f830c22
   leveldb-library: e8eadf9008a61f9e1dde3978c086d2b6d9b9dc28
   nanopb: 438bc412db1928dac798aa6fd75726007be04262
-  ProgressHUD: e603e8b8622c47d8818b9fb38b3cfe9d3e7ca421
   PromisesObjC: f5707f49cb48b9636751c5b2e7d227e43fba9f47
   RecaptchaInterop: 7d1a4a01a6b2cb1610a47ef3f85f0c411434cb21
   SnapKit: d612e99e678a2d3b95bf60b0705ed0a35c03484a
 
-PODFILE CHECKSUM: f4e245ef632303956bc354da1dd44d4464b08a49
+PODFILE CHECKSUM: 3f0b0314fbaae85112a5821d25257dad87a07f59
 
 COCOAPODS: 1.15.2
