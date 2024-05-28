@@ -11,6 +11,7 @@ import SnapKit
 class UpdateProductViewController: UIViewController {
 
     var selectedProduct: Product?
+    var viewModel = ProductViewModel()
     
     //MARK: - Create UI
     private let backgroundImage: UIImageView = {

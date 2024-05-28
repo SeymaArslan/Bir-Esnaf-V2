@@ -7,11 +7,15 @@
 
 import UIKit
 import SnapKit
+import Combine
+import FirebaseAuth
 
 class ProductViewController: UIViewController {
 
+    private var viewModel = ProductViewModel()
+    private var cancellables = Set<AnyCancellable>()
+    
     var tableView = UITableView()
-    var products: [Product] = []
     
     struct Cells {
         static let prodCell = "ProductCell"
@@ -20,12 +24,19 @@ class ProductViewController: UIViewController {
     //MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         setTableViewDelegates()
-        products = fetchData()
         configureTableView()
         createAddButton()
         createRefresh()
+        
+        
+        if let currentUser = Auth.auth().currentUser {
+            let uid = currentUser.uid
+            viewModel.fetchProducts(for: uid)
+        }
+
+        setupBindings()
     }
     
     
@@ -45,7 +56,7 @@ class ProductViewController: UIViewController {
     func configureTableView() {
         view.addSubview(tableView)
         setTableViewDelegates() // set delegates
-        tableView.rowHeight = 120 // set row height
+        tableView.rowHeight = 123 // set row height
         tableView.register(ProductTableViewCell.self, forCellReuseIdentifier: Cells.prodCell) // register cells
         tableView.backgroundColor = UIColor(named: Colors.background)
         
@@ -76,14 +87,21 @@ class ProductViewController: UIViewController {
     }
     
     func deleteProduct(at indexPath: IndexPath) {
-        print("delete items")
+        let product = viewModel.products[indexPath.row]
+        if let currentUser = Auth.auth().currentUser {
+            let uid = currentUser.uid
+            viewModel.deleteProduct(product.prodId)
+        }
+        self.viewModel.products.remove(at: indexPath.row)
     }
+    
     
     func createRefresh() {
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(refresh(_:)), for: .valueChanged)
         tableView.refreshControl = refreshControl
     }
+    
     
     @objc func refresh(_ sender: Any) {
         if let refreshControl = sender as? UIRefreshControl, refreshControl.isRefreshing {
@@ -94,7 +112,14 @@ class ProductViewController: UIViewController {
     
     
     //MARK: - Functions
-
+    private func setupBindings() {
+        viewModel.$products
+            .receive(on: RunLoop.main)
+            .sink { [weak self] _ in
+                self?.tableView.reloadData()
+            }
+            .store(in: &cancellables)
+    }
     
 }
 
@@ -103,20 +128,21 @@ class ProductViewController: UIViewController {
 extension ProductViewController: UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return products.count
+        return viewModel.products.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: Cells.prodCell) as! ProductTableViewCell
-        let product = products[indexPath.row]
+        let product = viewModel.products[indexPath.row]
         cell.set(product: product)
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let selectedProduct = products[indexPath.row]
+        let selectedProduct = viewModel.products[indexPath.row]
         let updateProd = UpdateProductViewController()
         updateProd.selectedProduct = selectedProduct
+        updateProd.viewModel = viewModel
         present(updateProd, animated: true)
     }
     
@@ -128,21 +154,15 @@ extension ProductViewController: UITableViewDelegate, UITableViewDataSource, UIS
     }
     
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        print("Scroll")
         if let refreshControl = scrollView.refreshControl, refreshControl.isRefreshing {
-            print("Get data function")
+            if let currentUser = Auth.auth().currentUser {
+                let uid = currentUser.uid
+                viewModel.fetchProducts(for: uid)
+            }
+
+            setupBindings()
             refreshControl.endRefreshing()
         }
     }
     
-}
-
-
-extension ProductViewController {
-    func fetchData() -> [Product] {
-        let data = Product(prodId: "1", userMail: "deneme", prodName: "deneme", prodTotal: "50", prodPrice: "0 ₺", count: "2")
-        let data2 = Product(prodId: "2", userMail: "deneme2", prodName: "deneme2", prodTotal: "100", prodPrice: "55 ₺", count: "deneme2")
-        let data3 = Product(prodId: "3", userMail: "deneme3", prodName: "deneme3", prodTotal: "30", prodPrice: "120 ₺", count: "deneme3")
-        return [data, data2, data3]
-    }
 }
