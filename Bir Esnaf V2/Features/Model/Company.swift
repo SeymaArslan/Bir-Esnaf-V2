@@ -7,11 +7,13 @@
 
 import Foundation
 
-struct CompanyData {
+struct CompanyData: Codable {
     let company: [Company]
+    let success: Int
 }
 
-struct Company {
+struct Company: Identifiable, Codable {
+    var id: String { cId }
     let cId: String
     let userMail: String
     let compName: String

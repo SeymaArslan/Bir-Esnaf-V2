@@ -7,11 +7,15 @@
 
 import UIKit
 import SnapKit
+import Combine
+import FirebaseAuth
 
 class CompanyViewController: UIViewController {
 
+    private var viewModel = CompanyViewModel()
+    private var cancellables = Set<AnyCancellable>()
+    
     var tableView = UITableView()
-    var companies: [Company] = []
     
     struct Cells {
         static let compCell = "CompanyCell"
@@ -24,9 +28,15 @@ class CompanyViewController: UIViewController {
 
         setTableViewDelegates()
         configureTableView()
-        companies = fetchData()
         createAddButton()
         createRefresh()
+        
+        if let currentUser = Auth.auth().currentUser {
+            let uid = currentUser.uid
+            viewModel.fetchCompanies(for: uid)
+        }
+        
+        setupBindings()
     }
     
     @objc func addButtonTap() {
@@ -93,26 +103,37 @@ class CompanyViewController: UIViewController {
         }
     }
     
+    //MARK: - Functions
+    private func setupBindings() {
+        viewModel.$companies
+            .receive(on: RunLoop.main)
+            .sink { [weak self] _ in
+                self?.tableView.reloadData()
+            }
+            .store(in: &cancellables)
+    }
+    
 }
 
 
 //MARK: - Extensions
 extension CompanyViewController: UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return companies.count
+        return viewModel.companies.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: Cells.compCell) as! CompanyTableViewCell
-        let company = companies[indexPath.row]
+        let company = viewModel.companies[indexPath.row]
         cell.set(company: company)
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let selectedCompany = companies[indexPath.row]
+        let selectedCompany = viewModel.companies[indexPath.row]
         let compDetail = CompanyDetailViewController()
         compDetail.selectedCompany = selectedCompany
+        compDetail.viewModel = viewModel
         navigationController?.pushViewController(compDetail, animated: true)
     }
     
@@ -124,20 +145,13 @@ extension CompanyViewController: UITableViewDelegate, UITableViewDataSource, UIS
     }
     
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        print("Scroll")
         if let refreshControl = scrollView.refreshControl, refreshControl.isRefreshing {
-            print("Get data function")
+            if let currentUser = Auth.auth().currentUser {
+                let uid = currentUser.uid
+                viewModel.fetchCompanies(for: uid)
+            }
+            setupBindings()
             refreshControl.endRefreshing()
         }
-    }
-}
-
-
-extension CompanyViewController {
-    func fetchData() -> [Company] {
-        let data = Company(cId: "1", userMail: "@mail", compName: "Firma1", compPhone: "05745867", compMail: "@firma", province: "Ankara", district: "Çankaya", asbn: "Koru Mahallesi Yeşiltepe Evleri No: 23", bankName: "YapıKredi", bankBranchName: "Bahçelievler", bankBranchCode: "34234", bankAccountType: "Try", bankAccountName: "Firma1", bankAccountNum: "2342352", bankIban: "TR00 0000 0000 0000 0000 0000 00", count: "Firma1")
-        let data2 = Company(cId: "2", userMail: "@mail", compName: "Firma2", compPhone: "453453625", compMail: "@firma2mail", province: "Bursa", district: "Osmangazi", asbn: "Paşa Mahallesi No: 22", bankName: "Garanti", bankBranchName: "Osmangazi", bankBranchCode: "34234", bankAccountType: "Try", bankAccountName: "Firma2", bankAccountNum: "2345234", bankIban: "TR00 0000 0000 0000 0000 0000 00", count: "Firma2")
-        
-        return [data, data2]
     }
 }

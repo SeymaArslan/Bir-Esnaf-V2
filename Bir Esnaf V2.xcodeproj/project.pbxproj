@@ -13,6 +13,7 @@
 		1F03D28B2C0600E6001C1732 /* ProductViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F03D28A2C0600E6001C1732 /* ProductViewModel.swift */; };
 		1F03D28D2C060105001C1732 /* ProductService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F03D28C2C060105001C1732 /* ProductService.swift */; };
 		1F03D28F2C060110001C1732 /* CompanyService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F03D28E2C060110001C1732 /* CompanyService.swift */; };
+		1F03D2922C070508001C1732 /* CompanyViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F03D2912C070508001C1732 /* CompanyViewModel.swift */; };
 		1F4A11832BFA3249004025AB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4A11822BFA3249004025AB /* AppDelegate.swift */; };
 		1F4A11852BFA3249004025AB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4A11842BFA3249004025AB /* SceneDelegate.swift */; };
 		1F4A118C2BFA324A004025AB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1F4A118B2BFA324A004025AB /* Assets.xcassets */; };
@@ -62,6 +63,7 @@
 		1F03D28A2C0600E6001C1732 /* ProductViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductViewModel.swift; sourceTree = "<group>"; };
 		1F03D28C2C060105001C1732 /* ProductService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductService.swift; sourceTree = "<group>"; };
 		1F03D28E2C060110001C1732 /* CompanyService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyService.swift; sourceTree = "<group>"; };
+		1F03D2912C070508001C1732 /* CompanyViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyViewModel.swift; sourceTree = "<group>"; };
 		1F4A117F2BFA3249004025AB /* Bir Esnaf V2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Bir Esnaf V2.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1F4A11822BFA3249004025AB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1F4A11842BFA3249004025AB /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -133,6 +135,7 @@
 			isa = PBXGroup;
 			children = (
 				1F03D28A2C0600E6001C1732 /* ProductViewModel.swift */,
+				1F03D2912C070508001C1732 /* CompanyViewModel.swift */,
 			);
 			path = ModelView;
 			sourceTree = "<group>";
@@ -474,6 +477,7 @@
 				1F9140502BFBD286001E25BE /* Province.swift in Sources */,
 				1F9140582BFBD3BD001E25BE /* UpdateProductViewController.swift in Sources */,
 				1F9140762BFBD529001E25BE /* UpdatePurchaseTransactionsViewController.swift in Sources */,
+				1F03D2922C070508001C1732 /* CompanyViewModel.swift in Sources */,
 				1F9140872BFBD61D001E25BE /* PurchaseTableViewCell.swift in Sources */,
 				1F91403C2BFBD10B001E25BE /* HomeTabBarController.swift in Sources */,
 				1F4A11832BFA3249004025AB /* AppDelegate.swift in Sources */,

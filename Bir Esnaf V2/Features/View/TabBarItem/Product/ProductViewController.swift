@@ -159,7 +159,6 @@ extension ProductViewController: UITableViewDelegate, UITableViewDataSource, UIS
                 let uid = currentUser.uid
                 viewModel.fetchProducts(for: uid)
             }
-
             setupBindings()
             refreshControl.endRefreshing()
         }

@@ -10,7 +10,7 @@ import SnapKit
 
 class CompanyDetailViewController: UIViewController {
 
-    
+    var viewModel = CompanyViewModel()
     var selectedCompany: Company?
     
     //MARK: - Create UI
