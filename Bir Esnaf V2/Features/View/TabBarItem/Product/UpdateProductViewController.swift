@@ -7,6 +7,8 @@
 
 import UIKit
 import SnapKit
+import Combine
+import FirebaseAuth
 
 class UpdateProductViewController: UIViewController {
 
@@ -101,6 +103,21 @@ class UpdateProductViewController: UIViewController {
     //MARK: - Button Actions
     @objc func saveButtonPressed() {
         print("saveButtonPressed")
+        if let currentUser = Auth.auth().currentUser {
+            let uid = currentUser.uid
+            guard let updateProdName = prodNameTextField.text,
+                    let updateProdTotal = costTextField.text?.replacingOccurrences(of: ",", with: "."),
+                    let updateProdPrice = amountTextField.text?.replacingOccurrences(of: ",", with: "."),
+                  let updateDoubleTotal = Double(updateProdTotal),
+                  let updateDoublePrice = Double(updateProdPrice) else {
+                return
+            }
+            
+            let updateProduct = Product(prodId: UUID().uuidString, userMail: uid, prodName: updateProdName, prodTotal: updateProdTotal, prodPrice: updateProdPrice, count: nil)
+            viewModel.updateProduct(updateProduct)
+            self.navigationController?.popViewController(animated: true)
+            
+        }
     }
 
     @objc func cancelButtonTapped() {

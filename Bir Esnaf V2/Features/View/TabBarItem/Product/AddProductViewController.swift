@@ -7,8 +7,12 @@
 
 import UIKit
 import SnapKit
+import Combine
+import FirebaseAuth
 
 class AddProductViewController: UIViewController {
+    
+    var viewModel = ProductViewModel()
     
     //MARK: - Create UI
     private let backgroundImage: UIImageView = {
@@ -177,9 +181,25 @@ class AddProductViewController: UIViewController {
     
     
     //MARK: - Button Actions
-    @objc func saveButtonPressed() {
-        print("saveButtonPressed")
+    @objc func saveButtonPressed(_ sender: UIButton) {
+        print("Button pressed")
+        if let currentUser = Auth.auth().currentUser {
+            let uid = currentUser.uid
+            guard let productName = prodNameTextField.text,
+                  let productTotal = costTextField.text?.replacingOccurrences(of: ",", with: "."),
+                  let productPrice = amountTextField.text?.replacingOccurrences(of: ",", with: "."),
+                  let doubleTotal = Double(productTotal),
+                  let doublePrice = Double(productPrice) else {
+                return
+            }
+
+            let newProduct = Product(prodId: UUID().uuidString, userMail: uid, prodName: productName, prodTotal: productTotal, prodPrice: productPrice, count: nil)
+            viewModel.addProduct(newProduct)
+            self.navigationController?.popViewController(animated: true)
+        }
     }
+    
+    
     
 }
 

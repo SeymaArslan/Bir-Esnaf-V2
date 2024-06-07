@@ -13,6 +13,7 @@ class ProductService {
     
     private init() {}
     
+    
     func fetchProducts(for userMail: String) -> AnyPublisher<ProductData, Error> {
         guard let url = URL(string: "https://lionelo.tech/birEsnaf/getAllProduct.php") else {
             fatalError("Invalid URL")
@@ -24,7 +25,7 @@ class ProductService {
         request.httpBody = post.data(using: .utf8)
 
         return URLSession.shared.dataTaskPublisher(for: request)
-            .tryMap { result -> Data in   // tryMap bloğunu kullanarak HTTP yanıtını kontrol ediyoruz ve yanıt başarılı olmadığında hata fırlatıyoruz. Bu sayede hataları daha etkin bir şekilde yakalayabiliriz.
+            .tryMap { result -> Data in
                 guard let response = result.response as? HTTPURLResponse, response.statusCode == 200 else {
                     throw URLError(.badServerResponse)
                 }
@@ -35,29 +36,31 @@ class ProductService {
             .eraseToAnyPublisher()
     }
     
-    
-    func addProduct(_ product: Product) -> AnyPublisher<Bool, Error> {
-        guard let url = URL(string: "https://lionelo.tech/birEsnaf/saveProduct.php") else {
-            fatalError("Invalid URL")
-        }
-        
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.httpBody = try? JSONEncoder().encode(product)
-        
-        return URLSession.shared.dataTaskPublisher(for: request)
-            .tryMap { result -> Data in
-                guard let response = result.response as? HTTPURLResponse, response.statusCode == 200 else {
-                    throw URLError(.badServerResponse)
-                }
-                return result.data
+ 
+    func addProduct(userMail: String, prodName: String, prodTotal: Double, prodPrice: Double) -> AnyPublisher<Bool, Error> {
+            guard let url = URL(string: "https://lionelo.tech/birEsnaf/addProduct.php") else {
+                fatalError("Invalid URL")
             }
-            .decode(type: Bool.self, decoder: JSONDecoder())
-            .subscribe(on: DispatchQueue.global(qos: .background))
-            .receive(on: DispatchQueue.main)
-            .eraseToAnyPublisher()
-    }
+
+            var request = URLRequest(url: url)
+            request.httpMethod = "POST"
+            let postString = "userMail=\(userMail)&prodName=\(prodName)&prodTotal=\(prodTotal)&prodPrice=\(prodPrice)"
+            request.httpBody = postString.data(using: .utf8)
+
+            return URLSession.shared.dataTaskPublisher(for: request)
+                .tryMap { result -> Bool in
+                    guard let httpResponse = result.response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
+                        throw URLError(.badServerResponse)
+                    }
+                    guard let json = try JSONSerialization.jsonObject(with: result.data, options: []) as? [String: Any],
+                          let success = json["success"] as? Int else {
+                        throw URLError(.cannotParseResponse)
+                    }
+                    return success == 1
+                }
+                .receive(on: DispatchQueue.main)
+                .eraseToAnyPublisher()
+        }
     
     func updateProduct(_ product: Product) -> AnyPublisher<Bool, Error> {
         guard let url = URL(string: "https://lionelo.tech/birEsnaf/updateProduct.php") else {

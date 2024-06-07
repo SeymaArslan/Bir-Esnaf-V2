@@ -43,6 +43,7 @@ class ProductViewController: UIViewController {
     //MARK: - Button Actions
     @objc func addButtonTap() {
         let addProdVC = AddProductViewController()
+        addProdVC.viewModel = viewModel
         present(addProdVC, animated: true)
     }
     
@@ -90,7 +91,7 @@ class ProductViewController: UIViewController {
         let product = viewModel.products[indexPath.row]
         if let currentUser = Auth.auth().currentUser {
             let uid = currentUser.uid
-            viewModel.deleteProduct(product.prodId)
+            viewModel.deleteProduct(product.prodId!)
         }
         self.viewModel.products.remove(at: indexPath.row)
     }
@@ -109,7 +110,6 @@ class ProductViewController: UIViewController {
             refreshControl.endRefreshing()
         }
     }
-    
     
     //MARK: - Functions
     private func setupBindings() {

@@ -26,36 +26,38 @@ class ProductViewModel: ObservableObject {
                     break
                 }
             } receiveValue: { productData in
-                if productData.success == 1 {
-                    self.products = productData.product
+                if let success = productData.success, success == 1 {
+                    self.products = productData.product ?? []
                 } else {
                     print("Failed to fetch products")
                 }
             }
             .store(in: &cancellables)
     }
-    
 
     func addProduct(_ product: Product) {
-        ProductService.shared.addProduct(product)
+        ProductService.shared.addProduct(userMail: product.userMail!, prodName: product.prodName!, prodTotal: Double(product.prodTotal!) ?? 0.0, prodPrice: Double(product.prodPrice!) ?? 0.0)
             .sink(receiveCompletion: { completion in
                 switch completion {
                 case .failure(let error):
                     print("Error adding product: \(error)")
                 case .finished:
-                    break
+                    print("Finished adding product")
                 }
             }, receiveValue: { success in
                 if success {
+                    print("Product added successfully")
                     if let currentUser = Auth.auth().currentUser {
                         let uid = currentUser.uid
                         self.fetchProducts(for: uid)
                     }
+                } else {
+                    print("Failed to add product")
                 }
             })
             .store(in: &cancellables)
     }
-
+    
     func updateProduct(_ product: Product) {
         ProductService.shared.updateProduct(product)
             .sink(receiveCompletion: { completion in
