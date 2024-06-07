@@ -9,6 +9,12 @@ import Foundation
 import Combine
 
 class ProductService {
+    
+    struct DeleteResponse: Codable {
+        let success: Int
+        let message: String
+    }
+    
     static let shared = ProductService()
     
     private init() {}
@@ -18,12 +24,12 @@ class ProductService {
         guard let url = URL(string: "https://lionelo.tech/birEsnaf/getAllProduct.php") else {
             fatalError("Invalid URL")
         }
-
+        
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         let post = "userMail=\(userMail)"
         request.httpBody = post.data(using: .utf8)
-
+        
         return URLSession.shared.dataTaskPublisher(for: request)
             .tryMap { result -> Data in
                 guard let response = result.response as? HTTPURLResponse, response.statusCode == 200 else {
@@ -36,57 +42,62 @@ class ProductService {
             .eraseToAnyPublisher()
     }
     
- 
-    func addProduct(userMail: String, prodName: String, prodTotal: Double, prodPrice: Double) -> AnyPublisher<Bool, Error> {
-            guard let url = URL(string: "https://lionelo.tech/birEsnaf/addProduct.php") else {
-                fatalError("Invalid URL")
-            }
-
-            var request = URLRequest(url: url)
-            request.httpMethod = "POST"
-            let postString = "userMail=\(userMail)&prodName=\(prodName)&prodTotal=\(prodTotal)&prodPrice=\(prodPrice)"
-            request.httpBody = postString.data(using: .utf8)
-
-            return URLSession.shared.dataTaskPublisher(for: request)
-                .tryMap { result -> Bool in
-                    guard let httpResponse = result.response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
-                        throw URLError(.badServerResponse)
-                    }
-                    guard let json = try JSONSerialization.jsonObject(with: result.data, options: []) as? [String: Any],
-                          let success = json["success"] as? Int else {
-                        throw URLError(.cannotParseResponse)
-                    }
-                    return success == 1
-                }
-                .receive(on: DispatchQueue.main)
-                .eraseToAnyPublisher()
-        }
     
-    func updateProduct(_ product: Product) -> AnyPublisher<Bool, Error> {
+    func addProduct(userMail: String, prodName: String, prodTotal: Double, prodPrice: Double) -> AnyPublisher<Bool, Error> {
+        guard let url = URL(string: "https://lionelo.tech/birEsnaf/addProduct.php") else {
+            fatalError("Invalid URL")
+        }
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        let postString = "userMail=\(userMail)&prodName=\(prodName)&prodTotal=\(prodTotal)&prodPrice=\(prodPrice)"
+        request.httpBody = postString.data(using: .utf8)
+        
+        return URLSession.shared.dataTaskPublisher(for: request)
+            .tryMap { result -> Bool in
+                guard let httpResponse = result.response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
+                    throw URLError(.badServerResponse)
+                }
+                guard let json = try JSONSerialization.jsonObject(with: result.data, options: []) as? [String: Any],
+                      let success = json["success"] as? Int else {
+                    throw URLError(.cannotParseResponse)
+                }
+                return success == 1
+            }
+            .receive(on: DispatchQueue.main)
+            .eraseToAnyPublisher()
+    }
+    
+    
+    func updateProduct(userMail: String, prodId: String, prodName: String, prodTotal: Double, prodPrice: Double) -> AnyPublisher<Bool, Error> {
+        
         guard let url = URL(string: "https://lionelo.tech/birEsnaf/updateProduct.php") else {
             fatalError("Invalid URL")
         }
         
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.httpBody = try? JSONEncoder().encode(product)
+        let postString = "userMail=\(userMail)&prodId=\(prodId)&prodName=\(prodName)&prodTotal=\(prodTotal)&prodPrice=\(prodPrice)"
+        request.httpBody = postString.data(using: .utf8)
         
         return URLSession.shared.dataTaskPublisher(for: request)
-            .tryMap { result -> Data in
-                guard let response = result.response as? HTTPURLResponse, response.statusCode == 200 else {
+            .tryMap { result -> Bool in
+                guard let httpResponse = result.response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
                     throw URLError(.badServerResponse)
                 }
-                return result.data
+                
+                guard let json = try JSONSerialization.jsonObject(with: result.data, options: []) as? [String: Any], let success = json["success"] as? Int else {
+                    throw URLError(.cannotParseResponse)
+                }
+                return success == 1
             }
-            .decode(type: Bool.self, decoder: JSONDecoder())
-            .subscribe(on: DispatchQueue.global(qos: .background))
             .receive(on: DispatchQueue.main)
             .eraseToAnyPublisher()
     }
 
     
-    func deleteProduct(_ productId: String) -> AnyPublisher<Bool, Error> {
+    
+    func deleteProduct(_ productId: String, userMail: String) -> AnyPublisher<Bool, Error> {
         guard let url = URL(string: "https://lionelo.tech/birEsnaf/deleteProduct.php") else {
             fatalError("Invalid URL")
         }
@@ -94,7 +105,8 @@ class ProductService {
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
-        request.httpBody = "id=\(productId)".data(using: .utf8)
+        let postString = "prodId=\(productId)&userMail=\(userMail)"
+        request.httpBody = postString.data(using: .utf8)
         
         return URLSession.shared.dataTaskPublisher(for: request)
             .tryMap { result -> Data in
@@ -103,13 +115,16 @@ class ProductService {
                 }
                 return result.data
             }
-            .decode(type: Bool.self, decoder: JSONDecoder())
+            .decode(type: DeleteResponse.self, decoder: JSONDecoder())
+            .map { $0.success == 1 }
             .subscribe(on: DispatchQueue.global(qos: .background))
             .receive(on: DispatchQueue.main)
             .eraseToAnyPublisher()
     }
     
+    
+    
 }
 
 
- 
+

@@ -81,7 +81,7 @@ class UpdateProductViewController: UIViewController {
         button.setTitle("Update", for: .normal)
         button.setTitleColor(UIColor(named: Colors.blue), for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
-        button.addTarget(self, action: #selector(saveButtonPressed), for: .touchUpInside)
+        button.addTarget(self, action: #selector(updateButtonPressed), for: .touchUpInside)
         return button
     }()
     
@@ -101,8 +101,7 @@ class UpdateProductViewController: UIViewController {
     }
     
     //MARK: - Button Actions
-    @objc func saveButtonPressed() {
-        print("saveButtonPressed")
+    @objc func updateButtonPressed() {
         if let currentUser = Auth.auth().currentUser {
             let uid = currentUser.uid
             guard let updateProdName = prodNameTextField.text,
@@ -112,14 +111,14 @@ class UpdateProductViewController: UIViewController {
                   let updateDoublePrice = Double(updateProdPrice) else {
                 return
             }
-            
-            let updateProduct = Product(prodId: UUID().uuidString, userMail: uid, prodName: updateProdName, prodTotal: updateProdTotal, prodPrice: updateProdPrice, count: nil)
+            let updateProduct = Product(prodId: selectedProduct?.prodId, userMail: uid, prodName: updateProdName, prodTotal: updateProdTotal, prodPrice: updateProdPrice, count: nil)
             viewModel.updateProduct(updateProduct)
-            self.navigationController?.popViewController(animated: true)
-            
+
+            dismiss(animated: true)
         }
     }
 
+    
     @objc func cancelButtonTapped() {
         dismiss(animated: true, completion: nil)
     }

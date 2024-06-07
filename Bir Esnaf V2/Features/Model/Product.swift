@@ -28,8 +28,13 @@ struct ProductData: Codable {
     let success: Int?
 }
 
-struct Product: Identifiable, Codable {
-    var id: String { prodId ?? UUID().uuidString }  // prodId opsiyonel olduğu için default bir değer sağlıyoruz
+struct Product: Identifiable, Codable, Equatable {
+    
+    static func == (lhs: Product, rhs: Product) -> Bool {
+        return lhs.prodName == rhs.prodName
+    }
+    
+    var id: String { prodId ?? UUID().uuidString }// prodId opsiyonel olduğu için default bir değer sağlıyoruz
     let prodId: String?
     let userMail: String?
     let prodName: String?
@@ -37,3 +42,6 @@ struct Product: Identifiable, Codable {
     let prodPrice: String?
     let count: String?
 }
+
+
+

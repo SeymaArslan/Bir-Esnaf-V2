@@ -43,6 +43,9 @@ class ProductTableViewCell: UITableViewCell {
         productTitle.text = product.prodName
         costTitle.text = "Cost:"
         cost.text = product.prodPrice
+        if let price = product.prodPrice {
+            cost.text = price + " ₺"
+        }
         amountTitle.text = "Amount:"
         amount.text = product.prodTotal
     }

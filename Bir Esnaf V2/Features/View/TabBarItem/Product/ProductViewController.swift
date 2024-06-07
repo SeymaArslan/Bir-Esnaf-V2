@@ -86,16 +86,16 @@ class ProductViewController: UIViewController {
         alertController.addAction(okAct)
         self.present(alertController, animated: true)
     }
-    
+
     func deleteProduct(at indexPath: IndexPath) {
         let product = viewModel.products[indexPath.row]
         if let currentUser = Auth.auth().currentUser {
             let uid = currentUser.uid
-            viewModel.deleteProduct(product.prodId!)
+            viewModel.deleteProduct(product.prodId!, userMail: product.userMail!)
         }
         self.viewModel.products.remove(at: indexPath.row)
+        self.tableView.deleteRows(at: [indexPath], with: .automatic)
     }
-    
     
     func createRefresh() {
         let refreshControl = UIRefreshControl()
