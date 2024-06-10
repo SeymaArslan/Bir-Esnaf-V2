@@ -7,28 +7,54 @@
 
 import Foundation
 
-struct CompanyData: Codable {
-    let company: [Company]
-    let success: Int
+//struct CompanyData: Codable {
+//    let company: [Company]?
+//    let success: Int?
+//}
+//
+//struct Company: Identifiable, Codable {
+//    var id: String { cId ?? UUID().uuidString }
+//    let cId: String?
+//    let userMail: String?
+//    let compName: String?
+//    let compPhone: String?
+//    let compMail: String?
+//    let province: String?  // il
+//    let district: String?  // ilce
+//    let quarter: String?
+//    let asbn: String?  // avenue/street/building/number
+//    let bankName: String?
+//    let bankBranchName: String?
+//    let bankBranchCode: String?
+//    let bankAccountType: String?
+//    let bankAccountName: String?
+//    let bankAccountNum: String?
+//    let bankIban: String?
+//    let count: String?
+//}
+
+struct CompanyBankData: Codable {
+    let companyBank: [CompanyBank]?
+    let success: Int?
 }
 
-struct Company: Identifiable, Codable {
-    var id: String { cId }
-    let cId: String
-    let userMail: String
-    let compName: String
-    let compPhone: String
-    let compMail: String
-    let province: String   // il
-    let district: String  // ilce
-    let asbn: String // avenue/street/building/number
-    let bankName: String
-    let bankBranchName: String
-    let bankBranchCode: String
-    let bankAccountType: String
-    let bankAccountName: String
-    let bankAccountNum: String
-    let bankIban: String
-    let count: String
+struct CompanyBank: Identifiable, Codable {
+    var id: String { cId ?? UUID().uuidString }
+    let cId: String?
+    let userMail: String?
+    let compName: String?
+    let compPhone: String?
+    let compMail: String?
+    let province: String?  // il
+    let district: String?  // ilce
+    let quarter: String?
+    let asbn: String?  // avenue/street/building/number
+    let bankName: String?
+    let bankBranchName: String?
+    let bankBranchCode: String?
+    let bankAccountType: String?
+    let bankAccountName: String?
+    let bankAccountNum: String?
+    let bankIban: String?
+    let count: String?
 }
-

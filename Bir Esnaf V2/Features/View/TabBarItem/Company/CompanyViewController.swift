@@ -55,7 +55,7 @@ class CompanyViewController: UIViewController {
     func configureTableView() {
         view.addSubview(tableView)
         setTableViewDelegates() // set delegates
-        tableView.rowHeight = 75 // set row height
+        tableView.rowHeight = 70 // set row height
         tableView.register(CompanyTableViewCell.self, forCellReuseIdentifier: Cells.compCell) // register cells
         tableView.backgroundColor = UIColor(named: Colors.background)
         

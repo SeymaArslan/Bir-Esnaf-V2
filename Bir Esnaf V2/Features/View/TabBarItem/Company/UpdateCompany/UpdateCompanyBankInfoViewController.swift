@@ -11,7 +11,7 @@ import SnapKit
 class UpdateCompanyBankInfoViewController: UIViewController {
 
     // Vars
-    var selectedCompany: Company?
+    var selectedCompany: CompanyBank?
     
     // UIs
     private let backgroundImage: UIImageView = {

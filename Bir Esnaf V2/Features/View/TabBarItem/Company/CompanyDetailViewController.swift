@@ -11,7 +11,7 @@ import SnapKit
 class CompanyDetailViewController: UIViewController {
 
     var viewModel = CompanyViewModel()
-    var selectedCompany: Company?
+    var selectedCompany: CompanyBank?
     
     //MARK: - Create UI
     private let backgroundImage: UIImageView = {
@@ -446,7 +446,10 @@ class CompanyDetailViewController: UIViewController {
             compName.text = comp.compName
             phone.text = comp.compPhone
             mail.text = comp.compMail
-            address.text = comp.asbn + " " + comp.district + " " + comp.province
+            if let asbn = comp.asbn, let quarter = comp.quarter, let district = comp.district, let province = comp.province {
+                address.text = quarter + " " + asbn + " " + district + " " + province
+            }
+//            address.text = comp.asbn + " " + comp.district + " " + comp.province
             bankName.text = comp.bankName
             iban.text = comp.bankIban
             accountNumber.text = comp.bankAccountNum

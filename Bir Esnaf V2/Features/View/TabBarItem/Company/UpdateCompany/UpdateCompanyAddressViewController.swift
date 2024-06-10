@@ -10,7 +10,7 @@ import SnapKit
 
 class UpdateCompanyAddressViewController: UIViewController {
 
-    var selectedCompany: Company?
+    var selectedCompany: CompanyBank?
     var data: [String] = ["Deneme1", "Deneme2", "Deneme3", "Deneme4", "Deneme4", "Deneme5", "Deneme6", "Deneme7", "Deneme8", "Deneme9", "Deneme10"]
     
     //MARK: - Create UI

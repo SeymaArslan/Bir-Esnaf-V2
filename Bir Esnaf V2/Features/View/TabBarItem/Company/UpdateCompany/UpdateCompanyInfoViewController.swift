@@ -10,7 +10,7 @@ import SnapKit
 
 class UpdateCompanyInfoViewController: UIViewController {
 
-    var selectedCompany: Company?
+    var selectedCompany: CompanyBank?
     
     //MARK: - Create UI
     private let backgroundImage: UIImageView = {

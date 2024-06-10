@@ -7,9 +7,12 @@
 
 import UIKit
 import SnapKit
+import FirebaseAuth
 
 class AddCompanyBankInfoViewController: UIViewController {
 
+    var viewModel = CompanyViewModel()
+    
     var selectedProvince: String?
     var selectedDistrict: String?
     var asbn: String?
@@ -183,6 +186,10 @@ class AddCompanyBankInfoViewController: UIViewController {
     
     @objc func updateButtonPressed() {
         print("updateButtonPressed")
+        if let currentUser = Auth.auth().currentUser {
+            let uid = currentUser.uid
+//            guard let
+        }
     }
     
 

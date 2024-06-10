@@ -15,6 +15,7 @@ class CompanyTableViewCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         contentView.backgroundColor = UIColor(named: Colors.cell)
+        
         addSubview(companyTitle)
         
         configureTitle()
@@ -25,7 +26,7 @@ class CompanyTableViewCell: UITableViewCell {
     }
     
     
-    func set(company: Company) {
+    func set(company: CompanyBank) {
         companyTitle.text = company.compName
     }
     

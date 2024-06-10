@@ -15,6 +15,10 @@
 		1F03D28F2C060110001C1732 /* CompanyService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F03D28E2C060110001C1732 /* CompanyService.swift */; };
 		1F03D2922C070508001C1732 /* CompanyViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F03D2912C070508001C1732 /* CompanyViewModel.swift */; };
 		1F03D2942C071F75001C1732 /* ApiResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F03D2932C071F75001C1732 /* ApiResponse.swift */; };
+		1F03D2962C17262A001C1732 /* CityService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F03D2952C17262A001C1732 /* CityService.swift */; };
+		1F03D2982C172674001C1732 /* CityViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F03D2972C172674001C1732 /* CityViewModel.swift */; };
+		1F03D29A2C1731D5001C1732 /* DistrictService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F03D2992C1731D5001C1732 /* DistrictService.swift */; };
+		1F03D29C2C17335F001C1732 /* DistrictViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F03D29B2C17335F001C1732 /* DistrictViewModel.swift */; };
 		1F4A11832BFA3249004025AB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4A11822BFA3249004025AB /* AppDelegate.swift */; };
 		1F4A11852BFA3249004025AB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4A11842BFA3249004025AB /* SceneDelegate.swift */; };
 		1F4A118C2BFA324A004025AB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1F4A118B2BFA324A004025AB /* Assets.xcassets */; };
@@ -66,6 +70,10 @@
 		1F03D28E2C060110001C1732 /* CompanyService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyService.swift; sourceTree = "<group>"; };
 		1F03D2912C070508001C1732 /* CompanyViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyViewModel.swift; sourceTree = "<group>"; };
 		1F03D2932C071F75001C1732 /* ApiResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiResponse.swift; sourceTree = "<group>"; };
+		1F03D2952C17262A001C1732 /* CityService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityService.swift; sourceTree = "<group>"; };
+		1F03D2972C172674001C1732 /* CityViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityViewModel.swift; sourceTree = "<group>"; };
+		1F03D2992C1731D5001C1732 /* DistrictService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DistrictService.swift; sourceTree = "<group>"; };
+		1F03D29B2C17335F001C1732 /* DistrictViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DistrictViewModel.swift; sourceTree = "<group>"; };
 		1F4A117F2BFA3249004025AB /* Bir Esnaf V2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Bir Esnaf V2.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1F4A11822BFA3249004025AB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1F4A11842BFA3249004025AB /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -138,6 +146,8 @@
 			children = (
 				1F03D28A2C0600E6001C1732 /* ProductViewModel.swift */,
 				1F03D2912C070508001C1732 /* CompanyViewModel.swift */,
+				1F03D2972C172674001C1732 /* CityViewModel.swift */,
+				1F03D29B2C17335F001C1732 /* DistrictViewModel.swift */,
 			);
 			path = ModelView;
 			sourceTree = "<group>";
@@ -147,6 +157,8 @@
 			children = (
 				1F03D28C2C060105001C1732 /* ProductService.swift */,
 				1F03D28E2C060110001C1732 /* CompanyService.swift */,
+				1F03D2952C17262A001C1732 /* CityService.swift */,
+				1F03D2992C1731D5001C1732 /* DistrictService.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -468,6 +480,7 @@
 				1F9140802BFBD58B001E25BE /* SalesResultsViewController.swift in Sources */,
 				1F91407B2BFBD557001E25BE /* AddSalesTransactionsViewController.swift in Sources */,
 				1F9140892BFBD627001E25BE /* SalesTableViewCell.swift in Sources */,
+				1F03D2962C17262A001C1732 /* CityService.swift in Sources */,
 				1F9140702BFBD4D9001E25BE /* ShopViewController.swift in Sources */,
 				1F03D2872C0075E6001C1732 /* FirebaseUserListener.swift in Sources */,
 				1F9140672BFBD48B001E25BE /* UpdateCompanyInfoViewController.swift in Sources */,
@@ -491,6 +504,8 @@
 				1F9140522BFBD28C001E25BE /* District.swift in Sources */,
 				1F03D28F2C060110001C1732 /* CompanyService.swift in Sources */,
 				1F03D2942C071F75001C1732 /* ApiResponse.swift in Sources */,
+				1F03D29A2C1731D5001C1732 /* DistrictService.swift in Sources */,
+				1F03D29C2C17335F001C1732 /* DistrictViewModel.swift in Sources */,
 				1F91403A2BFBCD5B001E25BE /* LoginViewController.swift in Sources */,
 				1F91405B2BFBD3F5001E25BE /* CompanyViewController.swift in Sources */,
 				1F9140792BFBD550001E25BE /* SalesTransactionsViewController.swift in Sources */,
@@ -500,6 +515,7 @@
 				1F03D2852C007539001C1732 /* FCollectionReference.swift in Sources */,
 				1F4A11852BFA3249004025AB /* SceneDelegate.swift in Sources */,
 				1F9140462BFBD260001E25BE /* Product.swift in Sources */,
+				1F03D2982C172674001C1732 /* CityViewModel.swift in Sources */,
 				1F91406E2BFBD4CE001E25BE /* SettingsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -1,29 +1,26 @@
 //
-//  CompanyService.swift
+//  DistrictService.swift
 //  Bir Esnaf V2
 //
-//  Created by Seyma Arslan on 28.05.2024.
+//  Created by Seyma Arslan on 10.06.2024.
 //
 
 import Foundation
 import Combine
 
-class CompanyService {
+class DistrictService {
+    static let shared = DistrictService()
     
-    static let shared = CompanyService()
-    
-    private init() {}
-    
-    func fetchCompanies(for userMail: String) -> AnyPublisher<[CompanyBank], Error> {
-        guard let url = URL(string: "https://lionelo.tech/birEsnaf/companyListWithUser.php") else {
+    func getDistricts(for provinceId: String) -> AnyPublisher<DistrictData, Error> {
+        guard let url = URL(string: "https://lionelo.tech/birEsnaf/getDistrict.php") else {
             fatalError("Invalid URL")
         }
-
+        
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
-        let post = "userMail=\(userMail)"
+        let post = "pId=\(provinceId)"
         request.httpBody = post.data(using: .utf8)
-
+        
         return URLSession.shared.dataTaskPublisher(for: request)
             .tryMap { result -> Data in
                 guard let response = result.response as? HTTPURLResponse, response.statusCode == 200 else {
@@ -31,8 +28,7 @@ class CompanyService {
                 }
                 return result.data
             }
-            .decode(type: CompanyBankData.self, decoder: JSONDecoder())
-            .map { $0.companyBank ?? [] }
+            .decode(type: DistrictData.self, decoder: JSONDecoder())
             .receive(on: DispatchQueue.main)
             .eraseToAnyPublisher()
     }

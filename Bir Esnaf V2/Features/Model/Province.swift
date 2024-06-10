@@ -8,10 +8,11 @@
 import Foundation
 
 struct ProvinceData: Codable {
-    let province: [Province]
+    let province: [Province]?
+    let success: Int?
 }
 
 struct Province: Codable {
-    let pId: String
-    let province: String
+    let pId: String?
+    let province: String?
 }
