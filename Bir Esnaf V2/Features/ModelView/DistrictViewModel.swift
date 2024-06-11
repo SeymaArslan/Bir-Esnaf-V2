@@ -9,11 +9,19 @@ import Foundation
 import Combine
 
 class DistrictViewModel: ObservableObject {
+    
     @Published var districts: [District] = []
     
     private var cancellables = Set<AnyCancellable>()
     
-    func fetchDistricts(for provinceId: String) {
+    var defaultDistricts: [District] = []
+    
+    func setDefaultDistricts(_ districts: [District]) {
+        self.defaultDistricts = districts
+    }
+    
+    func fetchDistricts(for provinceId: String?) {
+        guard let provinceId = provinceId else { return }
         DistrictService.shared.getDistricts(for: provinceId)
             .sink { completion in
                 switch completion {
@@ -22,14 +30,15 @@ class DistrictViewModel: ObservableObject {
                 case .finished:
                     break
                 }
-            } receiveValue: { districtData in
-                if districtData.success == 1 {
-                    self.districts = districtData.districts ?? []
+            } receiveValue: { [weak self] districtData in
+                if let districts = districtData.districts, districtData.success == 1 {
+                    print("Districts received: \(districts)")
+                    self?.districts = districts
                 } else {
                     print("Failed to fetch districts")
                 }
             }
             .store(in: &cancellables)
     }
-    
+
 }

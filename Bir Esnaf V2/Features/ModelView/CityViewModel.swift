@@ -10,13 +10,11 @@ import Combine
 
 class CityViewModel: ObservableObject {
     
-    @Published var provinceData: ProvinceData?
     @Published var provinces: [Province] = []
-    
     private var cancellables = Set<AnyCancellable>()
     
     func fetchProvinces() {
-        CityService.shared.getProvinces()
+        CityService.shared.getCities()
             .sink { completion in
                 switch completion {
                 case .failure(let error):
@@ -25,10 +23,10 @@ class CityViewModel: ObservableObject {
                     break
                 }
             } receiveValue: { provinceData in
-                if provinceData.success == 1 {
-                    self.provinces = provinceData.province ?? []
+                if let provinces = provinceData.province {
+                    self.provinces = provinces
                 } else {
-                    print("Failed to fetch Provinces")
+                    print("Failed to fetch provinces")
                 }
             }
             .store(in: &cancellables)

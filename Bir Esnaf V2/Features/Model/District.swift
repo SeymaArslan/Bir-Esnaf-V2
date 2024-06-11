@@ -10,6 +10,11 @@ import Foundation
 struct DistrictData: Codable {
     let districts: [District]?
     let success: Int?
+
+    enum CodingKeys: String, CodingKey {
+        case districts = "district"
+        case success
+    }
 }
 
 struct District: Codable {

@@ -19,6 +19,7 @@
 		1F03D2982C172674001C1732 /* CityViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F03D2972C172674001C1732 /* CityViewModel.swift */; };
 		1F03D29A2C1731D5001C1732 /* DistrictService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F03D2992C1731D5001C1732 /* DistrictService.swift */; };
 		1F03D29C2C17335F001C1732 /* DistrictViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F03D29B2C17335F001C1732 /* DistrictViewModel.swift */; };
+		1F03D29E2C184306001C1732 /* DistrictViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F03D29D2C184306001C1732 /* DistrictViewController.swift */; };
 		1F4A11832BFA3249004025AB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4A11822BFA3249004025AB /* AppDelegate.swift */; };
 		1F4A11852BFA3249004025AB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4A11842BFA3249004025AB /* SceneDelegate.swift */; };
 		1F4A118C2BFA324A004025AB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1F4A118B2BFA324A004025AB /* Assets.xcassets */; };
@@ -74,6 +75,7 @@
 		1F03D2972C172674001C1732 /* CityViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityViewModel.swift; sourceTree = "<group>"; };
 		1F03D2992C1731D5001C1732 /* DistrictService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DistrictService.swift; sourceTree = "<group>"; };
 		1F03D29B2C17335F001C1732 /* DistrictViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DistrictViewModel.swift; sourceTree = "<group>"; };
+		1F03D29D2C184306001C1732 /* DistrictViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DistrictViewController.swift; sourceTree = "<group>"; };
 		1F4A117F2BFA3249004025AB /* Bir Esnaf V2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Bir Esnaf V2.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1F4A11822BFA3249004025AB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1F4A11842BFA3249004025AB /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -269,6 +271,7 @@
 				1F9140832BFBD5DB001E25BE /* CompanyTableViewCell.swift */,
 				1F91406C2BFBD4AF001E25BE /* UpdateCompany */,
 				1F9140652BFBD464001E25BE /* AddCompany */,
+				1F03D29D2C184306001C1732 /* DistrictViewController.swift */,
 			);
 			path = Company;
 			sourceTree = "<group>";
@@ -477,6 +480,7 @@
 				1F9140442BFBD224001E25BE /* Constants.swift in Sources */,
 				1F91406B2BFBD4A7001E25BE /* UpdateCompanyBankInfoViewController.swift in Sources */,
 				1F91404C2BFBD278001E25BE /* Sale.swift in Sources */,
+				1F03D29E2C184306001C1732 /* DistrictViewController.swift in Sources */,
 				1F9140802BFBD58B001E25BE /* SalesResultsViewController.swift in Sources */,
 				1F91407B2BFBD557001E25BE /* AddSalesTransactionsViewController.swift in Sources */,
 				1F9140892BFBD627001E25BE /* SalesTableViewCell.swift in Sources */,

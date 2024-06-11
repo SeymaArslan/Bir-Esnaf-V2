@@ -13,7 +13,7 @@ class CityService {
     static let shared = CityService()
 
     
-    func getProvinces() -> AnyPublisher<ProvinceData, Error> {
+    func getCities() -> AnyPublisher<ProvinceData, Error> {
         guard let url = URL(string: "https://lionelo.tech/birEsnaf/getCity.php") else {
             fatalError("Invalid URL")
         }

@@ -8,18 +8,22 @@
 import UIKit
 import SnapKit
 import Combine
+import FirebaseAuth
 
 class AddCompanyAddressViewController: UIViewController {
-
+    
     private let provinceVM = CityViewModel()
     private let districtVM = DistrictViewModel()
     
     private var cancellables = Set<AnyCancellable>()
     
+    
     var addCompName: String?
     var addCompPhone: String?
     var addCompMail: String?
-
+    
+    
+    
     //MARK: - Create UI
     private let backgroundImage: UIImageView = {
         let imageView = UIImageView()
@@ -42,7 +46,7 @@ class AddCompanyAddressViewController: UIViewController {
         return label
     }()
     
-    private let cityPicker: UIPickerView = {
+    private let provincePicker: UIPickerView = {
         let picker = UIPickerView()
         
         return picker
@@ -102,14 +106,19 @@ class AddCompanyAddressViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        configuration()
+        
         addDelegate()
+        configuration()
+        
         provinceVM.fetchProvinces()
         
         provinceVM.$provinces
             .receive(on: RunLoop.main)
             .sink { [weak self] _ in
-                self?.cityPicker.reloadAllComponents()
+                self?.provincePicker.reloadAllComponents()
+                if let firstProvince = self?.provinceVM.provinces.first {
+                    self?.setDefaultDistrictsIfNeeded(for: firstProvince.pId)
+                }
             }
             .store(in: &cancellables)
         
@@ -119,13 +128,34 @@ class AddCompanyAddressViewController: UIViewController {
                 self?.districtPicker.reloadAllComponents()
             }
             .store(in: &cancellables)
+        
+        /*super.viewDidLoad()
+         
+         addDelegate()
+         configuration()
+         
+         provinceVM.fetchProvinces()
+         
+         provinceVM.$provinces
+         .receive(on: RunLoop.main)
+         .sink { [weak self] _ in
+         self?.provincePicker.reloadAllComponents()
+         }
+         .store(in: &cancellables)
+         
+         districtVM.$districts
+         .receive(on: RunLoop.main)
+         .sink { [weak self] _ in
+         self?.districtPicker.reloadAllComponents()
+         }
+         .store(in: &cancellables)*/
     }
     
-
+    
     //MARK: - Delegates
     func addDelegate() {
-        cityPicker.delegate = self
-        cityPicker.dataSource = self
+        provincePicker.delegate = self
+        provincePicker.dataSource = self
         
         districtPicker.delegate = self
         districtPicker.dataSource = self
@@ -135,8 +165,8 @@ class AddCompanyAddressViewController: UIViewController {
     //MARK: - Actions
     @objc func nextButtonPressed() {
         let addCompBank = AddCompanyBankInfoViewController()
-//        addCompBank.selectedProvince = provincePicker.selectedRow(inComponent: 1).formatted()
-//        addCompBank.selectedDistrict = districtPicker.selectedRow(inComponent: 1).formatted()
+        //        addCompBank.selectedProvince = provincePicker.selectedRow(inComponent: 1).formatted()
+        //        addCompBank.selectedDistrict = districtPicker.selectedRow(inComponent: 1).formatted()
         addCompBank.asbn = ASBNTextField.text
         addCompBank.modalPresentationStyle = .fullScreen
         present(addCompBank, animated: true, completion: nil)
@@ -169,7 +199,7 @@ class AddCompanyAddressViewController: UIViewController {
             make.leading.equalTo(20)
         }
         
-        cityPicker.snp.makeConstraints { make in
+        provincePicker.snp.makeConstraints { make in
             make.top.equalTo(addressTitle.snp.bottom)
             make.centerX.equalToSuperview()
         }
@@ -206,7 +236,7 @@ class AddCompanyAddressViewController: UIViewController {
         view.addSubview(backgroundImage)
         view.addSubview(contentView)
         view.addSubview(addressTitle)
-        view.addSubview(cityPicker)
+        view.addSubview(provincePicker)
         view.addSubview(districtTitle)
         view.addSubview(districtPicker)
         view.addSubview(ASBNTitle)
@@ -216,7 +246,16 @@ class AddCompanyAddressViewController: UIViewController {
     }
     
     
-
+    //MARK: - Func
+    func setDefaultDistrictsIfNeeded(for provinceId: String?) {
+        guard let provinceId = provinceId else { return }
+        if districtVM.defaultDistricts.isEmpty {
+            districtVM.fetchDistricts(for: provinceId)
+        } else {
+            districtVM.districts = districtVM.defaultDistricts
+        }
+    }
+    
 }
 
 
@@ -228,7 +267,7 @@ extension AddCompanyAddressViewController: UIPickerViewDelegate, UIPickerViewDat
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        if pickerView == cityPicker {
+        if pickerView == provincePicker {
             return provinceVM.provinces.count
         } else if pickerView == districtPicker {
             return districtVM.districts.count
@@ -237,16 +276,17 @@ extension AddCompanyAddressViewController: UIPickerViewDelegate, UIPickerViewDat
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        if pickerView == cityPicker {
+        if pickerView == provincePicker {
             return provinceVM.provinces[row].province
         } else if pickerView == districtPicker {
-            return String(districtVM.districts.count)
+            //return String(districtVM.districts.count)
+            return districtVM.districts[row].district
         }
         return nil
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        if pickerView == cityPicker {
+        if pickerView == provincePicker {
             let selectedProvince = provinceVM.provinces[row]
             districtVM.fetchDistricts(for: selectedProvince.pId!)
         }
