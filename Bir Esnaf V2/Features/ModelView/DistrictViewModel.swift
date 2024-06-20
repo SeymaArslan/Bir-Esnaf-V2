@@ -16,6 +16,13 @@ class DistrictViewModel: ObservableObject {
     
     var defaultDistricts: [District] = []
     
+    var selectedDistrics: String?
+    
+    func selected() {
+        self.selectedDistrics = defaultDistricts.first?.district
+
+    }
+    
     func setDefaultDistricts(_ districts: [District]) {
         self.defaultDistricts = districts
     }
@@ -32,7 +39,6 @@ class DistrictViewModel: ObservableObject {
                 }
             } receiveValue: { [weak self] districtData in
                 if let districts = districtData.districts, districtData.success == 1 {
-                    print("Districts received: \(districts)")
                     self?.districts = districts
                 } else {
                     print("Failed to fetch districts")

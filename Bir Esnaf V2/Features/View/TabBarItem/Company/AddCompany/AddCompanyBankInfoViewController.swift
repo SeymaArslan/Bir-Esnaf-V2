@@ -17,6 +17,10 @@ class AddCompanyBankInfoViewController: UIViewController {
     var selectedDistrict: String?
     var asbn: String?
     
+    var addCompName: String?
+    var addCompPhone: String?
+    var addCompMail: String?
+    
     // UIs
     private let backgroundImage: UIImageView = {
         let imageView = UIImageView()
@@ -166,7 +170,7 @@ class AddCompanyBankInfoViewController: UIViewController {
         button.setTitle("Update", for: .normal)
         button.setTitleColor(UIColor(named: Colors.blue), for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
-        button.addTarget(self, action: #selector(updateButtonPressed), for: .touchUpInside)
+        button.addTarget(self, action: #selector(saveButtonPressed), for: .touchUpInside)
         return button
     }()
     
@@ -176,23 +180,40 @@ class AddCompanyBankInfoViewController: UIViewController {
         super.viewDidLoad()
 
         configuration()
+        
     }
     
 
-    //MARK: - Helpers
+    //MARK: - Button Actions
     @objc func cancelButtonTapped() {
         dismiss(animated: true, completion: nil)
     }
     
-    @objc func updateButtonPressed() {
-        print("updateButtonPressed")
-        if let currentUser = Auth.auth().currentUser {
-            let uid = currentUser.uid
-//            guard let
-        }
+    @objc func saveButtonPressed() {
+        addComp()
+        print("test test test test")
     }
     
 
+    //MARK: - Helpers
+    func addComp() {
+        if let district = selectedDistrict, let province = selectedProvince, let compName = addCompName, let compMail = addCompMail, let compPhone = addCompPhone, let asbn = asbn, let bankName = bankNameTextField.text, let branchName = branchNameTextField.text, let branchCode = branchCodeTextField.text, let accountType = accountTypeTextField.text, let accountName = accountNameTextField.text, let accountNumber = accountNumTextField.text, let iban = ibanTextField.text {
+            
+            if let intAccountNumber = Int(accountNumber) {
+                
+                if let currentUser = Auth.auth().currentUser {
+                    let uid = currentUser.uid
+
+                    
+                    let newCompany = CompanyBank(cId: UUID().uuidString, userMail: uid, compName: compName, compPhone: compPhone, compMail: compMail, province: province, district: district, asbn: asbn, bankName: bankName, bankBranchName: branchName, bankBranchCode: branchCode, bankAccountType: accountType, bankAccountName: accountName, bankAccountNum: accountNumber, bankIban: iban, count: nil)
+                    viewModel.addCompany(newCompany)
+                    self.navigationController?.popViewController(animated: true)
+                }
+            }
+        }
+    }
+    
+    
     //MARK: - SnapKit Functions
     func configuration() {
         addSubviews()

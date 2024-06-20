@@ -446,8 +446,8 @@ class CompanyDetailViewController: UIViewController {
             compName.text = comp.compName
             phone.text = comp.compPhone
             mail.text = comp.compMail
-            if let asbn = comp.asbn, let quarter = comp.quarter, let district = comp.district, let province = comp.province {
-                address.text = quarter + " " + asbn + " " + district + " " + province
+            if let asbn = comp.asbn, let district = comp.district, let province = comp.province {
+                address.text = asbn + " " + district + " " + province
             }
 //            address.text = comp.asbn + " " + comp.district + " " + comp.province
             bankName.text = comp.bankName
