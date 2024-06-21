@@ -91,7 +91,7 @@ class ProductViewController: UIViewController {
         let product = viewModel.products[indexPath.row]
         if let currentUser = Auth.auth().currentUser {
             let uid = currentUser.uid
-            viewModel.deleteProduct(product.prodId!, userMail: product.userMail!)
+            viewModel.deleteProduct(product.prodId!, userMail: uid)
         }
         self.viewModel.products.remove(at: indexPath.row)
         self.tableView.deleteRows(at: [indexPath], with: .automatic)
@@ -150,7 +150,7 @@ extension ProductViewController: UITableViewDelegate, UITableViewDataSource, UIS
     }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let deleteAct = UIContextualAction(style: .destructive, title: "Sil") { contextualAction, view, boolValue in
+        let deleteAct = UIContextualAction(style: .destructive, title: "Delete") { contextualAction, view, boolValue in
             self.showDeleteWarning(for: indexPath)
         }
         return UISwipeActionsConfiguration(actions: [deleteAct])

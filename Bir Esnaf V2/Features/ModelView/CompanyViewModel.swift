@@ -13,6 +13,29 @@ class CompanyViewModel: ObservableObject {
     @Published var companyData: CompanyBankData?
     @Published var companies: [CompanyBank] = []
     private var cancellables = Set<AnyCancellable>()
+    
+    func deleteCompany(_ cbId: String, userMail: String) {
+        CompanyService.shared.deleteCompany(cbId, userMail: userMail)
+            .sink(receiveCompletion: { completion in
+                switch completion {
+                case .failure(let error):
+                    print("Error deleting company: \(error)")
+                case .finished:
+                    break
+                }
+            }, receiveValue: { success in
+                if success {
+                    print("Company deleted successfully")
+                    if let currentUser = Auth.auth().currentUser {
+                        let uid = currentUser.uid
+                        self.fetchCompanies(for: uid)
+                    }
+                } else {
+                    print("Failed to delete company")
+                }
+            })
+            .store(in: &cancellables)
+    }
 
     func addCompany(_ company: CompanyBank) {
         CompanyService.shared.addCompany(userMail: company.userMail!, compName: company.compName!, compPhone: company.compPhone!, compMail: company.compMail!, province: company.province!, district: company.district!, asbn: company.asbn!, bankName: company.bankName!, bankBranchName: company.bankBranchName!, bankBranchCode: company.bankBranchCode!, bankAccountType: company.bankAccountType!, bankAccountName: company.bankAccountName!, bankAccountNum: Int(company.bankAccountNum!)!, bankIban: company.bankIban!)

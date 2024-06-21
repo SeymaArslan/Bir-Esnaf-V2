@@ -13,8 +13,8 @@ struct CompanyBankData: Codable {
 }
 
 struct CompanyBank: Identifiable, Codable {
-    var id: String { cId ?? UUID().uuidString }
-    let cId: String?
+    var id: String { cbId ?? UUID().uuidString }
+    let cbId: String?
     let userMail: String?
     let compName: String?
     let compPhone: String?

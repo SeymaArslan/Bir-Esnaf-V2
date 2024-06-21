@@ -80,15 +80,21 @@ class CompanyViewController: UIViewController {
         let cancelAct = UIAlertAction(title: "Cancel", style: .cancel)
         alertController.addAction(cancelAct)
         let okAct = UIAlertAction(title: "Ok", style: .destructive) { action in
-            self.deleteProduct(at: indexPath)
+            self.deleteCompany(at: indexPath)
         }
         alertController.addAction(okAct)
         self.present(alertController, animated: true)
     }
     
     
-    func deleteProduct(at indexPath: IndexPath) {
-        print("delete items")
+    func deleteCompany(at indexPath: IndexPath) {
+        let company = viewModel.companies[indexPath.row]
+        if let currentUser = Auth.auth().currentUser {
+            let uid = currentUser.uid
+            viewModel.deleteCompany(company.cbId!, userMail: uid)
+        }
+        self.viewModel.companies.remove(at: indexPath.row)
+        self.tableView.deleteRows(at: [indexPath], with: .automatic)
     }
     
     func createRefresh() {

@@ -216,7 +216,7 @@ class AddCompanyBankInfoViewController: UIViewController {
                 return
             }
             
-            let newCompany = CompanyBank(cId: UUID().uuidString, userMail: uid, compName: compName, compPhone: compPhone, compMail: compMail, province: province, district: district, asbn: asbn, bankName: bankName, bankBranchName: branchName, bankBranchCode: branchCode, bankAccountType: accountType, bankAccountName: accountName, bankAccountNum: accountNumber, bankIban: iban, count: nil)
+            let newCompany = CompanyBank(cbId: UUID().uuidString, userMail: uid, compName: compName, compPhone: compPhone, compMail: compMail, province: province, district: district, asbn: asbn, bankName: bankName, bankBranchName: branchName, bankBranchCode: branchCode, bankAccountType: accountType, bankAccountName: accountName, bankAccountNum: accountNumber, bankIban: iban, count: nil)
             viewModel.addCompany(newCompany)
             self.view.window?.rootViewController?.dismiss(animated: true)
         }
