@@ -106,7 +106,10 @@ class ProductViewController: UIViewController {
     
     @objc func refresh(_ sender: Any) {
         if let refreshControl = sender as? UIRefreshControl, refreshControl.isRefreshing {
-            print("Get data function")
+            if let currentUser = Auth.auth().currentUser {
+                let uid = currentUser.uid
+                viewModel.fetchProducts(for: uid)
+            }
             refreshControl.endRefreshing()
         }
     }

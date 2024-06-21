@@ -41,6 +41,7 @@ class CompanyViewController: UIViewController {
     
     @objc func addButtonTap() {
         let addCompInfo = AddCompanyInfoViewController()
+        addCompInfo.viewModel = viewModel
         addCompInfo.modalPresentationStyle = .fullScreen
         present(addCompInfo, animated: true, completion: nil)
     }
@@ -98,7 +99,10 @@ class CompanyViewController: UIViewController {
     
     @objc func refresh(_ sender: Any) {
         if let refreshControl = sender as? UIRefreshControl, refreshControl.isRefreshing {
-            print("Get data function")
+            if let currentUser = Auth.auth().currentUser {
+                let uid = currentUser.uid
+                viewModel.fetchCompanies(for: uid)
+            }
             refreshControl.endRefreshing()
         }
     }

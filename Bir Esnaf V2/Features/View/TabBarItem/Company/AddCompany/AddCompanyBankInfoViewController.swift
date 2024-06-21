@@ -10,7 +10,7 @@ import SnapKit
 import FirebaseAuth
 
 class AddCompanyBankInfoViewController: UIViewController {
-
+    
     var viewModel = CompanyViewModel()
     
     var selectedProvince: String?
@@ -167,7 +167,7 @@ class AddCompanyBankInfoViewController: UIViewController {
     
     private let saveButton: UIButton = {
         let button = UIButton()
-        button.setTitle("Update", for: .normal)
+        button.setTitle("Save", for: .normal)
         button.setTitleColor(UIColor(named: Colors.blue), for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
         button.addTarget(self, action: #selector(saveButtonPressed), for: .touchUpInside)
@@ -175,7 +175,7 @@ class AddCompanyBankInfoViewController: UIViewController {
     }()
     
     
-    
+    //MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -186,31 +186,41 @@ class AddCompanyBankInfoViewController: UIViewController {
 
     //MARK: - Button Actions
     @objc func cancelButtonTapped() {
-        dismiss(animated: true, completion: nil)
+//        dismiss(animated: true, completion: nil)
+        self.view.window?.rootViewController?.dismiss(animated: true)
     }
     
     @objc func saveButtonPressed() {
         addComp()
-        print("test test test test")
     }
     
 
     //MARK: - Helpers
     func addComp() {
-        if let district = selectedDistrict, let province = selectedProvince, let compName = addCompName, let compMail = addCompMail, let compPhone = addCompPhone, let asbn = asbn, let bankName = bankNameTextField.text, let branchName = branchNameTextField.text, let branchCode = branchCodeTextField.text, let accountType = accountTypeTextField.text, let accountName = accountNameTextField.text, let accountNumber = accountNumTextField.text, let iban = ibanTextField.text {
-            
-            if let intAccountNumber = Int(accountNumber) {
-                
-                if let currentUser = Auth.auth().currentUser {
-                    let uid = currentUser.uid
-
-                    
-                    let newCompany = CompanyBank(cId: UUID().uuidString, userMail: uid, compName: compName, compPhone: compPhone, compMail: compMail, province: province, district: district, asbn: asbn, bankName: bankName, bankBranchName: branchName, bankBranchCode: branchCode, bankAccountType: accountType, bankAccountName: accountName, bankAccountNum: accountNumber, bankIban: iban, count: nil)
-                    viewModel.addCompany(newCompany)
-                    self.navigationController?.popViewController(animated: true)
-                }
+        
+        if let currentUser = Auth.auth().currentUser {
+            let uid = currentUser.uid
+            guard let district = selectedDistrict,
+                    let province = selectedProvince,
+                    let compName = addCompName,
+                    let compMail = addCompMail,
+                    let compPhone = addCompPhone,
+                    let asbn = asbn,
+                    let bankName = bankNameTextField.text,
+                    let branchName = branchNameTextField.text,
+                    let branchCode = branchCodeTextField.text,
+                    let accountType = accountTypeTextField.text,
+                    let accountName = accountNameTextField.text,
+                    let accountNumber = accountNumTextField.text,
+                    let iban = ibanTextField.text else {
+                return
             }
+            
+            let newCompany = CompanyBank(cId: UUID().uuidString, userMail: uid, compName: compName, compPhone: compPhone, compMail: compMail, province: province, district: district, asbn: asbn, bankName: bankName, bankBranchName: branchName, bankBranchCode: branchCode, bankAccountType: accountType, bankAccountName: accountName, bankAccountNum: accountNumber, bankIban: iban, count: nil)
+            viewModel.addCompany(newCompany)
+            self.view.window?.rootViewController?.dismiss(animated: true)
         }
+        
     }
     
     

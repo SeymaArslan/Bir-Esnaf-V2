@@ -10,7 +10,7 @@ import Combine
 import FirebaseAuth
 
 class CompanyViewModel: ObservableObject {
-    //@Published var companyData: CompanyData?
+    @Published var companyData: CompanyBankData?
     @Published var companies: [CompanyBank] = []
     private var cancellables = Set<AnyCancellable>()
 
@@ -47,8 +47,12 @@ class CompanyViewModel: ObservableObject {
                 case .finished:
                     break
                 }
-            } receiveValue: { companies in
-                self.companies = companies
+            } receiveValue: { companyData in
+                if let success = companyData.success, success == 1 {
+                    self.companies = companyData.companyBank ?? []
+                } else {
+                    print("Failed to fetch companies")
+                }
             }
             .store(in: &cancellables)
     }

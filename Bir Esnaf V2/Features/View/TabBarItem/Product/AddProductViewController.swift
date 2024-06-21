@@ -183,7 +183,6 @@ class AddProductViewController: UIViewController {
     
     //MARK: - Button Actions
     @objc func saveButtonPressed(_ sender: UIButton) {
-        print("Button pressed")
         if let currentUser = Auth.auth().currentUser {
             let uid = currentUser.uid
             guard let productName = prodNameTextField.text,
@@ -196,7 +195,8 @@ class AddProductViewController: UIViewController {
 
             let newProduct = Product(prodId: UUID().uuidString, userMail: uid, prodName: productName, prodTotal: productTotal, prodPrice: productPrice, count: nil)
             viewModel.addProduct(newProduct)
-            self.navigationController?.popViewController(animated: true)
+            
+            dismiss(animated: true, completion: nil)
         }
     }
     

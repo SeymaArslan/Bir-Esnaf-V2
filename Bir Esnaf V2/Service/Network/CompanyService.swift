@@ -41,7 +41,7 @@ class CompanyService {
             .eraseToAnyPublisher()
     }
     
-    func fetchCompanies(for userMail: String) -> AnyPublisher<[CompanyBank], Error> {
+    func fetchCompanies(for userMail: String) -> AnyPublisher<CompanyBankData, Error> {
         guard let url = URL(string: "https://lionelo.tech/birEsnaf/companyListWithUser.php") else {
             fatalError("Invalid URL")
         }
@@ -59,7 +59,7 @@ class CompanyService {
                 return result.data
             }
             .decode(type: CompanyBankData.self, decoder: JSONDecoder())
-            .map { $0.companyBank ?? [] }
+//            .map { $0.companyBank ?? [] }
             .receive(on: DispatchQueue.main)
             .eraseToAnyPublisher()
     }

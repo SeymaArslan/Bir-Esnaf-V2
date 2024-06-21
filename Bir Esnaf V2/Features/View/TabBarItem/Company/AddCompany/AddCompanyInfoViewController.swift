@@ -9,6 +9,8 @@ import UIKit
 import SnapKit
 
 class AddCompanyInfoViewController: UIViewController {
+    
+    var viewModel = CompanyViewModel()
 
     private let backgroundImage: UIImageView = {
         let imageView = UIImageView()
@@ -102,17 +104,18 @@ class AddCompanyInfoViewController: UIViewController {
     
     //MARK: - Button Actions
     @objc func nextButtonPressed() {
-        print("nextButtonPressed")
         let addCompAddress = AddCompanyAddressViewController()
         addCompAddress.addCompName = compNameTextField.text
         addCompAddress.addCompPhone = phoneTextField.text
         addCompAddress.addCompMail = mailTextField.text
+        addCompAddress.viewModel = viewModel
         addCompAddress.modalPresentationStyle = .fullScreen
         present(addCompAddress, animated: true, completion: nil)
     }
 
     @objc func cancelButtonTapped() {
-        dismiss(animated: true, completion: nil)
+//        dismiss(animated: true, completion: nil)
+        self.view.window?.rootViewController?.dismiss(animated: true)
     }
     
     func configuration() {

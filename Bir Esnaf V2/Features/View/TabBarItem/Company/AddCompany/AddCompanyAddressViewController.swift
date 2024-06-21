@@ -12,6 +12,8 @@ import FirebaseAuth
 
 class AddCompanyAddressViewController: UIViewController {
     
+    var viewModel = CompanyViewModel()
+    
     private let provinceVM = CityViewModel()
     private let districtVM = DistrictViewModel()
     
@@ -137,12 +139,14 @@ class AddCompanyAddressViewController: UIViewController {
         addCompBank.addCompName = addCompName
         addCompBank.addCompPhone = addCompPhone
         addCompBank.addCompMail = addCompMail
+        addCompBank.viewModel = viewModel
         addCompBank.modalPresentationStyle = .fullScreen
         present(addCompBank, animated: true, completion: nil)
     }
     
     @objc func cancelButtonTapped() {
-        dismiss(animated: true, completion: nil)
+//        dismiss(animated: true, completion: nil)
+        self.view.window?.rootViewController?.dismiss(animated: true)
     }
     
     
