@@ -3,18 +3,22 @@
 //  Bir Esnaf V2
 //
 //  Created by Seyma Arslan on 20.05.2024.
-//
+//  Alım işlemleri 
 
 import UIKit
 import SnapKit
+import Combine
+import FirebaseAuth
 
 class PurchaseTransactionsViewController: UIViewController {
 
+    private var viewModel = PurchaseTransactionsViewModel()
+    private var cancellables = Set<AnyCancellable>()
+    
     var tableView = UITableView()
-    var purchases: [Purchase] = []
     
     struct Cells {
-        static let purCell = "PuchaseCell"
+        static let purCell = "PurchaseCell"
     }
     
     override func viewDidLoad() {
@@ -22,10 +26,16 @@ class PurchaseTransactionsViewController: UIViewController {
 
         configureLeftBarButton()
         setTableViewDelegates()
-        purchases = fetchData()
         configureTableView()
         createAddButton()
         createRefresh()
+        
+        if let currentUser = Auth.auth().currentUser {
+            let uid = currentUser.uid
+            viewModel.fetchPurchases(for: uid)
+        }
+        
+        setupBindings()
     }
     
 
@@ -101,8 +111,23 @@ class PurchaseTransactionsViewController: UIViewController {
     
     @objc func refresh(_ sender: Any) {
         if let refreshControl = sender as? UIRefreshControl, refreshControl.isRefreshing {
+            if let currentUser = Auth.auth().currentUser {
+                let uid = currentUser.uid
+                viewModel.fetchPurchases(for: uid)
+            }
             refreshControl.endRefreshing()
         }
+    }
+    
+    
+    //MARK: - Functions
+    private func setupBindings() {
+        viewModel.$purchases
+            .receive(on: RunLoop.main)
+            .sink { [weak self] _ in
+                self?.tableView.reloadData()
+            }
+            .store(in: &cancellables)
     }
     
 }
@@ -112,18 +137,18 @@ class PurchaseTransactionsViewController: UIViewController {
 extension PurchaseTransactionsViewController: UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return purchases.count
+        return viewModel.purchases.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: Cells.purCell) as! PurchaseTableViewCell
-        let purchase = purchases[indexPath.row]
+        let purchase = viewModel.purchases[indexPath.row]
         cell.set(purchase: purchase)
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let selectedPurchase = purchases[indexPath.row]
+        let selectedPurchase = viewModel.purchases[indexPath.row]
         let updatePurchase = UpdatePurchaseTransactionsViewController()
         updatePurchase.selectedPurchase = selectedPurchase
         present(updatePurchase, animated: true)
@@ -138,19 +163,12 @@ extension PurchaseTransactionsViewController: UITableViewDelegate, UITableViewDa
     
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         if let refreshControl = scrollView.refreshControl, refreshControl.isRefreshing {
+            if let currentUser = Auth.auth().currentUser {
+                let uid = currentUser.uid
+                viewModel.fetchPurchases(for: uid)
+            }
             refreshControl.endRefreshing()
         }
     }
     
-}
-
-
-extension PurchaseTransactionsViewController {
-    
-    func fetchData() -> [Purchase] {
-        let data = Purchase(buyId: "1", userMail: "@test.com", compName: "Deneme", productName: "Deneme", price: "123.65", total: "30", totalPrice: "3709.5", buyDate: "29/04/2024", count: "5")
-        
-        let data2 = Purchase(buyId: "2", userMail: "@test.com", compName: "test", productName: "test", price: "123.65", total: "30", totalPrice: "3709.5", buyDate: "29/04/2024", count: "5")
-        return [data, data2]
-    }
 }

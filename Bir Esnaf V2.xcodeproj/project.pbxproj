@@ -20,6 +20,8 @@
 		1F03D29A2C1731D5001C1732 /* DistrictService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F03D2992C1731D5001C1732 /* DistrictService.swift */; };
 		1F03D29C2C17335F001C1732 /* DistrictViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F03D29B2C17335F001C1732 /* DistrictViewModel.swift */; };
 		1F03D29E2C184306001C1732 /* DistrictViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F03D29D2C184306001C1732 /* DistrictViewController.swift */; };
+		1F03D2A02C2AE4E4001C1732 /* PurchaseTransactionsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F03D29F2C2AE4E4001C1732 /* PurchaseTransactionsViewModel.swift */; };
+		1F03D2A22C2AE7B1001C1732 /* PurchaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F03D2A12C2AE7B1001C1732 /* PurchaseService.swift */; };
 		1F4A11832BFA3249004025AB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4A11822BFA3249004025AB /* AppDelegate.swift */; };
 		1F4A11852BFA3249004025AB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4A11842BFA3249004025AB /* SceneDelegate.swift */; };
 		1F4A118C2BFA324A004025AB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1F4A118B2BFA324A004025AB /* Assets.xcassets */; };
@@ -30,7 +32,7 @@
 		1F9140442BFBD224001E25BE /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9140432BFBD224001E25BE /* Constants.swift */; };
 		1F9140462BFBD260001E25BE /* Product.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9140452BFBD260001E25BE /* Product.swift */; };
 		1F9140482BFBD269001E25BE /* Company.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9140472BFBD269001E25BE /* Company.swift */; };
-		1F91404A2BFBD272001E25BE /* Puchase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9140492BFBD272001E25BE /* Puchase.swift */; };
+		1F91404A2BFBD272001E25BE /* Purchase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9140492BFBD272001E25BE /* Purchase.swift */; };
 		1F91404C2BFBD278001E25BE /* Sale.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F91404B2BFBD278001E25BE /* Sale.swift */; };
 		1F91404E2BFBD27D001E25BE /* Shop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F91404D2BFBD27D001E25BE /* Shop.swift */; };
 		1F9140502BFBD286001E25BE /* Province.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F91404F2BFBD286001E25BE /* Province.swift */; };
@@ -76,6 +78,8 @@
 		1F03D2992C1731D5001C1732 /* DistrictService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DistrictService.swift; sourceTree = "<group>"; };
 		1F03D29B2C17335F001C1732 /* DistrictViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DistrictViewModel.swift; sourceTree = "<group>"; };
 		1F03D29D2C184306001C1732 /* DistrictViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DistrictViewController.swift; sourceTree = "<group>"; };
+		1F03D29F2C2AE4E4001C1732 /* PurchaseTransactionsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseTransactionsViewModel.swift; sourceTree = "<group>"; };
+		1F03D2A12C2AE7B1001C1732 /* PurchaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseService.swift; sourceTree = "<group>"; };
 		1F4A117F2BFA3249004025AB /* Bir Esnaf V2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Bir Esnaf V2.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1F4A11822BFA3249004025AB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1F4A11842BFA3249004025AB /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -88,7 +92,7 @@
 		1F9140432BFBD224001E25BE /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		1F9140452BFBD260001E25BE /* Product.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Product.swift; sourceTree = "<group>"; };
 		1F9140472BFBD269001E25BE /* Company.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Company.swift; sourceTree = "<group>"; };
-		1F9140492BFBD272001E25BE /* Puchase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Puchase.swift; sourceTree = "<group>"; };
+		1F9140492BFBD272001E25BE /* Purchase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Purchase.swift; sourceTree = "<group>"; };
 		1F91404B2BFBD278001E25BE /* Sale.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sale.swift; sourceTree = "<group>"; };
 		1F91404D2BFBD27D001E25BE /* Shop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shop.swift; sourceTree = "<group>"; };
 		1F91404F2BFBD286001E25BE /* Province.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Province.swift; sourceTree = "<group>"; };
@@ -150,6 +154,7 @@
 				1F03D2912C070508001C1732 /* CompanyViewModel.swift */,
 				1F03D2972C172674001C1732 /* CityViewModel.swift */,
 				1F03D29B2C17335F001C1732 /* DistrictViewModel.swift */,
+				1F03D29F2C2AE4E4001C1732 /* PurchaseTransactionsViewModel.swift */,
 			);
 			path = ModelView;
 			sourceTree = "<group>";
@@ -161,6 +166,7 @@
 				1F03D28E2C060110001C1732 /* CompanyService.swift */,
 				1F03D2952C17262A001C1732 /* CityService.swift */,
 				1F03D2992C1731D5001C1732 /* DistrictService.swift */,
+				1F03D2A12C2AE7B1001C1732 /* PurchaseService.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -231,7 +237,7 @@
 			children = (
 				1F9140452BFBD260001E25BE /* Product.swift */,
 				1F9140472BFBD269001E25BE /* Company.swift */,
-				1F9140492BFBD272001E25BE /* Puchase.swift */,
+				1F9140492BFBD272001E25BE /* Purchase.swift */,
 				1F91404B2BFBD278001E25BE /* Sale.swift */,
 				1F91404D2BFBD27D001E25BE /* Shop.swift */,
 				1F91404F2BFBD286001E25BE /* Province.swift */,
@@ -486,11 +492,13 @@
 				1F9140892BFBD627001E25BE /* SalesTableViewCell.swift in Sources */,
 				1F03D2962C17262A001C1732 /* CityService.swift in Sources */,
 				1F9140702BFBD4D9001E25BE /* ShopViewController.swift in Sources */,
+				1F03D2A02C2AE4E4001C1732 /* PurchaseTransactionsViewModel.swift in Sources */,
 				1F03D2872C0075E6001C1732 /* FirebaseUserListener.swift in Sources */,
 				1F9140672BFBD48B001E25BE /* UpdateCompanyInfoViewController.swift in Sources */,
 				1F03D28D2C060105001C1732 /* ProductService.swift in Sources */,
 				1F03D28B2C0600E6001C1732 /* ProductViewModel.swift in Sources */,
-				1F91404A2BFBD272001E25BE /* Puchase.swift in Sources */,
+				1F91404A2BFBD272001E25BE /* Purchase.swift in Sources */,
+				1F03D2A22C2AE7B1001C1732 /* PurchaseService.swift in Sources */,
 				1F9140842BFBD5DB001E25BE /* CompanyTableViewCell.swift in Sources */,
 				1F91404E2BFBD27D001E25BE /* Shop.swift in Sources */,
 				1F9140602BFBD43E001E25BE /* AddCompanyInfoViewController.swift in Sources */,

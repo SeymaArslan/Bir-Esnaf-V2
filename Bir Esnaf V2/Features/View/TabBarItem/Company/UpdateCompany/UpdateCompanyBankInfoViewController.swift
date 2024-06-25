@@ -218,7 +218,7 @@ class UpdateCompanyBankInfoViewController: UIViewController {
                 print("Required field(s) is missing")
               return
           }
-            print("Province: \(upSelectedProvince), District: \(upSelectedDistrict), CompName: \(upCompName), CompPhone: \(upCompPhone), CompMail: \(upCompMail), Asbn: \(upAsbn), BankName: \(bankNameTextField.text), BranchName: \(branchNameTextField.text), BranchCode: \(branchCodeTextField.text), AccountType: \(accountTypeTextField.text), AccountName: \(accountNameTextField.text), AccountNumber: \(accountNumTextField.text), Iban: \(ibanTextField.text)")
+            print("Province: \(upSelectedProvince), District: \(upSelectedDistrict), CompName: \(upCompName), CompPhone: \(upCompPhone), CompMail: \(upCompMail), Asbn: \(upAsbn), BankName: \(bankNameTextField.text), BranchName: \(branchNameTextField.text), BranchCode: \(branchCodeTextField.text), AccountType: \(accountTypeTextField.text), AccountName: \(accountNameTextField.text), AccountNumber: \(accountNumTextField.text), Iban: \(ibanTextField.text), id: \(selectedCompany?.cbId)")
             
             let updateCompany = CompanyBank(cbId: selectedCompany?.cbId, userMail: uid, compName: compName, compPhone: compPhone, compMail: compMail, province: province, district: district, asbn: asbn, bankName: bankName, bankBranchName: branchName, bankBranchCode: branchCode, bankAccountType: accountType, bankAccountName: accountName, bankAccountNum: accountNumber, bankIban: iban, count: nil)
                    viewModel.updateCompany(updateCompany)
