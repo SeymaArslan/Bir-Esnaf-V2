@@ -116,7 +116,6 @@ class AddCompanyBankInfoViewController: UIViewController {
         return textField
     }()
     
-    
     private let accountNameTitle: UILabel = {
         let label = UILabel()
         label.textColor = UIColor(named: Colors.blue)
@@ -180,13 +179,11 @@ class AddCompanyBankInfoViewController: UIViewController {
         super.viewDidLoad()
 
         configuration()
-        
     }
     
 
     //MARK: - Button Actions
     @objc func cancelButtonTapped() {
-//        dismiss(animated: true, completion: nil)
         self.view.window?.rootViewController?.dismiss(animated: true)
     }
     
@@ -195,7 +192,7 @@ class AddCompanyBankInfoViewController: UIViewController {
     }
     
 
-    //MARK: - Helpers
+    //MARK: - Func
     func addComp() {
         
         if let currentUser = Auth.auth().currentUser {

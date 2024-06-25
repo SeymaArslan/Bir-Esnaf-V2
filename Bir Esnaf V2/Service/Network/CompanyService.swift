@@ -19,6 +19,33 @@ class CompanyService {
     
     private init() {}
     
+    func updateCompany(userMail: String, cbId: String, compName: String, compPhone: String, compMail: String, province: String, district: String, asbn: String, bankName: String, bankBranchName: String, bankBranchCode: String, bankAccountType: String, bankAccountName: String, bankAccountNum: Int, bankIban: String) -> AnyPublisher<Bool, Error> {
+        
+        guard let url = URL(string: "https://lionelo.tech/birEsnaf/updateCompany.php") else {
+            fatalError("Invalid URL")
+        }
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        let postStr = "userMail=\(userMail)&compName=\(compName)&compPhone=\(compPhone)&compMail=\(compMail)&province=\(province)&district=\(district)&asbn=\(asbn)&bankName=\(bankName)&bankBranchName=\(bankBranchName)&bankBranchCode=\(bankBranchCode)&bankAccountType=\(bankAccountType)&bankAccountName=\(bankAccountName)&bankAccountNum=\(bankAccountNum)&bankIban=\(bankIban)"
+        
+        request.httpBody = postStr.data(using: .utf8)
+        
+        return URLSession.shared.dataTaskPublisher(for: request)
+            .tryMap { result -> Bool in
+                guard let httpResponse = result.response as? HTTPURLResponse, httpResponse.statusCode == 200  else {
+                    throw URLError(.badServerResponse)
+                }
+                
+                guard let json = try JSONSerialization.jsonObject(with: result.data, options: []) as? [String: Any], let success = json["success"] as? Int else {
+                    throw URLError(.cannotParseResponse)
+                }
+                return success == 1
+            }
+            .receive(on: DispatchQueue.main)
+            .eraseToAnyPublisher()
+    }
+    
     func deleteCompany(_ cbId: String, userMail: String) -> AnyPublisher<Bool, Error> {
         guard let url = URL(string: "https://lionelo.tech/birEsnaf/deleteComp.php") else {
             fatalError("Invalid URL")

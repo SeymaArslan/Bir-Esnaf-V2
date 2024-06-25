@@ -109,12 +109,15 @@ class UpdateCompanyInfoViewController: UIViewController {
         print("nextButtonPressed")
         let updateCompAddress = UpdateCompanyAddressViewController()
         updateCompAddress.selectedCompany = selectedCompany
+        updateCompAddress.upCompName = compNameTextField.text
+        updateCompAddress.upCompPhone = phoneTextField.text
+        updateCompAddress.upCompMail = mailTextField.text
         updateCompAddress.modalPresentationStyle = .fullScreen
         present(updateCompAddress, animated: true, completion: nil)
     }
 
     @objc func cancelButtonTapped() {
-        dismiss(animated: true, completion: nil)
+        self.view.window?.rootViewController?.dismiss(animated: true)
     }
     
     func configuration() {

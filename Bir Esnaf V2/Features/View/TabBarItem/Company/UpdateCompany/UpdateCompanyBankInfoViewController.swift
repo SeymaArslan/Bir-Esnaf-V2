@@ -7,10 +7,22 @@
 
 import UIKit
 import SnapKit
+import Combine
+import FirebaseAuth
 
 class UpdateCompanyBankInfoViewController: UIViewController {
 
     // Vars
+    var viewModel = CompanyViewModel()
+    
+    var upSelectedProvince: String?
+    var upSelectedDistrict: String?
+    var upAsbn: String?
+    
+    var upCompName: String?
+    var upCompPhone: String?
+    var upCompMail: String?
+    
     var selectedCompany: CompanyBank?
     
     // UIs
@@ -108,7 +120,6 @@ class UpdateCompanyBankInfoViewController: UIViewController {
         return textField
     }()
     
-    
     private let accountNameTitle: UILabel = {
         let label = UILabel()
         label.textColor = UIColor(named: Colors.blue)
@@ -178,11 +189,41 @@ class UpdateCompanyBankInfoViewController: UIViewController {
     
     //MARK: - Helpers
     @objc func cancelButtonTapped() {
-        dismiss(animated: true, completion: nil)
+        self.view.window?.rootViewController?.dismiss(animated: true)
     }
     
     @objc func updateButtonPressed() {
-        print("updateButtonPressed")
+        print("button pressed")
+        updateCompany()
+    }
+    
+    //MARK: - Func
+    func updateCompany() {
+
+        if let currentUser = Auth.auth().currentUser {
+            let uid = currentUser.uid
+            guard let district = upSelectedDistrict,
+                  let province = upSelectedProvince,
+                  let compName = upCompName,
+                  let compPhone = upCompPhone,
+                  let compMail = upCompMail,
+                  let asbn = upAsbn,
+                  let bankName = bankNameTextField.text,
+                  let branchName = branchNameTextField.text,
+                  let branchCode = branchCodeTextField.text,
+                  let accountType = accountTypeTextField.text,
+                  let accountName = accountNameTextField.text,
+                  let accountNumber = accountNumTextField.text,
+                  let iban = ibanTextField.text else {
+                print("Required field(s) is missing")
+              return
+          }
+            print("Province: \(upSelectedProvince), District: \(upSelectedDistrict), CompName: \(upCompName), CompPhone: \(upCompPhone), CompMail: \(upCompMail), Asbn: \(upAsbn), BankName: \(bankNameTextField.text), BranchName: \(branchNameTextField.text), BranchCode: \(branchCodeTextField.text), AccountType: \(accountTypeTextField.text), AccountName: \(accountNameTextField.text), AccountNumber: \(accountNumTextField.text), Iban: \(ibanTextField.text)")
+            
+            let updateCompany = CompanyBank(cbId: selectedCompany?.cbId, userMail: uid, compName: compName, compPhone: compPhone, compMail: compMail, province: province, district: district, asbn: asbn, bankName: bankName, bankBranchName: branchName, bankBranchCode: branchCode, bankAccountType: accountType, bankAccountName: accountName, bankAccountNum: accountNumber, bankIban: iban, count: nil)
+                   viewModel.updateCompany(updateCompany)
+            self.view.window?.rootViewController?.dismiss(animated: true)
+        }
     }
     
 

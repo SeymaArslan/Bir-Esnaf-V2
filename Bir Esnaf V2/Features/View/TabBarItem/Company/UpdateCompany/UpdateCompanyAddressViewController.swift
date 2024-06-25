@@ -7,11 +7,27 @@
 
 import UIKit
 import SnapKit
+import Combine
+import FirebaseAuth
 
 class UpdateCompanyAddressViewController: UIViewController {
-
+    
+    private var provinceVM = CityViewModel()
+    private var districtVM = DistrictViewModel()
+    
+    private var cancellables = Set<AnyCancellable>()
+    
+    var provinceSelect: String?
+    var provinceSelected: String?
+    var districtSelect: String?
+    var districtSelected: String?
+    
+    var upCompName: String?
+    var upCompPhone: String?
+    var upCompMail: String?
+    
     var selectedCompany: CompanyBank?
-    var data: [String] = ["Deneme1", "Deneme2", "Deneme3", "Deneme4", "Deneme4", "Deneme5", "Deneme6", "Deneme7", "Deneme8", "Deneme9", "Deneme10"]
+    
     
     //MARK: - Create UI
     private let backgroundImage: UIImageView = {
@@ -96,6 +112,10 @@ class UpdateCompanyAddressViewController: UIViewController {
         addDelegate()
         configuration()
         fetchData()
+        
+        provinceVM.fetchProvinces()
+        
+        setupBindings()
     }
     
     
@@ -114,12 +134,18 @@ class UpdateCompanyAddressViewController: UIViewController {
         print("nextButtonPressed")
         let updateBank = UpdateCompanyBankInfoViewController()
         updateBank.selectedCompany = selectedCompany
+        updateBank.upSelectedDistrict = districtSelect
+        updateBank.upSelectedProvince = provinceSelect
+        updateBank.upAsbn = ASBNTextField.text
+        updateBank.upCompName = upCompName
+        updateBank.upCompPhone = upCompPhone
+        updateBank.upCompMail = upCompMail
         updateBank.modalPresentationStyle = .fullScreen
         present(updateBank, animated: true, completion: nil)
     }
     
     @objc func cancelButtonTapped() {
-        dismiss(animated: true, completion: nil)
+        self.view.window?.rootViewController?.dismiss(animated: true)
     }
     
     
@@ -192,11 +218,59 @@ class UpdateCompanyAddressViewController: UIViewController {
     }
     
     
-    //MARK: - Helpers
+    //MARK: - Func
     func fetchData() {
         if let comp = selectedCompany {
             ASBNTextField.text = comp.asbn
+            provinceSelected = comp.province
+            districtSelected = comp.district
         }
+        
+    }
+    
+    func setDefaultDistrictsIfNeeded(for provinceId: String?) {
+        guard let provinceId = provinceId else { return }
+        if districtVM.defaultDistricts.isEmpty {
+            districtVM.fetchDistricts(for: provinceId)
+            
+        } else {
+            districtVM.districts = districtVM.defaultDistricts
+        }
+
+    }
+    
+    func setupBindings() {
+        
+        provinceVM.$provinces
+            .receive(on: RunLoop.main)
+            .sink { [weak self] _ in
+                self?.provincePicker.reloadAllComponents()
+                
+                if let provinceSelected = self?.provinceSelected,
+                   let provinceIndex = self?.provinceVM.provinces.firstIndex(where: { $0.province == provinceSelected }) {
+                    self?.provincePicker.selectRow(provinceIndex, inComponent: 0, animated: false)
+                    self?.districtVM.fetchDistricts(for: self?.provinceVM.provinces[provinceIndex].pId)
+                } else if let firstProvince = self?.provinceVM.provinces.first {
+                    self?.setDefaultDistrictsIfNeeded(for: firstProvince.pId)
+                    self?.provinceSelect = firstProvince.province
+                }
+            }
+            .store(in: &cancellables)
+        
+        districtVM.$districts
+            .receive(on: RunLoop.main)
+            .sink { [weak self] _ in
+                self?.districtPicker.reloadAllComponents()
+                
+                if let districtSelected = self?.districtSelected,
+                   let districtIndex = self?.districtVM.districts.firstIndex(where: { $0.district == districtSelected }) {
+                    self?.districtPicker.selectRow(districtIndex, inComponent: 0, animated: false)
+                    self?.districtSelect = districtSelected
+                } else if let firstDistrict = self?.districtVM.districts.first?.district {
+                    self?.districtSelect = firstDistrict
+                }
+            }
+            .store(in: &cancellables)
     }
     
 }
@@ -209,7 +283,34 @@ extension UpdateCompanyAddressViewController: UIPickerViewDelegate, UIPickerView
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return data.count
+        if pickerView == provincePicker {
+            return provinceVM.provinces.count
+        } else if pickerView == districtPicker {
+            return districtVM.districts.count
+        }
+        return 0
     }
     
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        if pickerView == provincePicker {
+            return provinceVM.provinces[row].province
+        } else if pickerView == districtPicker {
+            //return String(districtVM.districts.count)
+            return districtVM.districts[row].district
+        }
+        return nil
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        if pickerView == provincePicker {
+            let selectedProvince = provinceVM.provinces[row]
+            provinceSelect = selectedProvince.province
+            districtVM.fetchDistricts(for: selectedProvince.pId!)
+        }
+
+        if pickerView == districtPicker {
+            let selectedDistrict = districtVM.districts[row]
+            districtSelect = selectedDistrict.district
+        }
+    }
 }

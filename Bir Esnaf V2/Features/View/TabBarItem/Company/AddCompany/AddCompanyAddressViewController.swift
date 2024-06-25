@@ -145,7 +145,6 @@ class AddCompanyAddressViewController: UIViewController {
     }
     
     @objc func cancelButtonTapped() {
-//        dismiss(animated: true, completion: nil)
         self.view.window?.rootViewController?.dismiss(animated: true)
     }
     
