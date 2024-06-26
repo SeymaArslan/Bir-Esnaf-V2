@@ -100,7 +100,13 @@ class PurchaseTransactionsViewController: UIViewController {
     }
     
     func deletePurchaseTransaction(at indexPath: IndexPath) {
-        print("delete items")
+        let purchase = viewModel.purchases[indexPath.row]
+        if let currentUser = Auth.auth().currentUser {
+            let uid = currentUser.uid
+            viewModel.deletePurchase(purchase.buyId!, userMail: uid)
+        }
+        self.viewModel.purchases.remove(at: indexPath.row)
+        self.tableView.deleteRows(at: [indexPath], with: .automatic)
     }
     
     func createRefresh() {
@@ -155,7 +161,7 @@ extension PurchaseTransactionsViewController: UITableViewDelegate, UITableViewDa
     }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let deleteAct = UIContextualAction(style: .destructive, title: "Sil") { contextualAction, view, boolValue in
+        let deleteAct = UIContextualAction(style: .destructive, title: "Delete") { contextualAction, view, boolValue in
             self.showDeleteWarning(for: indexPath)
         }
         return UISwipeActionsConfiguration(actions: [deleteAct])

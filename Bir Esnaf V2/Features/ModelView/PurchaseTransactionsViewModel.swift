@@ -16,6 +16,29 @@ class PurchaseTransactionsViewModel: ObservableObject {
     
     private var cancellables = Set<AnyCancellable>()
     
+    func deletePurchase(_ buyId: String, userMail: String) {
+        PurchaseService.shared.deletePurchase(buyId, userMail: userMail)
+            .sink(receiveCompletion: { completion in
+                switch completion {
+                case .failure(let error):
+                    print("Error deleting purchase: \(error)")
+                case .finished:
+                    break
+                }
+            }, receiveValue: { success in
+                if success {
+                    print("Purchase deleted successfully")
+                    if let currentUser = Auth.auth().currentUser {
+                        let uid = currentUser.uid
+                        self.fetchPurchases(for: uid)
+                    }
+                } else {
+                    print("Failed to deleye purchase")
+                }
+            })
+            .store(in: &cancellables)
+    }
+    
     func fetchPurchases(for userMail: String) {
         PurchaseService.shared.fetchPurchase(for: userMail)
             .sink { completion in
