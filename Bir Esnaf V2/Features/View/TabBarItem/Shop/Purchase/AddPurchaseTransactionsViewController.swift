@@ -7,10 +7,16 @@
 
 import UIKit
 import SnapKit
+import Combine
+import FirebaseAuth
 
 class AddPurchaseTransactionsViewController: UIViewController {
-
-    var data: [String] = ["Test1", "Test2", "Test3", "Test4", "Test5", "Test6",  "Test7",  "Test8",  "Test9", "Test10"]
+    
+    private var cancellables = Set<AnyCancellable>()
+    
+    var compSelect: String?
+    
+    var viewModel = PurchaseTransactionsViewModel()
     
     //MARK: - Create UI
     private let backgroundImage: UIImageView = {
@@ -146,16 +152,25 @@ class AddPurchaseTransactionsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         createDatePicker()
         setupToolBar()
         setupBackgroundTap()
         
         addDelegate()
         configuration()
+        
+        
+        if let currentUser = Auth.auth().currentUser {
+            let uid = currentUser.uid
+            viewModel.fetchCompListForBuy(for: uid)
+        }
+        
+        setupBindings()
+        
     }
     
-
+    
     //MARK: - Delegates
     func addDelegate() {
         compPicker.delegate = self
@@ -163,7 +178,7 @@ class AddPurchaseTransactionsViewController: UIViewController {
         
         companyProdTextField.delegate = self
     }
-
+    
     
     //MARK: - Button Actions
     @objc func cancelButtonPressed() {
@@ -171,7 +186,28 @@ class AddPurchaseTransactionsViewController: UIViewController {
     }
     
     @objc func saveButtonPressed() {
-        print("saveButtonPressed")
+        
+        if let currentUser = Auth.auth().currentUser {
+            let uid = currentUser.uid
+            guard let productName = companyProdTextField.text,
+                  let date = dateTextField.text,
+                  let total = unitPriceTextField.text?.replacingOccurrences(of: ",", with: "."),
+                  let price = amountTextField.text?.replacingOccurrences(of: ",", with: "."),
+                  let totalPrice = totalCostTextField.text?.replacingOccurrences(of: ",", with: ".") else {
+                return
+                print("olmadı saveButton da guard let else içinde ")
+            }
+            
+            print("guard let else dışında")
+            
+            
+            let newPurchase = Purchase(buyId: UUID().uuidString, userMail: uid, compName: compSelect, productName: productName, price: price, total: total, totalPrice: totalPrice, buyDate: date, count: nil)
+            viewModel.addPurchase(newPurchase)
+            
+            dismiss(animated: true, completion: nil)
+        }
+        
+        
     }
     
     
@@ -313,7 +349,18 @@ class AddPurchaseTransactionsViewController: UIViewController {
         datePicker.datePickerMode = .date
     }
     
-    
+    //MARK: - Functions
+    func setupBindings() {
+        viewModel.$companies
+            .receive(on: RunLoop.main)
+            .sink { [weak self] _ in
+                self?.compPicker.reloadAllComponents()
+                if let firstCompany = self?.viewModel.companies.first {
+                    self?.compSelect = firstCompany.compName
+                }
+            }
+            .store(in: &cancellables)
+    }
 }
 
 
@@ -324,7 +371,18 @@ extension AddPurchaseTransactionsViewController: UIPickerViewDelegate, UIPickerV
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return data.count
+        return viewModel.companies.count
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return viewModel.companies[row].compName
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        if pickerView == compPicker {
+            let selectedCompany = viewModel.companies[row]
+            compSelect = selectedCompany.compName
+        }
     }
 }
 

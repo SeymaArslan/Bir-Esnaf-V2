@@ -10,8 +10,10 @@ import SnapKit
 
 class UpdatePurchaseTransactionsViewController: UIViewController {
 
+    var compSelect: String?
+    
     var selectedPurchase: Purchase?
-    var data: [String] = ["Test1", "Test2", "Test3", "Test4", "Test5", "Test6",  "Test7",  "Test8",  "Test9", "Test10"]
+    var viewModel = PurchaseTransactionsViewModel()
     
     //MARK: - Create UI
     private let backgroundImage: UIImageView = {
@@ -340,7 +342,18 @@ extension UpdatePurchaseTransactionsViewController: UIPickerViewDelegate, UIPick
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return data.count
+        return viewModel.companies.count
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return viewModel.companies[row].compName
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        if pickerView == compPicker {
+            let selectedCompany = viewModel.companies[row]
+            compSelect = selectedCompany.compName
+        }
     }
 }
 

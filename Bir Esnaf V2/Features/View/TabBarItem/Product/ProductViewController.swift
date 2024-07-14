@@ -52,6 +52,7 @@ class ProductViewController: UIViewController {
     func createAddButton() {
         let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addButtonTap))
         navigationItem.rightBarButtonItem = addButton
+        navigationItem.rightBarButtonItem?.tintColor = UIColor(named: Colors.blue)
     }
     
     func configureTableView() {
