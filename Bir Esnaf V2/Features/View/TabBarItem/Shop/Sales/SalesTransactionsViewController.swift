@@ -7,11 +7,15 @@
 
 import UIKit
 import SnapKit
+import Combine
+import FirebaseAuth
 
 class SalesTransactionsViewController: UIViewController {
 
+    private var viewModel = SaleTransactionsViewModel()
+    private var cancellables = Set<AnyCancellable>()
+    
     var tableView = UITableView()
-    var sales: [Sale] = []
     
     struct Cells {
         static let saleCell = "SaleCell"
@@ -22,10 +26,16 @@ class SalesTransactionsViewController: UIViewController {
 
         configureLeftButton()
         setTableViewDelegates()
-        sales = fetchData()
         configureTableView()
         createAddButton()
         createRefresh()
+        
+        if let currentUser = Auth.auth().currentUser {
+            let uid = currentUser.uid
+            viewModel.fetchSales(for: uid)
+        }
+        
+        setupBindings()
     }
     
     
@@ -102,24 +112,36 @@ class SalesTransactionsViewController: UIViewController {
             refreshControl.endRefreshing()
         }
     }
+    
+    
+    //MARK: - Functions
+    private func setupBindings() {
+        viewModel.$sales
+            .receive(on: RunLoop.main)
+            .sink { [weak self] _ in
+                self?.tableView.reloadData()
+            }
+            .store(in: &cancellables)
+    }
+    
 }
 
 
 //MARK: - Extensions
 extension SalesTransactionsViewController: UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return sales.count
+        return viewModel.sales.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: Cells.saleCell) as! SalesTableViewCell
-        let sale = sales[indexPath.row]
+        let sale = viewModel.sales[indexPath.row]
         cell.set(sale: sale)
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let selectedSale = sales[indexPath.row]
+        let selectedSale = viewModel.sales[indexPath.row]
         let updateSaleVC = UpdateSalesTransactionsViewController()
         updateSaleVC.selectedSale = selectedSale
         present(updateSaleVC, animated: true)
@@ -134,17 +156,11 @@ extension SalesTransactionsViewController: UITableViewDelegate, UITableViewDataS
     
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         if let refreshControl = scrollView.refreshControl, refreshControl.isRefreshing {
+            if let currentUser = Auth.auth().currentUser {
+                let uid = currentUser.uid
+                viewModel.fetchSales(for: uid)
+            }
             refreshControl.endRefreshing()
         }
-    }
-}
-
-
-
-extension SalesTransactionsViewController {
-    func fetchData() -> [Sale]{
-        let data = Sale(saleId: "1", userMail: "test@", prodName: "Test", totalPrice: "1256", productPrice: "123", quantityOrPiece: "5", saleDate: "03/5/2024", count: "3")
-        let data2 = Sale(saleId: "2", userMail: "test@", prodName: "Test2", totalPrice: "500", productPrice: "5", quantityOrPiece: "100", saleDate: "06/05/2024", count: "5")
-        return [data, data2]
     }
 }

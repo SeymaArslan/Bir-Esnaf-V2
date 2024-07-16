@@ -27,6 +27,8 @@
 		1F4A118C2BFA324A004025AB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1F4A118B2BFA324A004025AB /* Assets.xcassets */; };
 		1F4A118F2BFA324A004025AB /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 1F4A118E2BFA324A004025AB /* Base */; };
 		1F6DD35D2BFE2BDB00677D04 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1F6DD35C2BFE2BDB00677D04 /* GoogleService-Info.plist */; };
+		1F8DCDF42C4694FA00756A35 /* SaleTransactionsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F8DCDF32C4694FA00756A35 /* SaleTransactionsViewModel.swift */; };
+		1F8DCDF62C46951B00756A35 /* SaleService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F8DCDF52C46951B00756A35 /* SaleService.swift */; };
 		1F91403A2BFBCD5B001E25BE /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9140392BFBCD5B001E25BE /* LoginViewController.swift */; };
 		1F91403C2BFBD10B001E25BE /* HomeTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F91403B2BFBD10B001E25BE /* HomeTabBarController.swift */; };
 		1F9140442BFBD224001E25BE /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9140432BFBD224001E25BE /* Constants.swift */; };
@@ -87,6 +89,8 @@
 		1F4A118E2BFA324A004025AB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1F4A11902BFA324A004025AB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1F6DD35C2BFE2BDB00677D04 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		1F8DCDF32C4694FA00756A35 /* SaleTransactionsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaleTransactionsViewModel.swift; sourceTree = "<group>"; };
+		1F8DCDF52C46951B00756A35 /* SaleService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaleService.swift; sourceTree = "<group>"; };
 		1F9140392BFBCD5B001E25BE /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		1F91403B2BFBD10B001E25BE /* HomeTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTabBarController.swift; sourceTree = "<group>"; };
 		1F9140432BFBD224001E25BE /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -155,6 +159,7 @@
 				1F03D2972C172674001C1732 /* CityViewModel.swift */,
 				1F03D29B2C17335F001C1732 /* DistrictViewModel.swift */,
 				1F03D29F2C2AE4E4001C1732 /* PurchaseTransactionsViewModel.swift */,
+				1F8DCDF32C4694FA00756A35 /* SaleTransactionsViewModel.swift */,
 			);
 			path = ModelView;
 			sourceTree = "<group>";
@@ -167,6 +172,7 @@
 				1F03D2952C17262A001C1732 /* CityService.swift */,
 				1F03D2992C1731D5001C1732 /* DistrictService.swift */,
 				1F03D2A12C2AE7B1001C1732 /* PurchaseService.swift */,
+				1F8DCDF52C46951B00756A35 /* SaleService.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -485,6 +491,7 @@
 				1F9140542BFBD393001E25BE /* ProductViewController.swift in Sources */,
 				1F9140442BFBD224001E25BE /* Constants.swift in Sources */,
 				1F91406B2BFBD4A7001E25BE /* UpdateCompanyBankInfoViewController.swift in Sources */,
+				1F8DCDF62C46951B00756A35 /* SaleService.swift in Sources */,
 				1F91404C2BFBD278001E25BE /* Sale.swift in Sources */,
 				1F03D29E2C184306001C1732 /* DistrictViewController.swift in Sources */,
 				1F9140802BFBD58B001E25BE /* SalesResultsViewController.swift in Sources */,
@@ -498,6 +505,7 @@
 				1F03D28D2C060105001C1732 /* ProductService.swift in Sources */,
 				1F03D28B2C0600E6001C1732 /* ProductViewModel.swift in Sources */,
 				1F91404A2BFBD272001E25BE /* Purchase.swift in Sources */,
+				1F8DCDF42C4694FA00756A35 /* SaleTransactionsViewModel.swift in Sources */,
 				1F03D2A22C2AE7B1001C1732 /* PurchaseService.swift in Sources */,
 				1F9140842BFBD5DB001E25BE /* CompanyTableViewCell.swift in Sources */,
 				1F91404E2BFBD27D001E25BE /* Shop.swift in Sources */,

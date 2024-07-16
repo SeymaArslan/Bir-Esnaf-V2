@@ -8,16 +8,18 @@
 import Foundation
 
 struct SaleData: Codable {
-    let sale: [Sale]
+    let sale: [Sale]?
+    let success: Int?
 }
 
-struct Sale: Codable {
-    let saleId: String
-    let userMail: String
-    let prodName: String
-    let totalPrice: String // toplam fiyat
-    let productPrice: String // satış fiyatı
-    let quantityOrPiece: String // miktar/adet
-    let saleDate: String
-    let count: String
+struct Sale: Identifiable, Codable {
+    var id: String { saleId ?? UUID().uuidString }
+    let saleId: String?
+    let userMail: String?
+    let prodName: String?
+    let salePrice: String?
+    let saleTotal: String?
+    let saleTotalPrice: String?
+    let saleDate: String?
+    let count: String?
 }

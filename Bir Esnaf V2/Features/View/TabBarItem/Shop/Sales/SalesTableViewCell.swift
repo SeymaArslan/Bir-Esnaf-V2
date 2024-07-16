@@ -48,13 +48,13 @@ class SalesTableViewCell: UITableViewCell {
     func set(sale: Sale) {
         prodName.text = sale.prodName
         totalPriceTitle.text = "Total Price:" // toplam tutar
-        totalPrice.text = sale.totalPrice
+        totalPrice.text = sale.saleTotalPrice
         dateTitle.text = "Date:"
         date.text = sale.saleDate
         productPriceTitle.text = "Product Price:"  // satış toplamı
-        productPrice.text = sale.productPrice
+        productPrice.text = sale.salePrice
         quantityOrPieceTitle.text = "Quantity/Piece:"  // miktar adet
-        quantityOrPiece.text = sale.quantityOrPiece
+        quantityOrPiece.text = sale.saleTotal
     }
     
     

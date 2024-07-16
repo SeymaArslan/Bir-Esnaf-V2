@@ -266,9 +266,9 @@ class UpdateSalesTransactionsViewController: UIViewController {
     //MARK: - Data Operations
     func fetchData() {
         if let sale = selectedSale {
-            prodPrice.text = sale.productPrice
-            quantityOrPiece.text = sale.quantityOrPiece
-            totalPrice.text = sale.totalPrice
+            prodPrice.text = sale.salePrice
+            quantityOrPiece.text = sale.saleTotal
+            totalPrice.text = sale.saleTotalPrice
             date.text = sale.saleDate
         }
     }

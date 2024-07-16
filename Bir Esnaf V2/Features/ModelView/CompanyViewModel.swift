@@ -10,7 +10,7 @@ import Combine
 import FirebaseAuth
 
 class CompanyViewModel: ObservableObject {
-    @Published var companyData: CompanyBankData?
+    @Published var companyData: CompanyBankData? 
     @Published var companies: [CompanyBank] = []
     private var cancellables = Set<AnyCancellable>()
     
