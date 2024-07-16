@@ -288,17 +288,11 @@ extension AddCompanyAddressViewController: UIPickerViewDelegate, UIPickerViewDat
             let selectedProvince = provinceVM.provinces[row]
             provinceSelect = selectedProvince.province
             districtVM.fetchDistricts(for: selectedProvince.pId!)
-            if let test = provinceSelect {
-                print("province select = \(test)")
-            }
         }
 
         if pickerView == districtPicker {
             let selectedDistrict = districtVM.districts[row]
             districtSelect = selectedDistrict.district
-            if let test2 = districtSelect {
-                print("district select = \(test2)")
-            }
         }
     }
     

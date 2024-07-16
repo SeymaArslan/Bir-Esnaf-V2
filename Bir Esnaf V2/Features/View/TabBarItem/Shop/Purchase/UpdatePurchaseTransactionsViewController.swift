@@ -7,9 +7,14 @@
 
 import UIKit
 import SnapKit
+import FirebaseAuth
+import Combine
 
 class UpdatePurchaseTransactionsViewController: UIViewController {
-
+    
+    private var cancellables = Set<AnyCancellable>()
+    
+    var compSelected: String?
     var compSelect: String?
     
     var selectedPurchase: Purchase?
@@ -160,6 +165,13 @@ class UpdatePurchaseTransactionsViewController: UIViewController {
         
         addDelegate()
         configuration()
+        
+        if let currentUser = Auth.auth().currentUser {
+            let uid = currentUser.uid
+            viewModel.fetchCompListForBuy(for: uid)
+        }
+        
+        setupBindings()
     }
     
     
@@ -178,7 +190,7 @@ class UpdatePurchaseTransactionsViewController: UIViewController {
     }
     
     @objc func updateButtonPressed() {
-        print("updateButtonPressed")
+        updatePurchases()
     }
     
     
@@ -297,6 +309,7 @@ class UpdatePurchaseTransactionsViewController: UIViewController {
     }
     
     
+    
     //MARK: - Input Accessories
     @objc func doneButtonClicked() {
         let formatter = DateFormatter()
@@ -329,9 +342,50 @@ class UpdatePurchaseTransactionsViewController: UIViewController {
             amountTextField.text = pured.total
             totalCostTextField.text = pured.totalPrice
             dateTextField.text = pured.buyDate
+            compSelected = pured.compName
         }
     }
-     
+    
+    
+    //MARK: - Functions
+    func setupBindings() {
+        
+        viewModel.$companies
+            .receive(on: RunLoop.main)
+            .sink { [weak self] _ in
+                self?.compPicker.reloadAllComponents()
+                
+                if let compSelected = self?.compSelected, let compIndex = self?.viewModel.companies.firstIndex(where: { $0.compName == compSelected}) {
+                    self?.compPicker.selectRow(compIndex, inComponent: 0, animated: false)
+                    print("selected = \(compSelected)")
+                } else if let firstCompany = self?.viewModel.companies.first {
+                    self?.compSelect = firstCompany.compName
+                }
+                
+            }
+            .store(in: &cancellables)
+    }
+    
+    func updatePurchases() {
+        if let currentUser = Auth.auth().currentUser {
+            let uid = currentUser.uid
+            
+            guard let productName = companyProdTextField.text,
+                  let date = dateTextField.text,
+                  let total = unitPriceTextField.text?.replacingOccurrences(of: ",", with: "."),
+                  let price = amountTextField.text?.replacingOccurrences(of: ",", with: "."),
+                  let totalPrice = totalCostTextField.text?.replacingOccurrences(of: ",", with: ".") else {
+                print("view controller da ")
+                return
+            }
+            
+            let updatePurchase = Purchase(buyId: UUID().uuidString, userMail: uid, compName: compSelect, productName: productName, price: price, total: total, totalPrice: totalPrice, buyDate: date, count: nil)
+            
+            viewModel.updatePurchase(updatePurchase)
+            self.view.window?.rootViewController?.dismiss(animated: true)
+        }
+    }
+    
 }
 
 

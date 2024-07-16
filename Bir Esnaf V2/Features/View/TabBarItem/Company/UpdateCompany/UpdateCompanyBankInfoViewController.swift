@@ -11,7 +11,7 @@ import Combine
 import FirebaseAuth
 
 class UpdateCompanyBankInfoViewController: UIViewController {
-
+    
     // Vars
     var viewModel = CompanyViewModel()
     
@@ -181,7 +181,7 @@ class UpdateCompanyBankInfoViewController: UIViewController {
     //MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         configuration()
         fetchData()
     }
@@ -199,7 +199,7 @@ class UpdateCompanyBankInfoViewController: UIViewController {
     
     //MARK: - Func
     func updateCompany() {
-
+        
         if let currentUser = Auth.auth().currentUser {
             let uid = currentUser.uid
             guard let district = upSelectedDistrict,
@@ -216,16 +216,16 @@ class UpdateCompanyBankInfoViewController: UIViewController {
                   let accountNumber = accountNumTextField.text,
                   let iban = ibanTextField.text else {
                 print("Required field(s) is missing")
-              return
-          }
+                return
+            }
             
             let updateCompany = CompanyBank(cbId: selectedCompany?.cbId, userMail: uid, compName: compName, compPhone: compPhone, compMail: compMail, province: province, district: district, asbn: asbn, bankName: bankName, bankBranchName: branchName, bankBranchCode: branchCode, bankAccountType: accountType, bankAccountName: accountName, bankAccountNum: accountNumber, bankIban: iban, count: nil)
-                   viewModel.updateCompany(updateCompany)
+            viewModel.updateCompany(updateCompany)
             self.view.window?.rootViewController?.dismiss(animated: true)
         }
     }
     
-
+    
     //MARK: - SnapKit Functions
     func configuration() {
         addSubviews()
@@ -345,7 +345,7 @@ class UpdateCompanyBankInfoViewController: UIViewController {
         view.addSubview(ibanTextField)
         view.addSubview(updateButton)
     }
-
+    
     func textFieldConstraints(make: ConstraintMaker) {
         make.leading.equalTo(21)
         make.width.equalTo(355)

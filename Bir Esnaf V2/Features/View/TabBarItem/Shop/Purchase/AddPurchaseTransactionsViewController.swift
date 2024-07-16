@@ -195,18 +195,13 @@ class AddPurchaseTransactionsViewController: UIViewController {
                   let price = amountTextField.text?.replacingOccurrences(of: ",", with: "."),
                   let totalPrice = totalCostTextField.text?.replacingOccurrences(of: ",", with: ".") else {
                 return
-                print("olmadı saveButton da guard let else içinde ")
             }
-            
-            print("guard let else dışında")
-            
             
             let newPurchase = Purchase(buyId: UUID().uuidString, userMail: uid, compName: compSelect, productName: productName, price: price, total: total, totalPrice: totalPrice, buyDate: date, count: nil)
             viewModel.addPurchase(newPurchase)
             
             dismiss(animated: true, completion: nil)
         }
-        
         
     }
     
