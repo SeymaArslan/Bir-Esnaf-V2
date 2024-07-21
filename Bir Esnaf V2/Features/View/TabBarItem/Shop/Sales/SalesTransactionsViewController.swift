@@ -115,6 +115,10 @@ class SalesTransactionsViewController: UIViewController {
     
     @objc func refresh(_ sender: Any) {
         if let refreshControl = sender as? UIRefreshControl, refreshControl.isRefreshing {
+            if let currentUser = Auth.auth().currentUser {
+                let uid = currentUser.uid
+                viewModel.fetchSales(for: uid)
+            }
             refreshControl.endRefreshing()
         }
     }

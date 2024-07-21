@@ -163,7 +163,21 @@ class AddSalesTransactionsViewController: UIViewController {
     
     //MARK: - Button Actions
     @objc func saveButtonPressed() {
-        print("save button pressed")
+        if let currentUser = Auth.auth().currentUser {
+            let uid = currentUser.uid
+            
+            guard let salePrice = prodPrice.text?.replacingOccurrences(of: ",", with: "."),
+                  let saleTotal = quantityOrPiece.text?.replacingOccurrences(of: ",", with: "."),
+                  let saleTotalPrice = totalPrice.text?.replacingOccurrences(of: ",", with: "."),
+                  let date = date.text else {
+                return
+            }
+            
+            let newSale = Sale(saleId: UUID().uuidString, userMail: uid, prodName: prodSelect, salePrice: salePrice, saleTotal: saleTotal, saleTotalPrice: saleTotalPrice, saleDate: date, count: nil)
+            
+            viewModel.addSale(newSale)
+            dismiss(animated: true, completion: nil)
+        }
     }
     
     @objc func closeButtonPressed() {
