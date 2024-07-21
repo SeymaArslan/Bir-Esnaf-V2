@@ -7,10 +7,16 @@
 
 import UIKit
 import SnapKit
+import Combine
+import FirebaseAuth
 
 class AddSalesTransactionsViewController: UIViewController {
     
-    var data: [String] = ["Test1", "Test2", "Test3", "Test4", "Test5", "Test6",  "Test7",  "Test8",  "Test9", "Test10"]
+    private var cancellables = Set<AnyCancellable>()
+    
+    var prodSelect: String?
+    
+    var viewModel = SaleTransactionsViewModel()
     
     //MARK: - Create UIs
     private let backgroundImage: UIImageView = {
@@ -137,6 +143,13 @@ class AddSalesTransactionsViewController: UIViewController {
         
         addDelegate()
         configuration()
+        
+        if let currentUser = Auth.auth().currentUser {
+            let uid = currentUser.uid
+            viewModel.fetchProductListForSale(for: uid)
+        }
+        
+        setupBindings()
     }
     
     
@@ -284,6 +297,20 @@ class AddSalesTransactionsViewController: UIViewController {
         datePicker.datePickerMode = .date
     }
     
+    
+    //MARK: - Func
+    func setupBindings() {
+        viewModel.$products
+            .receive(on: RunLoop.main)
+            .sink { [weak self] _ in
+                self?.prodPicker.reloadAllComponents()
+                if let firstProduct = self?.viewModel.products.first {
+                    self?.prodSelect = firstProduct.prodName
+                }
+            }
+            .store(in: &cancellables)
+    }
+    
 }
 
 
@@ -293,7 +320,18 @@ extension AddSalesTransactionsViewController: UIPickerViewDelegate, UIPickerView
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return data.count
+        return viewModel.products.count
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return viewModel.products[row].prodName
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        if pickerView == prodPicker {
+            let selectedProduct = viewModel.products[row]
+            prodSelect = selectedProduct.prodName
+        }
     }
 }
 

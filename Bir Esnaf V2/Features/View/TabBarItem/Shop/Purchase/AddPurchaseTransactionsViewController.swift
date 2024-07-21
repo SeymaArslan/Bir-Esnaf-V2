@@ -43,7 +43,7 @@ class AddPurchaseTransactionsViewController: UIViewController {
     
     private let compNameLabel: UILabel = {
         let label = UILabel()
-        label.text = "Products"
+        label.text = "Companies"
         label.font = UIFont.systemFont(ofSize: 18, weight: .medium)
         label.textColor = UIColor(named: Colors.blue)
         return label

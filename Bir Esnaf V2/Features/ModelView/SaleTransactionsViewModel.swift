@@ -11,10 +11,32 @@ import FirebaseAuth
 
 class SaleTransactionsViewModel: ObservableObject {
     
+    @Published var productData: ProductData?
+    @Published var products: [Product] = []
+    
     @Published var saleData: SaleData?
     @Published var sales: [Sale] = []
     
     private var cancellables = Set<AnyCancellable>()
+    
+    func fetchProductListForSale(for userMail: String) {
+        SaleService.shared.fetchProductListForSale(for: userMail)
+            .sink(receiveCompletion: { completion in
+                switch completion {
+                case .failure(let error):
+                    print("Error fetching product list for sale transactions: \(error)")
+                case .finished:
+                    break
+                }
+            }, receiveValue: { productData in
+                if let success = productData.success, success == 1 {
+                    self.products = productData.product ?? []
+                } else {
+                    print("Failed to fetch products")
+                }
+            })
+            .store(in: &cancellables)
+    }
     
     func deleteSale(_ saleId: String, userMail: String) {
         SaleService.shared.deleteSale(saleId, userMail: userMail)
