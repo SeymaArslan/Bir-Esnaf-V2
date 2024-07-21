@@ -19,14 +19,14 @@ class PurchaseService {
         let message: String
     }
     
-    func updatePurchase(userMail: String, compName: String, productName: String, price: Double, total: Double, totalPrice: Double, buyDate: String) -> AnyPublisher<Bool, Error> {
+    func updatePurchase(buyId: String, userMail: String, compName: String, productName: String, price: Double, total: Double, totalPrice: Double, buyDate: String) -> AnyPublisher<Bool, Error> {
         guard let url = URL(string: "https://lionelo.tech/birEsnaf/updateBuy.php") else {
             fatalError("Invalid URL")
         }
         
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
-        let postString = "userMail=\(userMail)&compName=\(compName)&productName=\(productName)&price=\(price)&total=\(total)&totalPrice=\(totalPrice)&buyDate=\(buyDate)"
+        let postString = "userMail=\(userMail)&buyId=\(buyId)&compName=\(compName)&productName=\(productName)&price=\(price)&total=\(total)&totalPrice=\(totalPrice)&buyDate=\(buyDate)"
         request.httpBody = postString.data(using: .utf8)
         
         return URLSession.shared.dataTaskPublisher(for: request)

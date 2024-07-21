@@ -16,6 +16,29 @@ class SaleTransactionsViewModel: ObservableObject {
     
     private var cancellables = Set<AnyCancellable>()
     
+    func deleteSale(_ saleId: String, userMail: String) {
+        SaleService.shared.deleteSale(saleId, userMail: userMail)
+            .sink(receiveCompletion: { completion in
+                switch completion {
+                case .failure(let error):
+                    print("Error deleting sale: \(error)")
+                case .finished:
+                    break
+                }
+            }, receiveValue: { success in
+                if success {
+                    print("Sale deleted successfully")
+                    if let currentId = Auth.auth().currentUser {
+                        let uid = currentId.uid
+                        self.fetchSales(for: uid)
+                    }
+                } else {
+                    print("Failed to delete sale.")
+                }
+            })
+            .store(in: &cancellables)
+    }
+    
     func fetchSales(for userMail: String) {
         SaleService.shared.fetchSale(for: userMail)
             .sink { completion in

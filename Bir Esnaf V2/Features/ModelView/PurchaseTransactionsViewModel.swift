@@ -20,7 +20,7 @@ class PurchaseTransactionsViewModel: ObservableObject {
     private var cancellables = Set<AnyCancellable>()
     
     func updatePurchase(_ purchase: Purchase) {
-        PurchaseService.shared.updatePurchase(userMail: purchase.userMail!, compName: purchase.compName!, productName: purchase.productName!, price: Double(purchase.price!) ?? 0.0, total: Double(purchase.total!) ?? 0.0, totalPrice: Double(purchase.totalPrice!) ?? 0.0, buyDate: purchase.buyDate!)
+        PurchaseService.shared.updatePurchase(buyId: purchase.buyId!, userMail: purchase.userMail!, compName: purchase.compName!, productName: purchase.productName!, price: Double(purchase.price!) ?? 0.0, total: Double(purchase.total!) ?? 0.0, totalPrice: Double(purchase.totalPrice!) ?? 0.0, buyDate: purchase.buyDate!)
             .sink(receiveCompletion: { completion in
                 switch completion {
                 case .failure(let error):

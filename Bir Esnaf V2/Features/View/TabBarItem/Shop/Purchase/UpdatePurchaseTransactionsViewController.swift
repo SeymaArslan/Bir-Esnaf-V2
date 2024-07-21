@@ -12,6 +12,8 @@ import Combine
 
 class UpdatePurchaseTransactionsViewController: UIViewController {
     
+    private var buyId: Int?
+    
     private var cancellables = Set<AnyCancellable>()
     
     var compSelected: String?
@@ -343,6 +345,7 @@ class UpdatePurchaseTransactionsViewController: UIViewController {
             totalCostTextField.text = pured.totalPrice
             dateTextField.text = pured.buyDate
             compSelected = pured.compName
+
         }
     }
     
@@ -375,14 +378,14 @@ class UpdatePurchaseTransactionsViewController: UIViewController {
                   let total = unitPriceTextField.text?.replacingOccurrences(of: ",", with: "."),
                   let price = amountTextField.text?.replacingOccurrences(of: ",", with: "."),
                   let totalPrice = totalCostTextField.text?.replacingOccurrences(of: ",", with: ".") else {
-                print("view controller da ")
                 return
             }
-            
-            let updatePurchase = Purchase(buyId: UUID().uuidString, userMail: uid, compName: compSelect, productName: productName, price: price, total: total, totalPrice: totalPrice, buyDate: date, count: nil)
+
+            let updatePurchase = Purchase(buyId: selectedPurchase?.buyId, userMail: uid, compName: compSelect, productName: productName, price: price, total: total, totalPrice: totalPrice, buyDate: date, count: nil)
             
             viewModel.updatePurchase(updatePurchase)
-            self.view.window?.rootViewController?.dismiss(animated: true)
+//            self.view.window?.rootViewController?.dismiss(animated: true)
+            dismiss(animated: true)
         }
     }
     

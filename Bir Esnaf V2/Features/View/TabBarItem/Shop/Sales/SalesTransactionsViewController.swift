@@ -98,7 +98,13 @@ class SalesTransactionsViewController: UIViewController {
     }
     
     func deleteSalesTransaction(at indexPath: IndexPath) {
-        print("deleteSalesTransaction")
+        let sales = viewModel.sales[indexPath.row]
+        if let currentUser = Auth.auth().currentUser {
+            let uid = currentUser.uid
+            viewModel.deleteSale(sales.saleId!, userMail: uid)
+        }
+        self.viewModel.sales.remove(at: indexPath.row)
+        self.tableView.deleteRows(at: [indexPath], with: .automatic )
     }
     
     func createRefresh() {
