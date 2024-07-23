@@ -8,13 +8,15 @@
 import Foundation
 
 struct ShopData: Codable {
-    let shop: [Shop]
+    let shop: [Shop]?
+    let success: Int?
 }
 
-struct Shop: Codable {
-    let shopId: String
-    let userMail: String
-    let prodName: String
-    let totalProfitAmount: String
-    let count: String
+struct Shop: Identifiable, Codable {
+    var id: String { shopId ?? UUID().uuidString }
+    let shopId: String?
+    let userMail: String?
+    let prodName: String?
+    let totalProfitAmount: String?
+    let count: String?
 }

@@ -63,6 +63,8 @@
 		1F9140842BFBD5DB001E25BE /* CompanyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9140832BFBD5DB001E25BE /* CompanyTableViewCell.swift */; };
 		1F9140872BFBD61D001E25BE /* PurchaseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9140862BFBD61D001E25BE /* PurchaseTableViewCell.swift */; };
 		1F9140892BFBD627001E25BE /* SalesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9140882BFBD627001E25BE /* SalesTableViewCell.swift */; };
+		1FF23E892C4FDD530082F789 /* ShopViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FF23E882C4FDD530082F789 /* ShopViewModel.swift */; };
+		1FF23E8B2C4FDD5B0082F789 /* ShopService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FF23E8A2C4FDD5B0082F789 /* ShopService.swift */; };
 		29B4F03F8827A2885F45BA57 /* Pods_Bir_Esnaf_V2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55E30EC6204C3D063B664950 /* Pods_Bir_Esnaf_V2.framework */; };
 /* End PBXBuildFile section */
 
@@ -125,6 +127,8 @@
 		1F9140832BFBD5DB001E25BE /* CompanyTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyTableViewCell.swift; sourceTree = "<group>"; };
 		1F9140862BFBD61D001E25BE /* PurchaseTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseTableViewCell.swift; sourceTree = "<group>"; };
 		1F9140882BFBD627001E25BE /* SalesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SalesTableViewCell.swift; sourceTree = "<group>"; };
+		1FF23E882C4FDD530082F789 /* ShopViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopViewModel.swift; sourceTree = "<group>"; };
+		1FF23E8A2C4FDD5B0082F789 /* ShopService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopService.swift; sourceTree = "<group>"; };
 		55E30EC6204C3D063B664950 /* Pods_Bir_Esnaf_V2.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Bir_Esnaf_V2.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8ABD50003077D3525D790C63 /* Pods-Bir Esnaf V2.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bir Esnaf V2.release.xcconfig"; path = "Target Support Files/Pods-Bir Esnaf V2/Pods-Bir Esnaf V2.release.xcconfig"; sourceTree = "<group>"; };
 		C5955BEC1910F62DD5A9AF2A /* Pods-Bir Esnaf V2.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bir Esnaf V2.debug.xcconfig"; path = "Target Support Files/Pods-Bir Esnaf V2/Pods-Bir Esnaf V2.debug.xcconfig"; sourceTree = "<group>"; };
@@ -160,6 +164,7 @@
 				1F03D29B2C17335F001C1732 /* DistrictViewModel.swift */,
 				1F03D29F2C2AE4E4001C1732 /* PurchaseTransactionsViewModel.swift */,
 				1F8DCDF32C4694FA00756A35 /* SaleTransactionsViewModel.swift */,
+				1FF23E882C4FDD530082F789 /* ShopViewModel.swift */,
 			);
 			path = ModelView;
 			sourceTree = "<group>";
@@ -173,6 +178,7 @@
 				1F03D2992C1731D5001C1732 /* DistrictService.swift */,
 				1F03D2A12C2AE7B1001C1732 /* PurchaseService.swift */,
 				1F8DCDF52C46951B00756A35 /* SaleService.swift */,
+				1FF23E8A2C4FDD5B0082F789 /* ShopService.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -516,6 +522,7 @@
 				1F03D2922C070508001C1732 /* CompanyViewModel.swift in Sources */,
 				1F9140872BFBD61D001E25BE /* PurchaseTableViewCell.swift in Sources */,
 				1F91403C2BFBD10B001E25BE /* HomeTabBarController.swift in Sources */,
+				1FF23E8B2C4FDD5B0082F789 /* ShopService.swift in Sources */,
 				1F4A11832BFA3249004025AB /* AppDelegate.swift in Sources */,
 				1F03D2832C0068D3001C1732 /* User.swift in Sources */,
 				1F9140642BFBD45D001E25BE /* AddCompanyBankInfoViewController.swift in Sources */,
@@ -528,6 +535,7 @@
 				1F03D29C2C17335F001C1732 /* DistrictViewModel.swift in Sources */,
 				1F91403A2BFBCD5B001E25BE /* LoginViewController.swift in Sources */,
 				1F91405B2BFBD3F5001E25BE /* CompanyViewController.swift in Sources */,
+				1FF23E892C4FDD530082F789 /* ShopViewModel.swift in Sources */,
 				1F9140792BFBD550001E25BE /* SalesTransactionsViewController.swift in Sources */,
 				1F9140742BFBD51E001E25BE /* AddPurchaseTransactionsViewController.swift in Sources */,
 				1F9140482BFBD269001E25BE /* Company.swift in Sources */,

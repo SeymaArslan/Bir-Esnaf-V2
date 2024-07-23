@@ -7,10 +7,15 @@
 
 import UIKit
 import SnapKit
+import Combine
+import FirebaseAuth
 
 class SalesResultsViewController: UIViewController {
-
-    var data: [String] = ["Test1", "Test2", "Test3", "Test4", "Test5", "Test6",  "Test7",  "Test8",  "Test9", "Test10"]
+    
+    private var cancellables = Set<AnyCancellable>()
+    
+    var saleSelect: String?
+    var viewModel = ShopViewModel()
     
     //MARK: - UIs
     private let backgroundImage: UIImageView = {
@@ -118,6 +123,13 @@ class SalesResultsViewController: UIViewController {
 
         addDelegates()
         configuration()
+        
+        if let currentUser = Auth.auth().currentUser {
+            let uid = currentUser.uid
+            viewModel.getAllShops(for: uid)
+        }
+        
+        setupBindings()
     }
     
     //MARK: - Delegates
@@ -239,6 +251,20 @@ class SalesResultsViewController: UIViewController {
         view.addSubview(deleteListButton)
     }
     
+    
+    //MARK: - Functions
+    func setupBindings() {
+        viewModel.$shops
+            .receive(on: RunLoop.main)
+            .sink { [weak self] _ in
+                self?.prodSoldPicker.reloadAllComponents()
+                if let firstSoldProduct = self?.viewModel.shops.first {
+                    self?.saleSelect = firstSoldProduct.prodName
+                }
+            }
+            .store(in: &cancellables)
+    }
+    
 }
 
 
@@ -248,6 +274,17 @@ extension SalesResultsViewController: UIPickerViewDelegate, UIPickerViewDataSour
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return data.count
+        return viewModel.shops.count
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return viewModel.shops[row].prodName
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        if pickerView == prodSoldPicker {
+            let selectedProduct = viewModel.shops[row]
+            saleSelect = selectedProduct.prodName
+        }
     }
 }
