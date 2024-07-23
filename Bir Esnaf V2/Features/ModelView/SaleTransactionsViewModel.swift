@@ -19,6 +19,29 @@ class SaleTransactionsViewModel: ObservableObject {
     
     private var cancellables = Set<AnyCancellable>()
     
+    func updateSale(_ sale: Sale) {
+        SaleService.shared.updateSale(saleId: sale.saleId!, userMail: sale.userMail!, prodName: sale.prodName!, salePrice: Double(sale.salePrice!) ?? 0.0, saleTotal: Double(sale.saleTotal!) ?? 0.0, saleTotalPrice: Double(sale.saleTotalPrice!) ?? 0.0, saleDate: sale.saleDate!) 
+            .sink(receiveCompletion: { completion in
+                switch completion {
+                case .failure(let error):
+                    print("Error update sale: \(error)")
+                case .finished:
+                    print("Finished update sale")
+                }
+            }, receiveValue: { success in
+                if success {
+                    print("Sale update successfully")
+                    if let currentUser = Auth.auth().currentUser {
+                        let uid = currentUser.uid
+                        self.fetchSales(for: uid)
+                    }
+                } else {
+                    print("Failed to update sale")
+                }
+            })
+            .store(in: &cancellables)
+    }
+    
     func addSale(_ sale: Sale) {
         SaleService.shared.addSale(userMail: sale.userMail!, prodName: sale.prodName!, salePrice: Double(sale.salePrice!) ?? 0.0, saleTotal: Double(sale.saleTotal!) ?? 0.0, saleTotalPrice: Double(sale.saleTotalPrice!) ?? 0.0, saleDate: sale.saleDate!)
             .sink(receiveCompletion: { completion in

@@ -19,6 +19,32 @@ class SaleService {
         let message: String
     }
     
+    func updateSale(saleId: String, userMail: String, prodName: String, salePrice: Double, saleTotal: Double, saleTotalPrice: Double, saleDate: String) -> AnyPublisher<Bool, Error> {
+        
+        guard let url = URL(string: "https://lionelo.tech/birEsnaf/updateSale.php") else {
+            fatalError("Invalid URL")
+        }
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        let postString = "userMail=\(userMail)&saleId=\(saleId)&prodName=\(prodName)&salePrice=\(salePrice)&saleTotal=\(saleTotal)&saleTotalPrice=\(saleTotalPrice)&saleDate=\(saleDate)"
+        request.httpBody = postString.data(using: .utf8)
+        
+        return URLSession.shared.dataTaskPublisher(for: request)
+            .tryMap { result -> Bool in
+                guard let httpResponse = result.response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
+                    throw URLError(.badServerResponse)
+                }
+                
+                guard let json = try JSONSerialization.jsonObject(with: result.data, options: []) as? [String: Any], let success = json["success"] as? Int else {
+                    throw URLError(.cannotParseResponse)
+                }
+                return success == 1
+            }
+            .receive(on: DispatchQueue.main)
+            .eraseToAnyPublisher()
+    }
+    
     func addSale(userMail: String, prodName: String, salePrice: Double, saleTotal: Double, saleTotalPrice: Double, saleDate: String) -> AnyPublisher<Bool,Error> {
         guard let url = URL(string: "https://lionelo.tech/birEsnaf/addSale.php") else {
             fatalError("Invalid URL")

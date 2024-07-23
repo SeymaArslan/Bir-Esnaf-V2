@@ -7,11 +7,20 @@
 
 import UIKit
 import SnapKit
+import FirebaseAuth
+import Combine
 
 class UpdateSalesTransactionsViewController: UIViewController {
     
+    private var saleId: Int?
+    
+    private var cancellables = Set<AnyCancellable>()
+    
+    var prodSelected: String?
+    var prodSelect: String?
+    
+    var viewModel = SaleTransactionsViewModel()
     var selectedSale: Sale?
-    var data: [String] = ["Test1", "Test2", "Test3", "Test4", "Test5", "Test6",  "Test7",  "Test8",  "Test9", "Test10"]
     
     //MARK: - Create UI
     private let backgroundImage: UIImageView = {
@@ -140,6 +149,13 @@ class UpdateSalesTransactionsViewController: UIViewController {
         fetchData()
         addDelegate()
         configuration()
+        
+        if let currentUser = Auth.auth().currentUser {
+            let uid = currentUser.uid
+            viewModel.fetchProductListForSale(for: uid)
+        }
+        
+        setupBindings()
     }
     
     
@@ -152,7 +168,7 @@ class UpdateSalesTransactionsViewController: UIViewController {
     
     //MARK: - Button Actions
     @objc func updateButtonPressed() {
-        print("updateButtonPressed")
+        updateSale()
     }
     
     @objc func closeButtonPressed() {
@@ -270,6 +286,7 @@ class UpdateSalesTransactionsViewController: UIViewController {
             quantityOrPiece.text = sale.saleTotal
             totalPrice.text = sale.saleTotalPrice
             date.text = sale.saleDate
+            prodSelected = sale.prodName
         }
     }
     
@@ -297,6 +314,42 @@ class UpdateSalesTransactionsViewController: UIViewController {
         datePicker.datePickerMode = .date
     }
     
+    
+    //MARK: - Functions
+    func setupBindings() {
+        viewModel.$products
+            .receive(on: RunLoop.main)
+            .sink { [weak self] _ in
+                self?.prodPicker.reloadAllComponents()
+                
+                if let prodSelected = self?.prodSelected, let prodIndex = self?.viewModel.products.firstIndex(where: { $0.prodName == prodSelected }) {
+                    self?.prodPicker.selectRow(prodIndex, inComponent: 0, animated: false)
+                    print("selected = \(prodSelected)")
+                } else if let firstProduct = self?.viewModel.products.first {
+                    self?.prodSelected = firstProduct.prodName
+                }
+            }
+            .store(in: &cancellables)
+    }
+ 
+    func updateSale() {
+        if let currentUser = Auth.auth().currentUser {
+            let uid = currentUser.uid
+            
+            guard let date = date.text,
+                  let price = prodPrice.text?.replacingOccurrences(of: ",", with: "."),
+                  let total = quantityOrPiece.text?.replacingOccurrences(of: ",", with: "."),
+                  let totalPrice = totalPrice.text?.replacingOccurrences(of: ",", with: ".") else {
+                return
+            }
+            
+            let updateSale = Sale(saleId: selectedSale?.saleId, userMail: uid, prodName: prodSelect, salePrice: price, saleTotal: total, saleTotalPrice: totalPrice, saleDate: date, count: nil)
+            
+            viewModel.updateSale(updateSale)
+            dismiss(animated: true, completion: nil)
+        }
+    }
+    
 }
 
 
@@ -306,9 +359,21 @@ extension UpdateSalesTransactionsViewController: UIPickerViewDelegate, UIPickerV
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return data.count
+        return viewModel.products.count
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return viewModel.products[row].prodName
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        if pickerView == prodPicker {
+            let selectedProduct = viewModel.products[row]
+            prodSelect = selectedProduct.prodName
+        }
     }
 }
+
 
 extension UpdateSalesTransactionsViewController: UITextFieldDelegate {
     @objc func dismissKeyboard() {
