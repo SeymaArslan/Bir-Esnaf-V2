@@ -12,6 +12,8 @@ import FirebaseAuth
 
 class SalesResultsViewController: UIViewController {
     
+   
+    
     private var cancellables = Set<AnyCancellable>()
     
     var saleSelect: String?
@@ -74,7 +76,7 @@ class SalesResultsViewController: UIViewController {
         label.text = "0 ₺"
         label.font = UIFont.systemFont(ofSize: 15, weight: .medium)
         return label
-    }()
+    }()  // ürünün toplam satış kar/zarar
     
     private let totalProfitAmountTitle: UILabel = {
         let label = UILabel()
@@ -90,7 +92,7 @@ class SalesResultsViewController: UIViewController {
         label.font = UIFont.systemFont(ofSize: 15, weight: .medium)
         label.textColor = UIColor(named: Colors.orange)
         return label
-    }()
+    }() // toplam satışların kar/zarar
     
     private let calculateButton: UIButton = {
         let button = UIButton()
@@ -265,6 +267,28 @@ class SalesResultsViewController: UIViewController {
             .store(in: &cancellables)
     }
     
+    func productSalesProfitAmount() {
+        if let currentUser = Auth.auth().currentUser {
+            let uid = currentUser.uid
+            viewModel.productSalesProfitAmount(for: uid, productName: saleSelect!)
+            
+            if let str = self.fetchShopList.first?.totalProfitAmount {
+                if let doubleStr = Double(str) {
+                    if doubleStr > 0 {
+                        DispatchQueue.main.async {
+                            self.profitAmount.text = str + " ₺"
+                            self.profitAmount.textColor = UIColor(named: "customColor")
+                        }
+                    } else if doubleStr < 0 {
+                        DispatchQueue.main.async {
+                            self.profitAmount.text = str + " ₺"
+                            self.profitAmount.textColor = .red
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
 
 
