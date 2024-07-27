@@ -18,24 +18,24 @@ class ShopViewModel: ObservableObject {
     
     private var cancellables = Set<AnyCancellable>()
     
-//    func sumAllSellProducts(for userMail: String) {
-//        ShopService.shared.sumAllSellProducts(for: userMail)
-//            .sink { completion in
-//                switch completion {
-//                case .failure(let error):
-//                    print("Error fetching sum products: \(error)")
-//                case .finished:
-//                    break
-//                }
-//            } receiveValue: { shopsData in
-//                if let success = shopsData.success, success == 1 {
-//                    self.shops = shopsData.shop ?? []
-//                } else {
-//                    print("Failed to fetch shops")
-//                }
-//            }
-//            .store(in: &cancellables)
-//    }
+    func sumAllSellProducts(for userMail: String) {
+        ShopService.shared.sumAllSellProducts(for: userMail)
+            .sink { completion in
+                switch completion {
+                case .failure(let error):
+                    print("Error fetching sum products: \(error)")
+                case .finished:
+                    break
+                }
+            } receiveValue: { shopsData in
+                if let success = shopsData.success, success == 1 {
+                    self.shops = shopsData.shop ?? []
+                } else {
+                    print("Failed to fetch shops")
+                }
+            }
+            .store(in: &cancellables)
+    }
     
     
     func productSalesProfitAmount(for userMail: String, productName: String) {

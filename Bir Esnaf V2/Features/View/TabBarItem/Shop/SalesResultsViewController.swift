@@ -12,7 +12,8 @@ import FirebaseAuth
 
 class SalesResultsViewController: UIViewController {
     
-   
+    private var sumShopList = [Shop]()
+    private var fetchShopList = [Shop]()
     
     private var cancellables = Set<AnyCancellable>()
     
@@ -267,6 +268,31 @@ class SalesResultsViewController: UIViewController {
             .store(in: &cancellables)
     }
     
+    
+    func sumAllSellProducts() {
+        if let currentUser = Auth.auth().currentUser {
+            let uid = currentUser.uid
+            viewModel.sumAllSellProducts(for: uid)
+                if let string = self.sumShopList.first?.totalProfitAmount {
+                    if let doubleStr = Double(string) {
+                        if doubleStr > 0 {
+                            DispatchQueue.main.async {
+                                self.totalProfitAmount.text = string + " ₺"
+                                self.totalProfitAmount.textColor = UIColor(named: "customColor")
+                            }
+                        } else {
+                            DispatchQueue.main.async {
+                                self.totalProfitAmount.text = string + " ₺"
+                                self.totalProfitAmount.textColor = .red
+                            }
+                        }
+                    }
+                }
+            
+        }
+    }
+    
+    
     func productSalesProfitAmount() {
         if let currentUser = Auth.auth().currentUser {
             let uid = currentUser.uid
@@ -276,19 +302,22 @@ class SalesResultsViewController: UIViewController {
                 if let doubleStr = Double(str) {
                     if doubleStr > 0 {
                         DispatchQueue.main.async {
-                            self.profitAmount.text = str + " ₺"
-                            self.profitAmount.textColor = UIColor(named: "customColor")
+                            self.prodSalesProfitAmount.text = str + " ₺"
+                            self.prodSalesProfitAmount.textColor = UIColor(named: "customColor")
                         }
                     } else if doubleStr < 0 {
                         DispatchQueue.main.async {
-                            self.profitAmount.text = str + " ₺"
-                            self.profitAmount.textColor = .red
+                            self.prodSalesProfitAmount.text = str + " ₺"
+                            self.prodSalesProfitAmount.textColor = .red
                         }
                     }
                 }
             }
         }
     }
+    
+    
+    
 }
 
 
