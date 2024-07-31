@@ -11,7 +11,16 @@ import FirebaseAuth
 
 class ShopViewModel: ObservableObject {
     
+    @Published var firstShop: Shop?
+    @Published var totalProfit: String = "0 ₺"
+    @Published var selectedShop: Shop?
+    
     @Published var productSalesProfitAmountList: [Shop] = []
+    
+    @Published var selectedProduct: Shop?
+    
+    @Published var sumShopList: [Shop] = []
+    @Published var fetchShopList: [Shop] = []
     
     @Published var shopData: ShopData?
     @Published var shops: [Shop] = []
@@ -37,9 +46,10 @@ class ShopViewModel: ObservableObject {
             .store(in: &cancellables)
     }
     
-    
+    // ShopService sınıfındaki fonksiyon
     func productSalesProfitAmount(for userMail: String, productName: String) {
         ShopService.shared.productSalesProfitAmount(for: userMail, productName: productName)
+            .receive(on: DispatchQueue.main)
             .sink { completion in
                 switch completion {
                 case .failure(let error):
@@ -47,15 +57,12 @@ class ShopViewModel: ObservableObject {
                 case .finished:
                     break
                 }
-            } receiveValue: { shopsData in
-                if let success = shopsData.success, success == 1 {
-                    self.shops = shopsData.shop ?? []
-                } else {
-                    print("Failed to fetch shops")
-                }
+            } receiveValue: { [weak self] shopsData in
+                self?.selectedShop = shopsData.shop?.first
             }
             .store(in: &cancellables)
     }
+    
     
     func getAllShops(for userMail: String) {
         ShopService.shared.getAllShops(for: userMail)
@@ -69,6 +76,7 @@ class ShopViewModel: ObservableObject {
             } receiveValue: { shopsData in
                 if let success = shopsData.success, success == 1 {
                     self.shops = shopsData.shop ?? []
+                    self.selectedProduct = self.shops.first
                 } else {
                     print("Failed to fetch shops")
                 }
@@ -77,4 +85,3 @@ class ShopViewModel: ObservableObject {
     }
     
 }
-

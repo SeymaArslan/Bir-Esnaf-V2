@@ -52,13 +52,13 @@ class SalesResultsViewController: UIViewController {
     }()
     
     private let prodSoldPicker: UIPickerView = {
-      let picker = UIPickerView()
+        let picker = UIPickerView()
         
         return picker
     }()
     
     private let pickerPATitleview: UIView = {
-       let view = UIView()
+        let view = UIView()
         view.backgroundColor = UIColor(named: Colors.blue)
         return view
     }()
@@ -105,7 +105,7 @@ class SalesResultsViewController: UIViewController {
     }()
     
     private let calDelView: UIView = {
-       let view = UIView()
+        let view = UIView()
         view.backgroundColor = UIColor(named: Colors.blue)
         return view
     }()
@@ -123,16 +123,17 @@ class SalesResultsViewController: UIViewController {
     //MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         addDelegates()
         configuration()
         
+        setupBindings()
+
         if let currentUser = Auth.auth().currentUser {
             let uid = currentUser.uid
             viewModel.getAllShops(for: uid)
         }
-        
-        setupBindings()
+
     }
     
     //MARK: - Delegates
@@ -141,8 +142,8 @@ class SalesResultsViewController: UIViewController {
         prodSoldPicker.dataSource = self
     }
     
-
-//MARK: - Button Actions
+    
+    //MARK: - Button Actions
     @objc func deleteListButtonPressed() {
         print("deleteListButtonPressed")
     }
@@ -206,7 +207,7 @@ class SalesResultsViewController: UIViewController {
             make.leading.equalTo(prodSalesProfitAmountTitle.snp.leading)
             make.top.equalTo(prodSalesProfitAmountTitle.snp.bottom).offset(20)
         }
-
+        
         
         totalProfitAmount.snp.makeConstraints { make in
             make.leading.equalTo(totalProfitAmountTitle.snp.trailing).offset(10)
@@ -262,62 +263,68 @@ class SalesResultsViewController: UIViewController {
             .sink { [weak self] _ in
                 self?.prodSoldPicker.reloadAllComponents()
                 if let firstSoldProduct = self?.viewModel.shops.first {
-                    self?.saleSelect = firstSoldProduct.prodName
+                    self?.updateProfitAmount(for: firstSoldProduct)
+                }
+            }
+            .store(in: &cancellables)
+        
+        viewModel.$selectedShop
+            .receive(on: RunLoop.main)
+            .sink { [weak self] shop in
+                if let selectedShop = shop {
+                    self?.updateProfitAmount(for: selectedShop)
                 }
             }
             .store(in: &cancellables)
     }
     
-    
-    func sumAllSellProducts() {
+    func setupInitialSelection() {
         if let currentUser = Auth.auth().currentUser {
             let uid = currentUser.uid
-            viewModel.sumAllSellProducts(for: uid)
-                if let string = self.sumShopList.first?.totalProfitAmount {
-                    if let doubleStr = Double(string) {
-                        if doubleStr > 0 {
-                            DispatchQueue.main.async {
-                                self.totalProfitAmount.text = string + " ₺"
-                                self.totalProfitAmount.textColor = UIColor(named: "customColor")
-                            }
-                        } else {
-                            DispatchQueue.main.async {
-                                self.totalProfitAmount.text = string + " ₺"
-                                self.totalProfitAmount.textColor = .red
-                            }
-                        }
-                    }
-                }
-            
-        }
-    }
-    
-    
-    func productSalesProfitAmount() {
-        if let currentUser = Auth.auth().currentUser {
-            let uid = currentUser.uid
-            viewModel.productSalesProfitAmount(for: uid, productName: saleSelect!)
-            
-            if let str = self.fetchShopList.first?.totalProfitAmount {
-                if let doubleStr = Double(str) {
-                    if doubleStr > 0 {
-                        DispatchQueue.main.async {
-                            self.prodSalesProfitAmount.text = str + " ₺"
-                            self.prodSalesProfitAmount.textColor = UIColor(named: "customColor")
-                        }
-                    } else if doubleStr < 0 {
-                        DispatchQueue.main.async {
-                            self.prodSalesProfitAmount.text = str + " ₺"
-                            self.prodSalesProfitAmount.textColor = .red
-                        }
-                    }
-                }
+            if let firstProductName = viewModel.shops.first?.prodName {
+                viewModel.productSalesProfitAmount(for: uid, productName: firstProductName)
             }
         }
     }
     
+    private func updateProfitAmount(for shop: Shop) {
+        if let totalProfit = shop.totalProfitAmount {
+            prodSalesProfitAmount.text = totalProfit + " ₺"
+            prodSalesProfitAmount.textColor = (Double(totalProfit) ?? 0) > 0 ? UIColor(named: "customColor") : .red
+        }
+    }
     
+    //    func sumAllSellProducts() {
+    //        if let currentUser = Auth.auth().currentUser {
+    //            let uid = currentUser.uid
+    //            viewModel.sumAllSellProducts(for: uid)
+    //            if let string = self.sumShopList.first?.totalProfitAmount {
+    //                if let doubleStr = Double(string) {
+    //                    DispatchQueue.main.async {
+    //                        self.totalProfitAmount.text = string + " ₺"
+    //                        self.totalProfitAmount.textColor = doubleStr > 0 ? UIColor(named: "customColor") : .red
+    //                    }
+    //                }
+    //            }
+    //        }
+    //    }
     
+    //    func productSalesProfitAmount() {
+    //        if let currentUser = Auth.auth().currentUser, let saleSelected = saleSelect {
+    //            let uid = currentUser.uid
+    //
+    //            viewModel.productSalesProfitAmount(for: uid, productName: saleSelected)
+    //
+    //            if let str = self.fetchShopList.first?.totalProfitAmount {
+    //                if let doubleStr = Double(str) {
+    //                    DispatchQueue.main.async {
+    //                        self.prodSalesProfitAmount.text = str + " ₺"
+    //                        self.prodSalesProfitAmount.textColor = doubleStr > 0 ? UIColor(named: "customColor") : .red
+    //                    }
+    //                }
+    //            }
+    //        }
+    //    }
 }
 
 
@@ -335,9 +342,21 @@ extension SalesResultsViewController: UIPickerViewDelegate, UIPickerViewDataSour
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        if pickerView == prodSoldPicker {
-            let selectedProduct = viewModel.shops[row]
-            saleSelect = selectedProduct.prodName
+//        if pickerView == prodSoldPicker {
+//            let selectedProduct = viewModel.shops[row]
+//            saleSelect = selectedProduct.prodName
+//            
+//            if let currentUser = Auth.auth().currentUser {
+//                let uid = currentUser.uid
+//                viewModel.productSalesProfitAmount(for: uid, productName: saleSelect!)
+//            }
+//        }
+        
+        if let currentUser = Auth.auth().currentUser {
+            let uid = currentUser.uid
+            let selectedShop = viewModel.shops[row]
+            viewModel.productSalesProfitAmount(for: uid, productName: selectedShop.prodName ?? "")
         }
+        
     }
 }

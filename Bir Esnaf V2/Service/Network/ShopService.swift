@@ -36,7 +36,8 @@ class ShopService {
             .eraseToAnyPublisher()
     }
     
-    func productSalesProfitAmount(for userMail: String, productName: String) -> AnyPublisher<ShopData, Error> { 
+
+    func productSalesProfitAmount(for userMail: String, productName: String) -> AnyPublisher<ShopData, Error> {
         guard let url = URL(string: "https://lionelo.tech/birEsnaf/fetchShop.php") else {
             fatalError("Invalid url")
         }
