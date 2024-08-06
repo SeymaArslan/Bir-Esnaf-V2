@@ -145,11 +145,14 @@ class SalesResultsViewController: UIViewController {
     
     //MARK: - Button Actions
     @objc func deleteListButtonPressed() {
-        print("deleteListButtonPressed")
+        clearShopAndSaleList()
     }
     
     @objc func calculateButtonPressed() {
-        print("calculateButtonPressed")
+        if let currentUser = Auth.auth().currentUser {
+            let uid = currentUser.uid
+            viewModel.sumAllSellProducts(for: uid)
+        }
     }
     
     @objc func closeButtonPressed() {
@@ -257,6 +260,20 @@ class SalesResultsViewController: UIViewController {
     
     
     //MARK: - Functions
+    private func clearShopAndSaleList() {
+        let alertController = UIAlertController(title: "Satış sonuçları listesini temizlemek üzeresiniz, satışı yapılan tüm ürünlerin sonuçları silinecektir.", message: "Devam etmek için Tamam'a tıklayın.", preferredStyle: .alert)
+        let cancelAct = UIAlertAction(title: "İptal", style: .cancel)
+        alertController.addAction(cancelAct)
+        let okAct = UIAlertAction(title: "Tamam", style: .destructive) { [weak self] _ in
+            if let currentUser = Auth.auth().currentUser {
+                let uid = currentUser.uid
+                self?.viewModel.clearAllListInShop(userMail: uid)
+            }
+        }
+        alertController.addAction(okAct)
+        present(alertController, animated: true)
+    }
+    
     func setupBindings() {
         viewModel.$shops
             .receive(on: RunLoop.main)
@@ -276,6 +293,14 @@ class SalesResultsViewController: UIViewController {
                 }
             }
             .store(in: &cancellables)
+        
+        viewModel.$totalProfit
+            .receive(on: RunLoop.main)
+            .sink { [weak self] totalProfit in
+                self?.totalProfitAmount.text = totalProfit
+                self?.totalProfitAmount  .textColor = (Double(totalProfit.replacingOccurrences(of: " ₺", with: "")) ?? 0) > 0 ? UIColor(named: "customColor") : .red
+            }
+            .store(in: &cancellables)
     }
     
     func setupInitialSelection() {
@@ -293,38 +318,7 @@ class SalesResultsViewController: UIViewController {
             prodSalesProfitAmount.textColor = (Double(totalProfit) ?? 0) > 0 ? UIColor(named: "customColor") : .red
         }
     }
-    
-    //    func sumAllSellProducts() {
-    //        if let currentUser = Auth.auth().currentUser {
-    //            let uid = currentUser.uid
-    //            viewModel.sumAllSellProducts(for: uid)
-    //            if let string = self.sumShopList.first?.totalProfitAmount {
-    //                if let doubleStr = Double(string) {
-    //                    DispatchQueue.main.async {
-    //                        self.totalProfitAmount.text = string + " ₺"
-    //                        self.totalProfitAmount.textColor = doubleStr > 0 ? UIColor(named: "customColor") : .red
-    //                    }
-    //                }
-    //            }
-    //        }
-    //    }
-    
-    //    func productSalesProfitAmount() {
-    //        if let currentUser = Auth.auth().currentUser, let saleSelected = saleSelect {
-    //            let uid = currentUser.uid
-    //
-    //            viewModel.productSalesProfitAmount(for: uid, productName: saleSelected)
-    //
-    //            if let str = self.fetchShopList.first?.totalProfitAmount {
-    //                if let doubleStr = Double(str) {
-    //                    DispatchQueue.main.async {
-    //                        self.prodSalesProfitAmount.text = str + " ₺"
-    //                        self.prodSalesProfitAmount.textColor = doubleStr > 0 ? UIColor(named: "customColor") : .red
-    //                    }
-    //                }
-    //            }
-    //        }
-    //    }
+
 }
 
 
@@ -342,16 +336,6 @@ extension SalesResultsViewController: UIPickerViewDelegate, UIPickerViewDataSour
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-//        if pickerView == prodSoldPicker {
-//            let selectedProduct = viewModel.shops[row]
-//            saleSelect = selectedProduct.prodName
-//            
-//            if let currentUser = Auth.auth().currentUser {
-//                let uid = currentUser.uid
-//                viewModel.productSalesProfitAmount(for: uid, productName: saleSelect!)
-//            }
-//        }
-        
         if let currentUser = Auth.auth().currentUser {
             let uid = currentUser.uid
             let selectedShop = viewModel.shops[row]

@@ -18,8 +18,7 @@ class ShopViewModel: ObservableObject {
     @Published var productSalesProfitAmountList: [Shop] = []
     
     @Published var selectedProduct: Shop?
-    
-    @Published var sumShopList: [Shop] = []
+
     @Published var fetchShopList: [Shop] = []
     
     @Published var shopData: ShopData?
@@ -27,8 +26,26 @@ class ShopViewModel: ObservableObject {
     
     private var cancellables = Set<AnyCancellable>()
     
+    func clearAllListInShop(userMail: String) {
+        ShopService.shared.clearAllListInShop(userMail: userMail)
+            .receive(on: DispatchQueue.main)
+            .sink { completion in
+                switch completion {
+                case .failure(let error):
+                    print("Failed to clear shop list: \(error)")
+                case .finished:
+                    break
+                }
+            } receiveValue: { [weak self] _ in
+                self?.shops.removeAll()
+                self?.totalProfit = "0 ₺"
+            }
+            .store(in: &cancellables)
+    }
+    
     func sumAllSellProducts(for userMail: String) {
         ShopService.shared.sumAllSellProducts(for: userMail)
+            .receive(on: DispatchQueue.main)
             .sink { completion in
                 switch completion {
                 case .failure(let error):
@@ -36,9 +53,9 @@ class ShopViewModel: ObservableObject {
                 case .finished:
                     break
                 }
-            } receiveValue: { shopsData in
-                if let success = shopsData.success, success == 1 {
-                    self.shops = shopsData.shop ?? []
+            } receiveValue: { [weak self] sumShopData in
+                if let totalAmount = sumShopData.shop?.first?.totalProfitAmount {
+                    self?.totalProfit = totalAmount + " ₺"
                 } else {
                     print("Failed to fetch shops")
                 }
@@ -66,6 +83,7 @@ class ShopViewModel: ObservableObject {
     
     func getAllShops(for userMail: String) {
         ShopService.shared.getAllShops(for: userMail)
+            .receive(on: DispatchQueue.main)
             .sink { completion in
                 switch completion {
                 case .failure(let error):
