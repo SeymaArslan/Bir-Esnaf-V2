@@ -9,9 +9,11 @@ import Foundation
 import Combine
 import FirebaseAuth
 
+
 class ShopViewModel: ObservableObject {
-    
-    @Published var firstShop: Shop?
+
+    @Published var fetchFirstShopList: [Shop] = []
+
     @Published var totalProfit: String = "0 ₺"
     @Published var selectedShop: Shop?
     
@@ -25,6 +27,27 @@ class ShopViewModel: ObservableObject {
     @Published var shops: [Shop] = []
     
     private var cancellables = Set<AnyCancellable>()
+    
+    func getFirstSale(userMail: String) {
+        ShopService.shared.getFirstSale(for: userMail)
+            .receive(on: DispatchQueue.main)
+            .sink { completion in
+                switch completion {
+                case .failure(let error):
+                    print("Error fetching first sale: \(error)")
+                case .finished:
+                    break
+                }
+            } receiveValue: { shopsData in
+                if let success = shopsData.success, success == 1 {
+                    self.fetchFirstShopList = shopsData.shop ?? []
+                } else {
+                    print("Failed to fetch shops")
+                }
+            }
+            .store(in: &cancellables)
+    }
+
     
     func clearAllListInShop(userMail: String) {
         ShopService.shared.clearAllListInShop(userMail: userMail)

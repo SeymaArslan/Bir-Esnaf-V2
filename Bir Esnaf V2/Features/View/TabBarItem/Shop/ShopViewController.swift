@@ -7,9 +7,14 @@
 
 import UIKit
 import SnapKit
+import FirebaseAuth
+import Combine
 
 class ShopViewController: UIViewController {
-
+    var firstShopList = [Shop]()
+    
+    var viewModel = ShopViewModel()
+    
     private let backgroundImage: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: Images.background)
@@ -40,7 +45,7 @@ class ShopViewController: UIViewController {
     }()
     
     private let salesButton: UIButton = {
-       let button = UIButton()
+        let button = UIButton()
         button.setTitle("Sales Transactions", for: .normal)
         button.setTitleColor(UIColor(named: Colors.orange), for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
@@ -60,8 +65,13 @@ class ShopViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        getFirstShop()
+        
         configure()
+        
+        
     }
+    
     
     
     func configure() {
@@ -123,8 +133,26 @@ class ShopViewController: UIViewController {
     
     @objc func saleResultButtonPressed() {
         let salesResultPage = SalesResultsViewController()
+        salesResultPage.firstShopList = viewModel.fetchFirstShopList
+        if let data = viewModel.fetchFirstShopList.first?.totalProfitAmount {
+            print(data)
+        }
         salesResultPage.modalPresentationStyle = .fullScreen
         present(salesResultPage, animated: true, completion: nil)
+    }
+    
+    
+    //MARK: - Functions
+    private func getFirstShop() {
+        if let currentUser = Auth.auth().currentUser {
+            let userMail = currentUser.uid
+            viewModel.getFirstSale(userMail: userMail)
+            if let data = viewModel.fetchFirstShopList.first {
+                print(data)
+            } else {
+                print("Yok")
+            }
+        }
     }
     
 }

@@ -19,6 +19,28 @@ class ShopService {
         let message: String
     }
     
+    func getFirstSale(for userMail: String) -> AnyPublisher<ShopData, Error> {
+        guard let url = URL(string: "https://lionelo.tech/birEsnaf/getFirstSaleDataInShop.php") else {
+            fatalError("Invalid url.")
+        }
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        let postString = "userMail=\(userMail)"
+        request.httpBody = postString.data(using: .utf8)
+        
+        return URLSession.shared.dataTaskPublisher(for: request)
+            .tryMap { result -> Data in
+                guard let response = result.response as? HTTPURLResponse, response.statusCode == 200 else {
+                    throw URLError(.badServerResponse)
+                }
+                return result.data
+            }
+            .decode(type: ShopData.self, decoder: JSONDecoder())
+            .receive(on: DispatchQueue.main)
+            .eraseToAnyPublisher()
+    }
+    
     func clearAllListInShop(userMail: String) -> AnyPublisher<Bool, Error> {
         guard let url = URL(string: "https://lionelo.tech/birEsnaf/clearAllListInShop.php") else {
             fatalError("Invalid Error")

@@ -12,6 +12,8 @@ import FirebaseAuth
 
 class SalesResultsViewController: UIViewController {
     
+    var firstShopList = [Shop]()
+    
     private var sumShopList = [Shop]()
     private var fetchShopList = [Shop]()
     
@@ -128,7 +130,8 @@ class SalesResultsViewController: UIViewController {
         configuration()
         
         setupBindings()
-
+        setupInitialSelection()
+        
         if let currentUser = Auth.auth().currentUser {
             let uid = currentUser.uid
             viewModel.getAllShops(for: uid)
@@ -298,7 +301,7 @@ class SalesResultsViewController: UIViewController {
             .receive(on: RunLoop.main)
             .sink { [weak self] totalProfit in
                 self?.totalProfitAmount.text = totalProfit
-                self?.totalProfitAmount  .textColor = (Double(totalProfit.replacingOccurrences(of: " ₺", with: "")) ?? 0) > 0 ? UIColor(named: "customColor") : .red
+                self?.totalProfitAmount.textColor = (Double(totalProfit.replacingOccurrences(of: " ₺", with: "")) ?? 0) > 0 ? UIColor(named: "customColor") : .red
             }
             .store(in: &cancellables)
     }
