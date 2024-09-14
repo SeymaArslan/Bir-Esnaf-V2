@@ -5,6 +5,9 @@
 //  Created by Seyma Arslan on 20.05.2024.
 //
 
+// sıra burada Satışları shop tablosuna ekleyeceğiz.
+
+
 import UIKit
 import SnapKit
 import Combine

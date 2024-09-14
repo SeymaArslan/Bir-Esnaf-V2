@@ -133,9 +133,8 @@ class ShopViewController: UIViewController {
     
     @objc func saleResultButtonPressed() {
         let salesResultPage = SalesResultsViewController()
-        salesResultPage.firstShopList = viewModel.fetchFirstShopList
         if let data = viewModel.fetchFirstShopList.first?.totalProfitAmount {
-            print(data)
+            salesResultPage.prodProfitAmount = data
         }
         salesResultPage.modalPresentationStyle = .fullScreen
         present(salesResultPage, animated: true, completion: nil)

@@ -19,6 +19,29 @@ class ProductService {
     
     private init() {}
     
+    func updateForSalesProduct(userMail: String, prodName: String, prodTotal: Double) -> AnyPublisher<Bool,Error> {
+        guard let url = URL(string: "https://lionelo.tech/birEsnaf/productUpdateWithSales.php") else {
+            fatalError("Invalid URL.")
+        }
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        let postString = "userMail=\(userMail)&prodName=\(prodName)&prodTotal=\(prodTotal)"
+        request.httpBody = postString.data(using: .utf8)
+        
+        return URLSession.shared.dataTaskPublisher(for: request)
+            .tryMap { result -> Bool in
+                guard let httpResult = result.response as? HTTPURLResponse, httpResult.statusCode == 200 else {
+                    throw URLError(.badServerResponse)
+                }
+                guard let json = try JSONSerialization.jsonObject(with: result.data, options: []) as? [String: Any], let success = json["success"] as? Int else {
+                    throw URLError(.cannotParseResponse)
+                }
+                return success == 1
+            }
+            .receive(on: DispatchQueue.main)
+            .eraseToAnyPublisher()
+    }
     
     func fetchProducts(for userMail: String) -> AnyPublisher<ProductData, Error> {
         guard let url = URL(string: "https://lionelo.tech/birEsnaf/getAllProduct.php") else {

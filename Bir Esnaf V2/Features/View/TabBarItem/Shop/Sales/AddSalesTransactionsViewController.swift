@@ -12,6 +12,12 @@ import FirebaseAuth
 
 class AddSalesTransactionsViewController: UIViewController {
     
+    var productViewModel = ProductViewModel()
+    var shopViewModel = ShopViewModel()
+    
+    var prodPriceAddShop: String?
+    var prodTotalAddShop: String?
+    
     private var cancellables = Set<AnyCancellable>()
     
     var prodSelect: String?
@@ -172,11 +178,20 @@ class AddSalesTransactionsViewController: UIViewController {
                   let date = date.text else {
                 return
             }
+            if let prodTotal = prodTotalAddShop, let prodPrice = prodPriceAddShop {
+                
+                if prodTotal >= saleTotal {
+                    let newSale = Sale(saleId: UUID().uuidString, userMail: uid, prodName: prodSelect, salePrice: salePrice, saleTotal: saleTotal, saleTotalPrice: saleTotalPrice, saleDate: date, count: nil)
+                    
+                    viewModel.addSale(newSale)
+                    if let doubleProdPrice = Double(prodPrice), let doubleProdTotal = Double(prodTotal), let prodS = prodSelect, let doubleSalePrice = Double(salePrice), let doubleSaleTotal = Double(saleTotalPrice)  {
+                        countProfitAmount(prodSelect: prodS, prodPrice: doubleProdPrice, prodTotal: doubleProdTotal, salePrice: doubleSalePrice, saleTotal: doubleSaleTotal)
+                    }
+                    dismiss(animated: true, completion: nil)
+                }
+            }
+
             
-            let newSale = Sale(saleId: UUID().uuidString, userMail: uid, prodName: prodSelect, salePrice: salePrice, saleTotal: saleTotal, saleTotalPrice: saleTotalPrice, saleDate: date, count: nil)
-            
-            viewModel.addSale(newSale)
-            dismiss(animated: true, completion: nil)
         }
     }
     
@@ -313,6 +328,28 @@ class AddSalesTransactionsViewController: UIViewController {
     
     
     //MARK: - Func
+    func countProfitAmount(prodSelect: String, prodPrice: Double, prodTotal: Double, salePrice: Double, saleTotal: Double) {
+        let priceDifference = salePrice - prodPrice // kar için
+        let totalRemainingProduct = prodTotal - saleTotal // Product güncelleme için prodTotal toplam ürün miktarı saleTotal satılan
+        let amount = priceDifference * saleTotal  // satış kar
+        if totalRemainingProduct > 0 {
+            if let currentUser = Auth.auth().currentUser {
+                let uid = currentUser.uid
+                shopViewModel.addSaleForShopping(userMail: uid, productName: prodSelect, totalProfitAmount: amount)
+                productViewModel.updateForSalesProduct(userMail: uid, prodName: prodSelect, prodTotal: totalRemainingProduct)
+            }
+        }
+        if totalRemainingProduct == 0 {
+            let alert = UIAlertController(title: "Error", message: "The sold item \(prodSelect) is out of stock", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
+            if let currentUser = Auth.auth().currentUser {
+                let uid = currentUser.uid
+                shopViewModel.addSaleForShopping(userMail: uid, productName: prodSelect, totalProfitAmount: amount)
+                productViewModel.updateForSalesProduct(userMail: uid, prodName: prodSelect, prodTotal: totalRemainingProduct)
+            }
+       }
+    }
+    
     func setupBindings() {
         viewModel.$products
             .receive(on: RunLoop.main)
@@ -320,6 +357,8 @@ class AddSalesTransactionsViewController: UIViewController {
                 self?.prodPicker.reloadAllComponents()
                 if let firstProduct = self?.viewModel.products.first {
                     self?.prodSelect = firstProduct.prodName
+                    self?.prodPriceAddShop = firstProduct.prodPrice
+                    self?.prodTotalAddShop = firstProduct.prodTotal
                 }
             }
             .store(in: &cancellables)
@@ -345,6 +384,8 @@ extension AddSalesTransactionsViewController: UIPickerViewDelegate, UIPickerView
         if pickerView == prodPicker {
             let selectedProduct = viewModel.products[row]
             prodSelect = selectedProduct.prodName
+            prodPriceAddShop = selectedProduct.prodPrice
+            prodTotalAddShop = selectedProduct.prodTotal
         }
     }
 }
@@ -370,4 +411,8 @@ extension AddSalesTransactionsViewController: UITextFieldDelegate {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         view.addGestureRecognizer(tapGesture)
     }
+}
+
+extension AddSalesTransactionsViewController {
+    
 }

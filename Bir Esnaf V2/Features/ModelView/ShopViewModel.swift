@@ -27,6 +27,30 @@ class ShopViewModel: ObservableObject {
     @Published var shops: [Shop] = []
     
     private var cancellables = Set<AnyCancellable>()
+
+    
+    func addSaleForShopping(userMail: String, productName: String, totalProfitAmount: Double) {
+        ShopService.shared.addShop(userMail: userMail, prodName: productName, totalProfitAmount: totalProfitAmount)
+            .sink(receiveCompletion: { completion in
+                switch completion {
+                case .failure(let error):
+                    print("Error adding sale for shopping: \(error)")
+                case .finished:
+                    break
+                }
+            }, receiveValue: { success in
+                if success {
+                    print("Sale for shopping added successfully")
+                    if let currentUser = Auth.auth().currentUser {
+                        let uid = currentUser.uid
+                        self.getAllShops(for: uid)
+                    }
+                } else {
+                    print("failed to add sale for shopping")
+                }
+            })
+            .store(in: &cancellables)
+    }
     
     func getFirstSale(userMail: String) {
         ShopService.shared.getFirstSale(for: userMail)
@@ -48,7 +72,6 @@ class ShopViewModel: ObservableObject {
             .store(in: &cancellables)
     }
 
-    
     func clearAllListInShop(userMail: String) {
         ShopService.shared.clearAllListInShop(userMail: userMail)
             .receive(on: DispatchQueue.main)

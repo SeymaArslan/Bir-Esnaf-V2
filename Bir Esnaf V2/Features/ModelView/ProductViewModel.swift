@@ -15,6 +15,29 @@ class ProductViewModel: ObservableObject {
     @Published var products: [Product] = []
     private var cancellables = Set<AnyCancellable>()
     
+    func updateForSalesProduct(userMail: String, prodName: String, prodTotal: Double) {
+        ProductService.shared.updateForSalesProduct(userMail: userMail, prodName: prodName, prodTotal: prodTotal)
+            .sink { completion in
+                switch completion {
+                case .failure(let error):
+                    print("Error update for sales product: \(error)")
+                case .finished:
+                    print("Finished update for sales product")
+                }
+            } receiveValue: { success in
+                if success {
+                    print("Product update successfully")
+                    if let currentUser = Auth.auth().currentUser {
+                        let uid = currentUser.uid
+                        self.fetchProducts(for: uid)
+                    }
+                } else {
+                    print("Failed to update product")
+                }
+            }
+            .store(in: &cancellables)
+        
+    }
 
     func fetchProducts(for userMail: String) {
         ProductService.shared.fetchProducts(for: userMail)

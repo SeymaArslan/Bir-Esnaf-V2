@@ -19,6 +19,30 @@ class ShopService {
         let message: String
     }
     
+    func addShop(userMail: String, prodName: String, totalProfitAmount: Double) -> AnyPublisher<Bool, Error> {
+        guard let url = URL(string: "https://lionelo.tech/birEsnaf/fetchProdListForSale.php") else {
+            fatalError("Invalid url.")
+        }
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        let postString = "userMail=\(userMail)&prodName=\(prodName)&totalProfitAmount=\(totalProfitAmount)"
+        request.httpBody = postString.data(using: .utf8)
+        
+        return URLSession.shared.dataTaskPublisher(for: request)
+            .tryMap { result -> Bool in
+                guard let httpResponse = result.response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
+                    throw URLError(.badServerResponse)
+                }
+                guard let json = try JSONSerialization.jsonObject(with: result.data, options: []) as? [String: Any], let success = json["success"] as? Int else {
+                    throw URLError(.cannotParseResponse)
+                }
+                return success == 1
+            }
+            .receive(on: DispatchQueue.main)
+            .eraseToAnyPublisher()
+    }
+    
     func getFirstSale(for userMail: String) -> AnyPublisher<ShopData, Error> {
         guard let url = URL(string: "https://lionelo.tech/birEsnaf/getFirstSaleDataInShop.php") else {
             fatalError("Invalid url.")

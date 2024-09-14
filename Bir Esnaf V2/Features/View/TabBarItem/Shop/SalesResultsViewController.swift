@@ -12,7 +12,7 @@ import FirebaseAuth
 
 class SalesResultsViewController: UIViewController {
     
-    var firstShopList = [Shop]()
+    var prodProfitAmount: String?
     
     private var sumShopList = [Shop]()
     private var fetchShopList = [Shop]()
@@ -139,6 +139,12 @@ class SalesResultsViewController: UIViewController {
 
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        getProfitFirstData()
+    }
+    
     //MARK: - Delegates
     func addDelegates() {
         prodSoldPicker.delegate = self
@@ -263,6 +269,11 @@ class SalesResultsViewController: UIViewController {
     
     
     //MARK: - Functions
+    private func getProfitFirstData() {
+        prodSalesProfitAmount.text = prodProfitAmount
+        prodSalesProfitAmount.textColor = (Double(prodProfitAmount!.replacingOccurrences(of: " ₺", with: "")) ?? 0) >= 0 ? UIColor(named: "customColor") : .red
+    }
+    
     private func clearShopAndSaleList() {
         let alertController = UIAlertController(title: "Satış sonuçları listesini temizlemek üzeresiniz, satışı yapılan tüm ürünlerin sonuçları silinecektir.", message: "Devam etmek için Tamam'a tıklayın.", preferredStyle: .alert)
         let cancelAct = UIAlertAction(title: "İptal", style: .cancel)
@@ -297,11 +308,12 @@ class SalesResultsViewController: UIViewController {
             }
             .store(in: &cancellables)
         
+
         viewModel.$totalProfit
             .receive(on: RunLoop.main)
             .sink { [weak self] totalProfit in
                 self?.totalProfitAmount.text = totalProfit
-                self?.totalProfitAmount.textColor = (Double(totalProfit.replacingOccurrences(of: " ₺", with: "")) ?? 0) > 0 ? UIColor(named: "customColor") : .red
+                self?.totalProfitAmount.textColor = (Double(totalProfit.replacingOccurrences(of: " ₺", with: "")) ?? 0) >= 0 ? UIColor(named: "customColor") : .red
             }
             .store(in: &cancellables)
     }
