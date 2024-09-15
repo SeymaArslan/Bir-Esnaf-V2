@@ -20,7 +20,7 @@ class AddSalesTransactionsViewController: UIViewController {
     
     private var cancellables = Set<AnyCancellable>()
     
-    var prodSelect: String?
+    var prodSelect = String()
     
     var viewModel = SaleTransactionsViewModel()
     
@@ -75,6 +75,7 @@ class AddSalesTransactionsViewController: UIViewController {
         textField.textColor = UIColor(named: Colors.label)
         textField.keyboardType = .decimalPad
         textField.borderStyle = .roundedRect
+        textField.addTarget(self, action: #selector(calculate), for: .editingChanged)
         return textField
     }()
     
@@ -92,6 +93,7 @@ class AddSalesTransactionsViewController: UIViewController {
         textField.textColor = UIColor(named: Colors.label)
         textField.keyboardType = .decimalPad
         textField.borderStyle = .roundedRect
+        textField.addTarget(self, action: #selector(calculate), for: .editingChanged)
         return textField
     }()
     
@@ -130,7 +132,7 @@ class AddSalesTransactionsViewController: UIViewController {
     
     private let saveButton: UIButton = {
         let button = UIButton()
-        button.setTitle("Update", for: .normal)
+        button.setTitle("Add", for: .normal)
         button.setTitleColor(UIColor(named: Colors.blue), for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 20, weight: .medium)
         button.addTarget(self, action: #selector(saveButtonPressed), for: .touchUpInside)
@@ -178,20 +180,18 @@ class AddSalesTransactionsViewController: UIViewController {
                   let date = date.text else {
                 return
             }
-            if let prodTotal = prodTotalAddShop, let prodPrice = prodPriceAddShop {
-                
-                if prodTotal >= saleTotal {
-                    let newSale = Sale(saleId: UUID().uuidString, userMail: uid, prodName: prodSelect, salePrice: salePrice, saleTotal: saleTotal, saleTotalPrice: saleTotalPrice, saleDate: date, count: nil)
-                    
-                    viewModel.addSale(newSale)
-                    if let doubleProdPrice = Double(prodPrice), let doubleProdTotal = Double(prodTotal), let prodS = prodSelect, let doubleSalePrice = Double(salePrice), let doubleSaleTotal = Double(saleTotalPrice)  {
-                        countProfitAmount(prodSelect: prodS, prodPrice: doubleProdPrice, prodTotal: doubleProdTotal, salePrice: doubleSalePrice, saleTotal: doubleSaleTotal)
-                    }
-                    dismiss(animated: true, completion: nil)
-                }
-            }
-
             
+            if let doubleSalePrice = Double(salePrice), let doubleSaleTotal = Double(saleTotal), let doubleSaleTotalPrice = Double(saleTotalPrice), let prodTotal = prodTotalAddShop, let prodPrice = prodPriceAddShop {
+                if let doubleProdT = Double(prodTotal), let doubleProdP = Double(prodPrice) {
+                    if doubleProdT >= doubleSaleTotal {
+                        
+                        viewModel.addSale(userMail: uid, prodName: prodSelect, salePrice: doubleSalePrice, saleTotal: doubleSaleTotal, saleTotalPrice: doubleSaleTotalPrice, saleDate: date)
+                        countProfitAmount(prodSelect: prodSelect, prodPrice: doubleProdP, prodTotal: doubleProdT, salePrice: doubleSalePrice, saleTotal: doubleSaleTotal)
+                        dismiss(animated: true, completion: nil)
+                    }
+                }
+
+            }
         }
     }
     
@@ -328,6 +328,15 @@ class AddSalesTransactionsViewController: UIViewController {
     
     
     //MARK: - Func
+    @objc func calculate() {
+        guard let price = Double(prodPrice.text ?? "Null"), let total = Double(quantityOrPiece.text ?? "Null") else {
+            totalPrice.text = "0 ₺"
+            return
+        }
+        let result = price * total
+        totalPrice.text = "\(result) ₺" 
+    }
+    
     func countProfitAmount(prodSelect: String, prodPrice: Double, prodTotal: Double, salePrice: Double, saleTotal: Double) {
         let priceDifference = salePrice - prodPrice // kar için
         let totalRemainingProduct = prodTotal - saleTotal // Product güncelleme için prodTotal toplam ürün miktarı saleTotal satılan
@@ -356,7 +365,7 @@ class AddSalesTransactionsViewController: UIViewController {
             .sink { [weak self] _ in
                 self?.prodPicker.reloadAllComponents()
                 if let firstProduct = self?.viewModel.products.first {
-                    self?.prodSelect = firstProduct.prodName
+                    self?.prodSelect = firstProduct.prodName!
                     self?.prodPriceAddShop = firstProduct.prodPrice
                     self?.prodTotalAddShop = firstProduct.prodTotal
                 }
@@ -383,7 +392,7 @@ extension AddSalesTransactionsViewController: UIPickerViewDelegate, UIPickerView
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         if pickerView == prodPicker {
             let selectedProduct = viewModel.products[row]
-            prodSelect = selectedProduct.prodName
+            prodSelect = selectedProduct.prodName!
             prodPriceAddShop = selectedProduct.prodPrice
             prodTotalAddShop = selectedProduct.prodTotal
         }

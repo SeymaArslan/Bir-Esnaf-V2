@@ -42,8 +42,8 @@ class SaleTransactionsViewModel: ObservableObject {
             .store(in: &cancellables)
     }
     
-    func addSale(_ sale: Sale) {
-        SaleService.shared.addSale(userMail: sale.userMail!, prodName: sale.prodName!, salePrice: Double(sale.salePrice!) ?? 0.0, saleTotal: Double(sale.saleTotal!) ?? 0.0, saleTotalPrice: Double(sale.saleTotalPrice!) ?? 0.0, saleDate: sale.saleDate!)
+    func addSale(userMail: String, prodName: String, salePrice: Double, saleTotal: Double, saleTotalPrice: Double, saleDate: String) {
+        SaleService.shared.addSale(userMail: userMail, prodName: prodName, salePrice: salePrice, saleTotal: saleTotal, saleTotalPrice: saleTotalPrice, saleDate: saleDate)
             .sink(receiveCompletion: { completion in
                 switch completion {
                 case .failure(let error):
