@@ -19,6 +19,28 @@ class CompanyService {
     
     private init() {}
     
+    func countCompanyForPurchase(userMail: String) -> AnyPublisher<CompanyBankData, Error> {
+        guard let url = URL(string: "https://lionelo.tech/birEsnaf/countCompBank.php") else {
+            fatalError("Invalid url.")
+        }
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        let postString = "userMail=\(userMail)"
+        request.httpBody = postString.data(using: .utf8)
+        
+        return URLSession.shared.dataTaskPublisher(for: request)
+            .tryMap { result -> Data in
+                guard let response = result.response as? HTTPURLResponse, response.statusCode == 200 else {
+                    throw URLError(.badServerResponse)
+                }
+                return result.data
+            }
+            .decode(type: CompanyBankData.self, decoder: JSONDecoder())
+            .receive(on: DispatchQueue.main)
+            .eraseToAnyPublisher()
+    }
+    
     func updateCompany(userMail: String, cbId: String, compName: String, compPhone: String, compMail: String, province: String, district: String, asbn: String, bankName: String, bankBranchName: String, bankBranchCode: String, bankAccountType: String, bankAccountName: String, bankAccountNum: Int, bankIban: String) -> AnyPublisher<Bool, Error> {
         
         guard let url = URL(string: "https://lionelo.tech/birEsnaf/updateCompany.php") else {

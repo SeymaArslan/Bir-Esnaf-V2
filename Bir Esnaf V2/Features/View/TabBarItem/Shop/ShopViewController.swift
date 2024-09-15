@@ -13,7 +13,11 @@ import Combine
 class ShopViewController: UIViewController {
     var firstShopList = [Shop]()
     
-    var viewModel = ShopViewModel()
+    var countCompany: String?
+    var compList = [CompanyBank]()
+    var companyViewModel = CompanyViewModel()
+    
+    var shopViewModel = ShopViewModel()
     
     private let backgroundImage: UIImageView = {
         let imageView = UIImageView()
@@ -41,6 +45,7 @@ class ShopViewController: UIViewController {
         button.setTitleColor(UIColor(named: Colors.orange), for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
         button.addTarget(self, action: #selector(purchaseButtonPressed), for: .touchUpInside)
+        button.isEnabled = true
         return button
     }()
     
@@ -122,8 +127,28 @@ class ShopViewController: UIViewController {
     
     //MARK: - Button Actions
     @objc func purchaseButtonPressed() {
-        let purchasePage = PurchaseTransactionsViewController()
-        navigationController?.pushViewController(purchasePage, animated: true)
+        if let currentUser = Auth.auth().currentUser {
+            let uid = currentUser.uid
+            companyViewModel.countCompanyForPurchase(for: uid)
+            compList = companyViewModel.countCompany
+            if let count = self.compList.first?.count {
+                self.countCompany = count
+                guard let countCompanySafe = (self.countCompany) else {
+                    return
+                }
+                if let intCountCompany = Int(countCompanySafe) {
+                    if intCountCompany < 1 {
+                        self.purchaseButton.isEnabled = false
+                        let alert = UIAlertController(title: "Insufficient Company", message: "Add company to activate the 'Purchase Transactions' feature", preferredStyle: .alert)
+                        alert.addAction(UIAlertAction(title: "I understand", style: .cancel, handler: nil))
+                    } else {
+                        self.purchaseButton.isEnabled = true
+                        let purchasePage = PurchaseTransactionsViewController()
+                        navigationController?.pushViewController(purchasePage, animated: true)
+                    }
+                }
+            }
+        }
     }
     
     @objc func salesButtonPressed() {
@@ -133,7 +158,7 @@ class ShopViewController: UIViewController {
     
     @objc func saleResultButtonPressed() {
         let salesResultPage = SalesResultsViewController()
-        if let data = viewModel.fetchFirstShopList.first?.totalProfitAmount {
+        if let data = shopViewModel.fetchFirstShopList.first?.totalProfitAmount {
             salesResultPage.prodProfitAmount = data
         }
         salesResultPage.modalPresentationStyle = .fullScreen
@@ -145,8 +170,8 @@ class ShopViewController: UIViewController {
     private func getFirstShop() {
         if let currentUser = Auth.auth().currentUser {
             let userMail = currentUser.uid
-            viewModel.getFirstSale(userMail: userMail)
-            if let data = viewModel.fetchFirstShopList.first {
+            shopViewModel.getFirstSale(userMail: userMail)
+            if let data = shopViewModel.fetchFirstShopList.first {
                 print(data)
             } else {
                 print("Yok")

@@ -85,6 +85,7 @@ class AddPurchaseTransactionsViewController: UIViewController {
         textField.placeholder = "Unit Price"
         textField.borderStyle = .roundedRect
         textField.keyboardType = .decimalPad
+        textField.addTarget(self, action: #selector(calculate), for: .editingChanged)
         return textField
     }()
     
@@ -102,6 +103,7 @@ class AddPurchaseTransactionsViewController: UIViewController {
         textField.placeholder = "Amount"
         textField.borderStyle = .roundedRect
         textField.keyboardType = .decimalPad
+        textField.addTarget(self, action: #selector(calculate), for: .editingChanged)
         return textField
     }()
     
@@ -345,6 +347,15 @@ class AddPurchaseTransactionsViewController: UIViewController {
     }
     
     //MARK: - Functions
+    @objc func calculate() {
+        guard let  price = Double(unitPriceTextField.text ?? "Null"), let total = Double(amountTextField.text ?? "Null") else {
+            totalCostTextField.text = "0"
+            return
+        }
+        let result = price * total
+        totalCostTextField.text = "\(result)"
+    }
+    
     func setupBindings() {
         viewModel.$companies
             .receive(on: RunLoop.main)

@@ -330,11 +330,11 @@ class AddSalesTransactionsViewController: UIViewController {
     //MARK: - Func
     @objc func calculate() {
         guard let price = Double(prodPrice.text ?? "Null"), let total = Double(quantityOrPiece.text ?? "Null") else {
-            totalPrice.text = "0 ₺"
+            totalPrice.text = "0"
             return
         }
         let result = price * total
-        totalPrice.text = "\(result) ₺" 
+        totalPrice.text = "\(result)"
     }
     
     func countProfitAmount(prodSelect: String, prodPrice: Double, prodTotal: Double, salePrice: Double, saleTotal: Double) {
