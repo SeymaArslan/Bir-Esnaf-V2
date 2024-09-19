@@ -13,6 +13,10 @@ import Combine
 class ShopViewController: UIViewController {
     var firstShopList = [Shop]()
     
+    var countProduct: String?
+    var prodList = [Product]()
+    var productViewModel = ProductViewModel()
+    
     var countCompany: String?
     var compList = [CompanyBank]()
     var companyViewModel = CompanyViewModel()
@@ -152,6 +156,30 @@ class ShopViewController: UIViewController {
     }
     
     @objc func salesButtonPressed() {
+        if let currentUser = Auth.auth().currentUser {
+            let userMail = currentUser.uid
+            productViewModel.countProductForSale(for: userMail)
+            prodList = productViewModel.countProduct
+            if let count = self.prodList.first?.count {
+                self.countProduct = count
+                guard let countProductSafe = (self.countProduct) else {
+                    return
+                }
+                if let intCountProduct = Int(countProductSafe) {
+                    if intCountProduct < 1 {
+                        self.salesButton .isEnabled = false
+                        let alert = UIAlertController(title: "Insufficient Product", message: "Add product to activate the 'Sale Transactions' feature", preferredStyle: .alert)
+                        alert.addAction(UIAlertAction(title: "I understand", style: .cancel, handler: nil))
+                    } else {
+                        self.salesButton.isEnabled = true
+                        let salesPage = SalesTransactionsViewController()
+                        navigationController?.pushViewController(salesPage, animated: true)
+                    }
+                }
+                
+            }
+        }
+
         let salesPage = SalesTransactionsViewController()
         navigationController?.pushViewController(salesPage, animated: true)
     }

@@ -11,9 +11,30 @@ import FirebaseAuth
 
 class ProductViewModel: ObservableObject {
     
+    @Published var countProduct: [Product] = []
+    
     @Published var productData: ProductData?
     @Published var products: [Product] = []
     private var cancellables = Set<AnyCancellable>()
+    
+    func countProductForSale(for userMail: String) {
+        ProductService.shared.countProductForSale(userMail: userMail)
+            .sink { completion in
+                switch completion {
+                case .failure(let error):
+                    print("Error count product for sale: \(error)")
+                case .finished:
+                    print("Finished count company for sale")
+                }
+            } receiveValue: { prodData in
+                if let success = prodData.success, success == 1 {
+                    self.countProduct = prodData.product ?? []
+                } else {
+                    print("Failed to fetch product data")
+                }
+            }
+            .store(in: &cancellables)
+    }
     
     func updateForSalesProduct(userMail: String, prodName: String, prodTotal: Double) {
         ProductService.shared.updateForSalesProduct(userMail: userMail, prodName: prodName, prodTotal: prodTotal)
