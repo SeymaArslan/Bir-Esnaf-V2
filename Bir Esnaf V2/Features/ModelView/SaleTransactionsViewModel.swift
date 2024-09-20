@@ -11,6 +11,8 @@ import FirebaseAuth
 
 class SaleTransactionsViewModel: ObservableObject {
     
+    @Published var countSale: [Sale] = []
+    
     @Published var productData: ProductData?
     @Published var products: [Product] = []
     
@@ -18,6 +20,25 @@ class SaleTransactionsViewModel: ObservableObject {
     @Published var sales: [Sale] = []
     
     private var cancellables = Set<AnyCancellable>()
+    
+    func countSaleForSaleResults(for userMail: String) {
+        SaleService.shared.countSaleForSaleResults(userMail: userMail)
+            .sink { completion in
+                switch completion {
+                case .failure(let error):
+                    print("Error count sale for sale results: \(error)")
+                case .finished:
+                    print("Finished count sale for sale results")
+                }
+            } receiveValue: { saleData in
+                if let success = saleData.success, success == 1 {
+                    self.countSale = saleData.sale ?? []
+                } else {
+                    print("Failed to fetch sales")
+                }
+            }
+            .store(in: &cancellables)
+    }
     
     func updateSale(_ sale: Sale) {
         SaleService.shared.updateSale(saleId: sale.saleId!, userMail: sale.userMail!, prodName: sale.prodName!, salePrice: Double(sale.salePrice!) ?? 0.0, saleTotal: Double(sale.saleTotal!) ?? 0.0, saleTotalPrice: Double(sale.saleTotalPrice!) ?? 0.0, saleDate: sale.saleDate!) 

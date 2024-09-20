@@ -11,6 +11,8 @@ import FirebaseAuth
 
 
 class ShopViewModel: ObservableObject {
+    
+    @Published var countShop: [Shop] = []
 
     @Published var fetchFirstShopList: [Shop] = []
 
@@ -28,6 +30,24 @@ class ShopViewModel: ObservableObject {
     
     private var cancellables = Set<AnyCancellable>()
 
+    func countShopForSaleResults(for userMail: String) {
+        ShopService.shared.countShopForSaleResults(userMail: userMail)
+            .sink { completion in
+                switch completion {
+                case .failure(let error):
+                    print("Error count shop for sale results: \(error)")
+                case .finished:
+                    print("Finished count shop for sale results")
+                }
+            } receiveValue: { shopData in
+                if let success = shopData.success, success == 1 {
+                    self.countShop = shopData.shop ?? []
+                } else {
+                    print("Failed to fetch shops")
+                }
+            }
+            .store(in: &cancellables)
+    }
     
     func addSaleForShopping(userMail: String, productName: String, totalProfitAmount: Double) {
         ShopService.shared.addShop(userMail: userMail, prodName: productName, totalProfitAmount: totalProfitAmount)
