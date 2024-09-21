@@ -3,7 +3,7 @@
 //  Bir Esnaf V2
 //
 //  Created by Seyma Arslan on 20.05.2024.
-//
+//           NOT :  TEST EDERKEN HATA ALIRSAN UPDATESALERESULTSBUTTONSTATE FONKSİYONUNA BİR BAK. %% Ve kullandım belki de || veya kullanmam gerek uykum geldi :/
 
 import UIKit
 import SnapKit
@@ -58,13 +58,13 @@ class ShopViewController: UIViewController {
         button.setTitleColor(UIColor(named: Colors.orange), for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
         button.addTarget(self, action: #selector(purchaseButtonPressed), for: .touchUpInside)
-        button.isEnabled = true
+//        button.isEnabled = true
         return button
     }()
     
     private let salesButton: UIButton = {
         let button = UIButton()
-        button.setTitle("Sales Transactions", for: .normal)
+        button.setTitle("Sale Transactions", for: .normal)
         button.setTitleColor(UIColor(named: Colors.orange), for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
         button.addTarget(self, action: #selector(salesButtonPressed), for: .touchUpInside)
@@ -86,6 +86,8 @@ class ShopViewController: UIViewController {
         bindViewModel()
         companyViewModel.countCompanyForPurchase(for: Auth.auth().currentUser?.uid ?? "")
         productViewModel.countProductForSale(for: Auth.auth().currentUser?.uid ?? "")
+        saleViewModel.countSaleForSaleResults(for: Auth.auth().currentUser?.uid ?? "")
+        shopViewModel.countShopForSaleResults(for: Auth.auth().currentUser?.uid ?? "")
         
         getFirstShop()
         configure()
@@ -148,29 +150,8 @@ class ShopViewController: UIViewController {
     }
     
     @objc func salesButtonPressed() {
-        if let currentUser = Auth.auth().currentUser {
-            let userMail = currentUser.uid
-            productViewModel.countProductForSale(for: userMail)
-            prodList = productViewModel.countProduct
-            if let count = self.prodList.first?.count {
-                self.countProduct = count
-                guard let countProductSafe = (self.countProduct) else {
-                    return
-                }
-                if let intCountProduct = Int(countProductSafe) {
-                    if intCountProduct < 1 {
-                        self.salesButton.isEnabled = false
-                        let alert = UIAlertController(title: "Insufficient Product", message: "Add product to activate the 'Sale Transactions' feature", preferredStyle: .alert)
-                        alert.addAction(UIAlertAction(title: "I understand", style: .cancel, handler: nil))
-                    } else {
-                        self.salesButton.isEnabled = true
-                        let salesPage = SalesTransactionsViewController()
-                        navigationController?.pushViewController(salesPage, animated: true)
-                    }
-                }
-                
-            }
-        }
+        let salesPage = SalesTransactionsViewController()
+        navigationController?.pushViewController(salesPage, animated: true)
     }
     
     @objc func saleResultButtonPressed() {
@@ -212,6 +193,20 @@ class ShopViewController: UIViewController {
 
     
     //MARK: - Functions
+    private func updateSaleResultsButtonState() {
+        if let countSale = saleViewModel.countSale.first?.count, let intCountSale = Int(countSale), let countShop = shopViewModel.countShop.first?.count, let intCountShop = Int(countShop),
+           intCountSale < 1 && intCountShop < 1 {
+            self.saleResultButton.isEnabled = false
+            self.saleResultButton.setTitleColor(UIColor.gray, for: .normal)
+            let alert = UIAlertController(title: "Insufficient Sale", message: "Add sale to activate the 'Sales Results' feature", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "I understand", style: .cancel, handler: nil))
+            present(alert, animated: true, completion: nil)
+        } else {
+            self.saleResultButton.isEnabled = true
+            self.saleResultButton.setTitleColor(UIColor(named: Colors.orange), for: .normal)
+        }
+    }
+    
     private func updateSaleButtonState() {
         if let count = productViewModel.countProduct.first?.count, let intCountProduct = Int(count), intCountProduct < 1 {
             self.salesButton.isEnabled = false
@@ -259,10 +254,25 @@ class ShopViewController: UIViewController {
                 self?.updatePurchaseButtonState()
             }
             .store(in: &cancellables)
+        
         productViewModel.$countProduct
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
                 self?.updateSaleButtonState()
+            }
+            .store(in: &cancellables)
+        
+        saleViewModel.$countSale
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                self?.updateSaleResultsButtonState()
+            }
+            .store(in: &cancellables)
+        
+        shopViewModel.$countShop
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                self?.updateSaleResultsButtonState()
             }
             .store(in: &cancellables)
     }
