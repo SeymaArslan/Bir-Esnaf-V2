@@ -20,7 +20,7 @@ class ShopService {
     }
     
     func countShopForSaleResults(userMail: String) -> AnyPublisher<ShopData, Error> {
-        guard let url = URL(string: "") else {
+        guard let url = URL(string: "https://lionelo.tech/birEsnaf/countShop.php") else {
             fatalError("Invalid url.")
         }
         

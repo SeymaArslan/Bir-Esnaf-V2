@@ -15,7 +15,7 @@ class ShopViewController: UIViewController {
     
     var countShop: String?
     var shopList = [Shop]()
-
+    
     var countSale: String?
     var saleList = [Sale]()
     var saleViewModel = SaleTransactionsViewModel()
@@ -29,6 +29,8 @@ class ShopViewController: UIViewController {
     var companyViewModel = CompanyViewModel()
     
     var shopViewModel = ShopViewModel()
+    
+    private var cancellables = Set<AnyCancellable>()
     
     private let backgroundImage: UIImageView = {
         let imageView = UIImageView()
@@ -81,8 +83,10 @@ class ShopViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        getFirstShop()
+        bindViewModel()
+        companyViewModel.countCompanyForPurchase(for: Auth.auth().currentUser?.uid ?? "")
         
+        getFirstShop()
         configure()
         
         
@@ -138,28 +142,8 @@ class ShopViewController: UIViewController {
     
     //MARK: - Button Actions
     @objc func purchaseButtonPressed() {
-        if let currentUser = Auth.auth().currentUser {
-            let uid = currentUser.uid
-            companyViewModel.countCompanyForPurchase(for: uid)
-            compList = companyViewModel.countCompany
-            if let count = self.compList.first?.count {
-                self.countCompany = count
-                guard let countCompanySafe = (self.countCompany) else {
-                    return
-                }
-                if let intCountCompany = Int(countCompanySafe) {
-                    if intCountCompany < 1 {
-                        self.purchaseButton.isEnabled = false
-                        let alert = UIAlertController(title: "Insufficient Company", message: "Add company to activate the 'Purchase Transactions' feature", preferredStyle: .alert)
-                        alert.addAction(UIAlertAction(title: "I understand", style: .cancel, handler: nil))
-                    } else {
-                        self.purchaseButton.isEnabled = true
-                        let purchasePage = PurchaseTransactionsViewController()
-                        navigationController?.pushViewController(purchasePage, animated: true)
-                    }
-                }
-            }
-        }
+        let purchasePage = PurchaseTransactionsViewController()
+        navigationController?.pushViewController(purchasePage, animated: true)
     }
     
     @objc func salesButtonPressed() {
@@ -225,8 +209,42 @@ class ShopViewController: UIViewController {
         }
     }
     
+    //MARK: - Helpers
+    private func bindViewModel() {
+        companyViewModel.$countCompany
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                self?.updatePurchaseButtonState()
+            }
+            .store(in: &cancellables)
+    }
     
     //MARK: - Functions
+    private func countShopForSaleResults() {
+        
+    }
+    
+    private func countSaleForSaleResults(){
+        
+    }
+    
+    private func countProductForSale(){
+        
+    }
+    
+    private func updatePurchaseButtonState() {
+        if let count = companyViewModel.countCompany.first?.count, let intCountCompany = Int(count), intCountCompany < 1 {
+            self.purchaseButton.isEnabled = false
+            self.purchaseButton.setTitleColor(UIColor.gray, for: .normal) // Pasif durumu göstermek için gri renk
+            let alert = UIAlertController(title: "Insufficient Company", message: "Add company to activate the 'Purchase Transactions' feature", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "I understand", style: .cancel, handler: nil))
+            present(alert, animated: true, completion: nil)
+        } else {
+            self.purchaseButton.isEnabled = true
+            self.purchaseButton.setTitleColor(UIColor(named: Colors.orange), for: .normal)
+        }
+    }
+    
     private func getFirstShop() {
         if let currentUser = Auth.auth().currentUser {
             let userMail = currentUser.uid

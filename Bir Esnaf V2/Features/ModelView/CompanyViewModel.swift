@@ -34,8 +34,6 @@ class CompanyViewModel: ObservableObject {
                 }
             }
             .store(in: &cancellables)
-            
-
     }
     
     func updateCompany(_ company: CompanyBank) {

@@ -20,7 +20,7 @@ class ProductService {
     private init() {}
     
     func countProductForSale(userMail: String) -> AnyPublisher<ProductData, Error> {
-        guard let url = URL(string: "") else {
+        guard let url = URL(string: "https://lionelo.tech/birEsnaf/countProduct.php") else {
             fatalError("Invalid url.")
         }
         
