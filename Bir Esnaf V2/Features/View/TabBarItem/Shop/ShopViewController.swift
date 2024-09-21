@@ -85,6 +85,7 @@ class ShopViewController: UIViewController {
         
         bindViewModel()
         companyViewModel.countCompanyForPurchase(for: Auth.auth().currentUser?.uid ?? "")
+        productViewModel.countProductForSale(for: Auth.auth().currentUser?.uid ?? "")
         
         getFirstShop()
         configure()
@@ -208,28 +209,20 @@ class ShopViewController: UIViewController {
             
         }
     }
-    
-    //MARK: - Helpers
-    private func bindViewModel() {
-        companyViewModel.$countCompany
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] _ in
-                self?.updatePurchaseButtonState()
-            }
-            .store(in: &cancellables)
-    }
+
     
     //MARK: - Functions
-    private func countShopForSaleResults() {
-        
-    }
-    
-    private func countSaleForSaleResults(){
-        
-    }
-    
-    private func countProductForSale(){
-        
+    private func updateSaleButtonState() {
+        if let count = productViewModel.countProduct.first?.count, let intCountProduct = Int(count), intCountProduct < 1 {
+            self.salesButton.isEnabled = false
+            self.salesButton.setTitleColor(UIColor.gray, for: .normal)
+            let alert = UIAlertController(title: "Insufficient Product", message: "Add product to activate the 'Sale Transactions' feature", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "I understand", style: .cancel, handler: nil))
+            present(alert, animated: true, completion: nil)
+        } else {
+            self.salesButton.isEnabled = true
+            self.salesButton.setTitleColor(UIColor(named: Colors.orange), for: .normal)
+        }
     }
     
     private func updatePurchaseButtonState() {
@@ -255,6 +248,23 @@ class ShopViewController: UIViewController {
                 print("Yok")
             }
         }
+    }
+    
+    
+    //MARK: - Helpers
+    private func bindViewModel() {
+        companyViewModel.$countCompany
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                self?.updatePurchaseButtonState()
+            }
+            .store(in: &cancellables)
+        productViewModel.$countProduct
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                self?.updateSaleButtonState()
+            }
+            .store(in: &cancellables)
     }
     
 }
