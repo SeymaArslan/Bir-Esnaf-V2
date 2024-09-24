@@ -114,11 +114,26 @@ class CompanyViewController: UIViewController {
     }
     
     //MARK: - Functions
+    private func noDataInCompanyCount() {
+        if let count = viewModel.countCompany.first?.count, let intCountCompany = Int(count), intCountCompany == 0 {
+            let alert = UIAlertController(title: "Start using the application", message: "By adding a company with +", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "I understand", style: .cancel, handler: nil))
+            present(alert, animated: true, completion: nil)
+        }
+    }
+    
     private func setupBindings() {
         viewModel.$companies
             .receive(on: RunLoop.main)
             .sink { [weak self] _ in
                 self?.tableView.reloadData()
+            }
+            .store(in: &cancellables)
+        
+        viewModel.$countCompany
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                self?.noDataInCompanyCount()
             }
             .store(in: &cancellables)
     }

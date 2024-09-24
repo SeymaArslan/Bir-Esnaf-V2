@@ -84,7 +84,7 @@ class ShopViewController: UIViewController {
         super.viewDidLoad()
         
         bindViewModel()
-        companyViewModel.countCompanyForPurchase(for: Auth.auth().currentUser?.uid ?? "")
+        companyViewModel.countCompany(for: Auth.auth().currentUser?.uid ?? "")
         productViewModel.countProductForSale(for: Auth.auth().currentUser?.uid ?? "")
         saleViewModel.countSaleForSaleResults(for: Auth.auth().currentUser?.uid ?? "")
         shopViewModel.countShopForSaleResults(for: Auth.auth().currentUser?.uid ?? "")

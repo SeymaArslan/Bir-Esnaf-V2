@@ -17,7 +17,7 @@ class CompanyViewModel: ObservableObject {
     @Published var companies: [CompanyBank] = []
     private var cancellables = Set<AnyCancellable>()
     
-    func countCompanyForPurchase(for userMail: String) {
+    func countCompany(for userMail: String) {
         CompanyService.shared.countCompanyForPurchase(userMail: userMail)
             .sink { completion in
                 switch completion {

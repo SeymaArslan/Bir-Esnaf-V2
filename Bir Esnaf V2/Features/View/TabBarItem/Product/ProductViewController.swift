@@ -116,11 +116,24 @@ class ProductViewController: UIViewController {
     }
     
     //MARK: - Functions
+    private func noDataInProductCount() {
+        if let count = viewModel.countProduct.first?.count, let intCountProduct = Int(count), intCountProduct == 0 {
+            let alert = UIAlertController(title: "Start using the application", message: "By adding a company with '+'", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "I understand", style: .cancel, handler: nil))
+        }
+    }
+    
     private func setupBindings() {
         viewModel.$products
             .receive(on: RunLoop.main)
             .sink { [weak self] _ in
                 self?.tableView.reloadData()
+            }
+            .store(in: &cancellables)
+        viewModel.$countProduct
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                self?.noDataInProductCount()
             }
             .store(in: &cancellables)
     }
