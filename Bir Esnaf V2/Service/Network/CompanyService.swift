@@ -19,21 +19,28 @@ class CompanyService {
     
     private init() {}
     
-    func countCompanyForPurchase(userMail: String) -> AnyPublisher<CompanyBankData, Error> {
-        guard let url = URL(string: "https://lionelo.tech/birEsnaf/countCompBank.php") else {
+    func countCompany(userMail: String) -> AnyPublisher<CompanyBankData, Error> {
+        guard let url = URL(string: "https://lionelo.tech/birEsnaf/countCompany.php") else {
             fatalError("Invalid url.")
         }
-        
+
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         let postString = "userMail=\(userMail)"
         request.httpBody = postString.data(using: .utf8)
+        
+        print("Request Body: \(postString)")
         
         return URLSession.shared.dataTaskPublisher(for: request)
             .tryMap { result -> Data in
                 guard let response = result.response as? HTTPURLResponse, response.statusCode == 200 else {
                     throw URLError(.badServerResponse)
                 }
+                
+                guard !result.data.isEmpty else {
+                    throw URLError(.dataNotAllowed)
+                }
+                
                 return result.data
             }
             .decode(type: CompanyBankData.self, decoder: JSONDecoder())
@@ -137,13 +144,13 @@ class CompanyService {
         
         return URLSession.shared.dataTaskPublisher(for: request)
             .tryMap { result -> Data in
+                print(String(data: result.data, encoding: .utf8) ?? "No data")
                 guard let response = result.response as? HTTPURLResponse, response.statusCode == 200 else {
                     throw URLError(.badServerResponse)
                 }
                 return result.data
             }
             .decode(type: CompanyBankData.self, decoder: JSONDecoder())
-//            .map { $0.companyBank ?? [] }
             .receive(on: DispatchQueue.main)
             .eraseToAnyPublisher()
     }

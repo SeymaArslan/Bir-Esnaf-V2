@@ -12,6 +12,7 @@ import FirebaseAuth
 
 class ShopViewModel: ObservableObject {
     
+    @Published var countShopInt: Int = 0
     @Published var countShop: [Shop] = []
 
     @Published var fetchFirstShopList: [Shop] = []
@@ -42,6 +43,9 @@ class ShopViewModel: ObservableObject {
             } receiveValue: { shopData in
                 if let success = shopData.success, success == 1 {
                     self.countShop = shopData.shop ?? []
+                    if let countString = shopData.count, let count = Int(countString) {
+                        self.countShopInt = count
+                    }
                 } else {
                     print("Failed to fetch shops")
                 }

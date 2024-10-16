@@ -15,6 +15,8 @@ import FirebaseAuth
 
 class SalesTransactionsViewController: UIViewController {
 
+    private var productVM = ProductViewModel()
+    
     private var viewModel = SaleTransactionsViewModel()
     private var cancellables = Set<AnyCancellable>()
     
@@ -107,7 +109,18 @@ class SalesTransactionsViewController: UIViewController {
             viewModel.deleteSale(sales.saleId!, userMail: uid)
         }
         self.viewModel.sales.remove(at: indexPath.row)
-        self.tableView.deleteRows(at: [indexPath], with: .automatic )
+        self.tableView.deleteRows(at: [indexPath], with: .automatic)
+        
+        let alertController = UIAlertController(title: "You deleted the Sales Transaction", message: "Should the product be added back to stock?", preferredStyle: .alert)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        alertController.addAction(cancelAction)
+        let okAction = UIAlertAction(title: "Ok", style: .destructive) { action in
+            if let test = sales.prodName {
+                print("test delete sales prodname = \(test)")
+                self.productVM.getProductByProductName(for: test)
+            }
+
+        }
     }
     
     func createRefresh() {

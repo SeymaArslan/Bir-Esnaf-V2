@@ -9,6 +9,7 @@ import Foundation
 
 struct PurchaseData: Codable {
     let buy: [Purchase]?
+    let count: String?
     let success: Int?
 }
 

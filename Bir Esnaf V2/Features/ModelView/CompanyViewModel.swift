@@ -11,6 +11,7 @@ import FirebaseAuth
 
 class CompanyViewModel: ObservableObject {
     
+    @Published var countCompanyInt: Int = 0
     @Published var countCompany: [CompanyBank] = []
     
     @Published var companyData: CompanyBankData?
@@ -18,17 +19,20 @@ class CompanyViewModel: ObservableObject {
     private var cancellables = Set<AnyCancellable>()
     
     func countCompany(for userMail: String) {
-        CompanyService.shared.countCompanyForPurchase(userMail: userMail)
+        CompanyService.shared.countCompany(userMail: userMail)
             .sink { completion in
                 switch completion {
                 case .failure(let error):
-                    print("Error count company for purchase activites: \(error)")
+                    print("Error count company for purchase activities: \(error)")
                 case .finished:
                     print("Finished count company for purchase")
                 }
             } receiveValue: { companyData in
                 if let success = companyData.success, success == 1 {
                     self.countCompany = companyData.companyBank ?? []
+                    if let countString = companyData.count, let count = Int(countString) {
+                        self.countCompanyInt = count
+                    }
                 } else {
                     print("Failed to fetch companies")
                 }

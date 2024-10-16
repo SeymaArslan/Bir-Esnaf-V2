@@ -117,9 +117,10 @@ class ProductViewController: UIViewController {
     
     //MARK: - Functions
     private func noDataInProductCount() {
-        if let count = viewModel.countProduct.first?.count, let intCountProduct = Int(count), intCountProduct == 0 {
+        if viewModel.countProductInt == 0 {
             let alert = UIAlertController(title: "Start using the application", message: "By adding a company with '+'", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "I understand", style: .cancel, handler: nil))
+            present(alert, animated: true, completion: nil)
         }
     }
     

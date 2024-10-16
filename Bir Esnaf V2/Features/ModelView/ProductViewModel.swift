@@ -11,14 +11,36 @@ import FirebaseAuth
 
 class ProductViewModel: ObservableObject {
     
+    @Published var getProductByProdName: [Product] = []
+    
+    @Published var countProductInt: Int = 0
     @Published var countProduct: [Product] = []
     
     @Published var productData: ProductData?
     @Published var products: [Product] = []
     private var cancellables = Set<AnyCancellable>()
     
-    func countProductForSale(for userMail: String) {
-        ProductService.shared.countProductForSale(userMail: userMail)
+    func getProductByProductName(for prodName: String) {
+        ProductService.shared.getProductByProductName(prodName: prodName)
+            .sink { completion in
+                switch completion {
+                case .failure(let error):
+                    print("Error get product by product name: \(error)")
+                case .finished:
+                    print("Finished get product by product name")
+                }
+            } receiveValue: { productData in
+                if let success = productData.success, success == 1 {
+                    self.getProductByProdName = productData.product ?? []
+                } else {
+                    print("Failed to get product by product name.")
+                }
+            }
+            .store(in: &cancellables)
+    }
+    
+    func countProduct(for userMail: String) {
+        ProductService.shared.countProduct(userMail: userMail)
             .sink { completion in
                 switch completion {
                 case .failure(let error):
@@ -29,6 +51,9 @@ class ProductViewModel: ObservableObject {
             } receiveValue: { prodData in
                 if let success = prodData.success, success == 1 {
                     self.countProduct = prodData.product ?? []
+                    if let countString = prodData.count, let count = Int(countString) {
+                        self.countProductInt = count
+                    }
                 } else {
                     print("Failed to fetch product data")
                 }
@@ -36,8 +61,8 @@ class ProductViewModel: ObservableObject {
             .store(in: &cancellables)
     }
     
-    func updateForSalesProduct(userMail: String, prodName: String, prodTotal: Double) {
-        ProductService.shared.updateForSalesProduct(userMail: userMail, prodName: prodName, prodTotal: prodTotal)
+    func productUpdateBasedOnSalesTransactions(userMail: String, prodName: String, prodTotal: Double) {
+        ProductService.shared.productUpdateBasedOnSalesTransactions(userMail: userMail, prodName: prodName, prodTotal: prodTotal)
             .sink { completion in
                 switch completion {
                 case .failure(let error):

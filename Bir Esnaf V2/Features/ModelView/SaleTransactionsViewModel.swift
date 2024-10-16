@@ -11,6 +11,7 @@ import FirebaseAuth
 
 class SaleTransactionsViewModel: ObservableObject {
     
+    @Published var countSaleInt: Int = 0
     @Published var countSale: [Sale] = []
     
     @Published var productData: ProductData?
@@ -33,6 +34,9 @@ class SaleTransactionsViewModel: ObservableObject {
             } receiveValue: { saleData in
                 if let success = saleData.success, success == 1 {
                     self.countSale = saleData.sale ?? []
+                    if let countString = saleData.count, let count = Int(countString) {
+                        self.countSaleInt = count
+                    }
                 } else {
                     print("Failed to fetch sales")
                 }

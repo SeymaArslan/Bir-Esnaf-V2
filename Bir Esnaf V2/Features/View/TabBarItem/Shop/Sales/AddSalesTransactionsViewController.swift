@@ -345,7 +345,7 @@ class AddSalesTransactionsViewController: UIViewController {
             if let currentUser = Auth.auth().currentUser {
                 let uid = currentUser.uid
                 shopViewModel.addSaleForShopping(userMail: uid, productName: prodSelect, totalProfitAmount: amount)
-                productViewModel.updateForSalesProduct(userMail: uid, prodName: prodSelect, prodTotal: totalRemainingProduct)
+                productViewModel.productUpdateBasedOnSalesTransactions(userMail: uid, prodName: prodSelect, prodTotal: totalRemainingProduct)
             }
         }
         if totalRemainingProduct == 0 {
@@ -354,7 +354,7 @@ class AddSalesTransactionsViewController: UIViewController {
             if let currentUser = Auth.auth().currentUser {
                 let uid = currentUser.uid
                 shopViewModel.addSaleForShopping(userMail: uid, productName: prodSelect, totalProfitAmount: amount)
-                productViewModel.updateForSalesProduct(userMail: uid, prodName: prodSelect, prodTotal: totalRemainingProduct)
+                productViewModel.productUpdateBasedOnSalesTransactions(userMail: uid, prodName: prodSelect, prodTotal: totalRemainingProduct)
             }
        }
     }

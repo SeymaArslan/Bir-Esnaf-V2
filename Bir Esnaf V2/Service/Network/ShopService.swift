@@ -34,6 +34,11 @@ class ShopService {
                 guard let response = result.response as? HTTPURLResponse, response.statusCode == 200 else {
                     throw URLError(.badServerResponse)
                 }
+                
+                guard !result.data.isEmpty else {
+                    throw URLError(.dataNotAllowed)
+                }
+                
                 return result.data
             }
             .decode(type: ShopData.self, decoder: JSONDecoder())

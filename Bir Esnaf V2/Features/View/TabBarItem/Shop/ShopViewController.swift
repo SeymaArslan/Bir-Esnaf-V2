@@ -58,7 +58,7 @@ class ShopViewController: UIViewController {
         button.setTitleColor(UIColor(named: Colors.orange), for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
         button.addTarget(self, action: #selector(purchaseButtonPressed), for: .touchUpInside)
-//        button.isEnabled = true
+        //        button.isEnabled = true
         return button
     }()
     
@@ -85,7 +85,7 @@ class ShopViewController: UIViewController {
         
         bindViewModel()
         companyViewModel.countCompany(for: Auth.auth().currentUser?.uid ?? "")
-        productViewModel.countProductForSale(for: Auth.auth().currentUser?.uid ?? "")
+        productViewModel.countProduct(for: Auth.auth().currentUser?.uid ?? "")
         saleViewModel.countSaleForSaleResults(for: Auth.auth().currentUser?.uid ?? "")
         shopViewModel.countShopForSaleResults(for: Auth.auth().currentUser?.uid ?? "")
         
@@ -157,45 +157,57 @@ class ShopViewController: UIViewController {
     @objc func saleResultButtonPressed() {
         if let currentUser = Auth.auth().currentUser {
             let userMail = currentUser.uid
-            saleViewModel.countSaleForSaleResults(for: userMail)
-            saleList = saleViewModel.countSale
+            //            saleViewModel.countSaleForSaleResults(for: userMail)
+            //            saleList = saleViewModel.countSale
             
-            shopViewModel.countShopForSaleResults(for: userMail)
-            shopList = shopViewModel.countShop
+            //            shopViewModel.countShopForSaleResults(for: userMail)
+            //            shopList = shopViewModel.countShop
             
-            if let cSale = self.saleList.first?.count, let cShop = self.shopList.first?.count {
-                self.countSale = cSale
-                self.countShop = cShop
-                guard let countSaleSafe = (self.countSale), let countShopSafe = (self.countShop) else {
-                    return
-                }
-                if let intCountSale = Int(countSaleSafe), let intCountShop = Int(countShopSafe) {
-                    if intCountSale < 1 || intCountShop < 1 {
-                        self.saleResultButton.isEnabled = false
-                        let alert = UIAlertController(title: "Insufficient Sale", message: "Add sale to activate the 'Sale Result Transactions' feature", preferredStyle: .alert)
-                        alert.addAction(UIAlertAction(title: "I understand", style: .cancel, handler: nil))
-                    } else {
-                        self.saleResultButton.isEnabled = true
-                        let salesResultsPage = SalesResultsViewController()
-                        if let data = shopViewModel.fetchFirstShopList.first?.totalProfitAmount {
-                            salesResultsPage.prodProfitAmount = data
-                        }
-                        salesResultsPage.modalPresentationStyle = .fullScreen
-                        present(salesResultsPage, animated: true, completion: nil)
-                    }
-                }
+            //            if let cSale = self.saleList.first?.count, let cShop = self.shopList.first?.count {
+            //                self.countSale = cSale
+            //                self.countShop = cShop
+            //                guard let countSaleSafe = (self.countSale), let countShopSafe = (self.countShop) else {
+            //                    return
+            //                }
+            //                if let intCountSale = Int(countSaleSafe), let intCountShop = Int(countShopSafe) {
+            if saleViewModel.countSaleInt == 0 || shopViewModel.countShopInt == 0 {
+                self.saleResultButton.isEnabled = false
+                let alert = UIAlertController(title: "Insufficient Sale", message: "Add sale to activate the 'Sale Result Transactions' feature", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "I understand", style: .cancel, handler: nil))
                 
+                //                if intCountSale < 1 || intCountShop < 1 {
+                //                        self.saleResultButton.isEnabled = false
+                //                        let alert = UIAlertController(title: "Insufficient Sale", message: "Add sale to activate the 'Sale Result Transactions' feature", preferredStyle: .alert)
+                //                        alert.addAction(UIAlertAction(title: "I understand", style: .cancel, handler: nil))
+                //                    } else {
+                //                        self.saleResultButton.isEnabled = true
+                //                        let salesResultsPage = SalesResultsViewController()
+                //                        if let data = shopViewModel.fetchFirstShopList.first?.totalProfitAmount {
+                //                            salesResultsPage.prodProfitAmount = data
+                //                        }
+                //                        salesResultsPage.modalPresentationStyle = .fullScreen
+                //                        present(salesResultsPage, animated: true, completion: nil)
+                //                    }
+            } else {
+                self.saleResultButton.isEnabled = true
+                let salesResultsPage = SalesResultsViewController()
+                if let data = shopViewModel.fetchFirstShopList.first?.totalProfitAmount {
+                    salesResultsPage.prodProfitAmount = data
+                }
+                salesResultsPage.modalPresentationStyle = .fullScreen
+                present(salesResultsPage, animated: true, completion: nil)
             }
+            
+            //            }
             
             
         }
     }
-
+    
     
     //MARK: - Functions
     private func updateSaleResultsButtonState() {
-        if let countSale = saleViewModel.countSale.first?.count, let intCountSale = Int(countSale), let countShop = shopViewModel.countShop.first?.count, let intCountShop = Int(countShop),
-           intCountSale < 1 && intCountShop < 1 {
+        if saleViewModel.countSaleInt == 0 || shopViewModel.countShopInt == 0 {
             self.saleResultButton.isEnabled = false
             self.saleResultButton.setTitleColor(UIColor.gray, for: .normal)
             let alert = UIAlertController(title: "Insufficient Sale", message: "Add sale to activate the 'Sales Results' feature", preferredStyle: .alert)

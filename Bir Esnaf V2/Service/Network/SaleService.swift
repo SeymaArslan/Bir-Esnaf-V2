@@ -29,11 +29,18 @@ class SaleService {
         let postStr = "userMail=\(userMail)"
         request.httpBody = postStr.data(using: .utf8)
         
+        print("Request Body: \(postStr)")
+        
         return URLSession.shared.dataTaskPublisher(for: request)
             .tryMap { result -> Data in
                 guard let response = result.response as? HTTPURLResponse, response.statusCode == 200 else {
                     throw URLError(.badServerResponse)
                 }
+                
+                guard !result.data.isEmpty else {
+                    throw URLError(.dataNotAllowed)
+                }
+                
                 return result.data
             }
             .decode(type: SaleData.self, decoder: JSONDecoder())

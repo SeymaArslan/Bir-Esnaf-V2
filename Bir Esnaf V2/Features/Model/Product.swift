@@ -9,6 +9,7 @@ import Foundation
 
 struct ProductData: Codable {
     let product: [Product]?
+    let count: String? 
     let success: Int?
 }
 

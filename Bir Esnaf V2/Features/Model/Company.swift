@@ -9,11 +9,18 @@ import Foundation
 
 struct CompanyBankData: Codable {
     let companyBank: [CompanyBank]?
+    let count: String?
     let success: Int?
 }
 
-struct CompanyBank: Identifiable, Codable {
-    var id: String { cbId ?? UUID().uuidString }
+struct CompanyBank: Identifiable, Codable, Equatable {
+    
+    static func == (lhs: CompanyBank, rhs: CompanyBank) -> Bool {
+        return lhs.compName == rhs.compName
+    }
+    
+    var id: String { cbId ?? UUID().uuidString }// prodId opsiyonel olduğu için default bir değer sağlıyoruz
+
     let cbId: String?
     let userMail: String?
     let compName: String?
